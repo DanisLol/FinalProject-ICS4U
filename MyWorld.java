@@ -7,7 +7,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @version (a version number or a date)
  */
 public class MyWorld extends World
-{
+{    
+    private String testLayout = "bbbbbbbbbbbbbbbbbbbbbbwwbbbbbbbbbbbbwwwwwwfffbbbbbbwbfwwwwwbfbbbbbwbbwwwwbwbfbbbbwbffwwwffwwfbbbbwbbffbffwwwwbbbfwbbbffffwwbwwbbfwwbbfwwwfbwwbbbbfwwwwwfbbbbbbbbbbffffbbbbbbbbbbbbbbbbbbbbbbbbbb";
 
     /**
      * Constructor for objects of class MyWorld.
@@ -16,6 +17,13 @@ public class MyWorld extends World
     public MyWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(600, 400, 1); 
+        super(1024, 768, 1); 
+
+        Board board = new Board(testLayout);
+        addObject(board, 0, 0);
+        board.display();
+    }
+
+    public void act(){
     }
 }
