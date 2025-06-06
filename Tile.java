@@ -2,10 +2,6 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
  * Tiles have different images and "passability" (whether or not user can move through).
- * Things to fix:
- * - Tile images
- * - Tile types (will probably need more)
- * - Set passability
  * 
  * @author Angela Wang
  * @version June 4 2025
@@ -19,44 +15,24 @@ public class Tile extends Actor
     private boolean isMouseHeld;
 
     public Tile(char type){
-        this.type = type;
-
-        String imageName = "";
-        switch (type){
-            case 'f':
-                imageName = "tile_grass.png";
-                break;
-            case 'w':
-                imageName = "tile_water.png";
-                break;
-            case 'b':
-                imageName = "tile_blank.png";
-        }
-
-        image = new GreenfootImage(imageName);
-        setImage(image);
+        setType(type);  // use setType instead of manual code
     }
 
     public void act(){
-        //if this tile is in a RoomEditor (NOT in a game world), user can edit type
+        // if this tile is in a RoomEditor (NOT in a game world), user can edit type
         if (getWorld() instanceof RoomEditor){
             RoomEditor room = (RoomEditor) getWorld();
 
-            //if user is dragging mouse + touches this tile, set tile to new type based on RoomEditor            if (room.getIsMousePressed() && intersects(room.getCursor())){
+            // if user is dragging mouse + touches this tile, set tile to new type based on RoomEditor
             if (room.getIsMousePressed() && intersects(room.getCursor())){
-                type = room.getNewType();
-                if (type == 'f'){
-                    setImage(new GreenfootImage("tile_grass.png"));
-                } else if (type == 'w'){
-                    setImage(new GreenfootImage("tile_water.png"));
-                }
+                setType(room.getNewType());  // use setType() here too
             }
         }
     }
 
     /**
      * Return type of this tile 
-     * @return char     e.g. f for floor, w for wall... (may need to change this)
+     * @return char     e.g. f for floor, w for wall...
      */
     public char getType(){
         return type;
@@ -68,5 +44,37 @@ public class Tile extends Actor
      */
     public boolean getIsPassable(){
         return isPassable;
+    }
+
+    /**
+     * Safely sets the type and updates the image together
+     * @param newType    The new type of the tile
+     */
+    public void setType(char newType){
+        this.type = newType;
+
+        String imageName = "";
+        switch (newType){
+            case 'g':
+                imageName = "tile_grass.png";
+                break;
+            case 'w':
+                imageName = "tile_water.png";
+                break;
+            case 'u':
+                imageName = "tile_ub.png";
+                break;
+            case 'b':
+                imageName = "tile_b.png";
+                break;
+            case 'f':
+                imageName = "tile_fire.png";
+                break;
+            default:
+                imageName = "tile_ub.png";  
+        }
+
+        image = new GreenfootImage(imageName);
+        setImage(image);
     }
 }
