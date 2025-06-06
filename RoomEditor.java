@@ -34,11 +34,17 @@ public class RoomEditor extends World
     
     public void act(){
         //press key to set tile type/save
-        if (Greenfoot.isKeyDown("f")){
-            newType = 'f';
+        if (Greenfoot.isKeyDown("g")){
+            newType = 'g';
         } else if (Greenfoot.isKeyDown("w")){
             newType = 'w';
-        } else if (Greenfoot.isKeyDown("e")){
+        } else if (Greenfoot.isKeyDown("u")){
+            newType = 'u';
+        } else if (Greenfoot.isKeyDown("b")){
+            newType = 'b';
+        } else if (Greenfoot.isKeyDown("f")){
+            newType = 'f';
+        } else if (Greenfoot.isKeyDown("s")){
             System.out.println("Saved.");
             System.out.println(room.getLayout());
         }
