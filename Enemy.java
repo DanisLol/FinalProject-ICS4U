@@ -2,7 +2,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.*;
 
 
-public abstract class Enemy extends Actor
+public abstract class Enemy extends SuperSmoothMover
 {
     protected Player play;
     protected boolean inRange;
