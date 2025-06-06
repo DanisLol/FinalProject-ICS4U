@@ -1,19 +1,28 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.*;
 
-/**
- * Write a description of class Enemy here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
-public class Enemy extends Actor
+
+public abstract class Enemy extends Actor
 {
-    /**
-     * Act - do whatever the Enemy wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+    protected Player play;
+    protected boolean inRange;
+    protected int cd = 0;
+    protected int cooldown;
     public void act()
     {
-        // Add your action code here.
+        attacking();
     }
+    protected void addedToWorld(World world){
+        List<Player> players = world.getObjects(Player.class);
+        if (!players.isEmpty()) {
+            play = players.get(0);
+        }
+    }
+    protected void attacking(){
+        cd++;
+        if(cd%cooldown==0){
+            attack();
+        }
+    }
+    protected abstract void attack();
 }
