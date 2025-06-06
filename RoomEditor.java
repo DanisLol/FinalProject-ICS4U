@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Tool to help with designing room layouts. Draw out room layout and press 's' to save - 
+ * Tool to help with designing room layouts. Draw out room layout and press 'e' to save (*changed!)- 
  * String representation of layout will be printed to terminal so you can copy and paste.
  * 
  * @author Angela Wang
@@ -38,7 +38,7 @@ public class RoomEditor extends World
             newType = 'f';
         } else if (Greenfoot.isKeyDown("w")){
             newType = 'w';
-        } else if (Greenfoot.isKeyDown("s")){
+        } else if (Greenfoot.isKeyDown("e")){
             System.out.println("Saved.");
             System.out.println(room.getLayout());
         }
