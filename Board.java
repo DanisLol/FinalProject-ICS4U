@@ -19,7 +19,7 @@ public class Board extends Actor
         tiles = new Tile[12][16];
         for (int i = 0; i < tiles.length; i++){
             for (int j = 0; j < tiles[i].length; j++){
-                tiles[i][j] = new Tile('b');
+                tiles[i][j] = new Tile('u');
             }
         }
     }
