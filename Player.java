@@ -6,14 +6,95 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Player extends Actor
+public class Player extends SuperSmoothMover
 {
+    private GreenfootImage image;
+    private Animation animation;
+    private int countdown, direction, frame;
+    private int xSpeed, ySpeed;
+
+    public Player (){
+        GreenfootImage spritesheet = new GreenfootImage("testplayer.png");
+        animation = AnimationManager.createAnimation(spritesheet, 9, 4, 9, 64, 64);
+        direction = 3;        
+        image = animation.getOneImage(Direction.fromInteger(direction), 0); 
+        setImage(image);
+        frame = 0;
+        xSpeed = 0;
+        ySpeed = 0;
+    }
+
     /**
-     * Act - do whatever the Player wants to do. This method is called whenever
+     * Act - do whatever the Goblin wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act()
-    {
-        // Add your action code here.
+    {        
+        checkKeys();
+        
+        if (isMoving()){
+            animate();
+            setLocation(getX() + xSpeed, getY() + ySpeed);
+        } else {
+            if (frame > 0){
+                if (countdown > 0){
+                    countdown--;
+                } else {
+                    if (frame < 5){
+                        frame--;
+                    } else {
+                        frame++;
+                        if (frame > 8) frame = 0;
+                    }
+                    setImage(animation.getOneImage(Direction.fromInteger(direction), frame));
+                    countdown = 3;
+                }
+            }
+        }
+    }
+
+    private void checkKeys(){
+        xSpeed = 0;
+        ySpeed = 0;
+        
+        if (Greenfoot.isKeyDown("a")){
+            direction = 1;
+            xSpeed = -2;
+        } 
+        
+        if (Greenfoot.isKeyDown("d")){
+            direction = 0;
+            xSpeed = 2;
+        }
+        
+        if (Greenfoot.isKeyDown("w")){
+            direction = 2;
+            ySpeed = -2;
+        }
+        
+        if (Greenfoot.isKeyDown("s")){
+            direction = 3;
+            ySpeed = 2;
+        } 
+    }
+    
+    private boolean isMoving(){
+        if (xSpeed == 0 && ySpeed == 0){
+            return false;
+        }
+        return true;
+    }
+
+    private void animate(){
+        if (countdown > 0){
+            countdown--;
+        } else {
+            frame++;
+            if (frame > 8){
+                frame = 1;
+            }
+            setImage (animation.getOneImage(Direction.fromInteger(direction), frame));
+            countdown = 6;
+        }
     }
 }
