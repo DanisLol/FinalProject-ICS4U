@@ -20,9 +20,7 @@ public class Animation {
     private boolean directional;
 
     private int directions;
-    
-    private int frame;
-    
+        
     /**
      * Constructor for directional animations - should be a 2d array of GreenfootImage with
      * 4 directions (dimension 1) and at least one image per direction (dimension 2)
@@ -58,8 +56,11 @@ public class Animation {
     }
 
     public GreenfootImage getOneImage (Direction d, int frame){
-        this.frame = frame;
         return directionalImages[d.getDirection()][frame];
+    }
+    
+    public GreenfootImage getOneImage(int frame){
+        return nonDirectionalImages[frame];
     }
 
     public GreenfootImage[][] getDirectionalImages (){
@@ -68,10 +69,6 @@ public class Animation {
 
     public GreenfootImage[] getNonDirectionalImages (){
         return nonDirectionalImages;
-    }
-
-    public int getFrame(){
-        return frame;
     }
 }
 

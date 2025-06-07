@@ -24,16 +24,17 @@ public class Tile extends Actor
         String imageName = "";
         switch (type){
             case 'f':
-                imageName = "tile_grass.png";
+                imageName = "tile_floor.png";
                 break;
             case 'w':
-                imageName = "tile_water.png";
+                imageName = "tile_wall.png";
                 break;
             case 'b':
                 imageName = "tile_blank.png";
         }
 
         image = new GreenfootImage(imageName);
+        image.scale(64, 64);
         setImage(image);
     }
 
@@ -46,9 +47,9 @@ public class Tile extends Actor
             if (room.getIsMousePressed() && intersects(room.getCursor())){
                 type = room.getNewType();
                 if (type == 'f'){
-                    setImage(new GreenfootImage("tile_grass.png"));
+                    setImage(new GreenfootImage("tile_floor.png"));
                 } else if (type == 'w'){
-                    setImage(new GreenfootImage("tile_water.png"));
+                    setImage(new GreenfootImage("tile_wall.png"));
                 }
             }
         }
