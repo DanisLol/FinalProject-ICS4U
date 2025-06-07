@@ -9,19 +9,21 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Player extends SuperSmoothMover
 {
     private GreenfootImage image;
-    private Animation animation;
+    private Animation walkAnimation, deathAnimation;
     private int countdown, direction, frame;
     private int xSpeed, ySpeed;
 
     public Player (){
         GreenfootImage spritesheet = new GreenfootImage("testplayer.png");
-        animation = AnimationManager.createAnimation(spritesheet, 9, 4, 9, 64, 64);
+        walkAnimation = AnimationManager.createAnimation(spritesheet, 9, 4, 9, 64, 64);
+        deathAnimation = AnimationManager.createAnimation(spritesheet, 20, 1, 6, 64, 64);
         direction = 3;        
-        image = animation.getOneImage(Direction.fromInteger(direction), 0); 
+        image = walkAnimation.getOneImage(Direction.fromInteger(direction), 0); 
         setImage(image);
         frame = 0;
         xSpeed = 0;
         ySpeed = 0;
+        countdown = 6;
     }
 
     /**
@@ -31,7 +33,6 @@ public class Player extends SuperSmoothMover
     public void act()
     {        
         checkKeys();
-        
         if (isMoving()){
             animate();
             setLocation(getX() + xSpeed, getY() + ySpeed);
@@ -46,7 +47,7 @@ public class Player extends SuperSmoothMover
                         frame++;
                         if (frame > 8) frame = 0;
                     }
-                    setImage(animation.getOneImage(Direction.fromInteger(direction), frame));
+                    setImage(walkAnimation.getOneImage(Direction.fromInteger(direction), frame));
                     countdown = 3;
                 }
             }
@@ -93,7 +94,23 @@ public class Player extends SuperSmoothMover
             if (frame > 8){
                 frame = 1;
             }
-            setImage (animation.getOneImage(Direction.fromInteger(direction), frame));
+            setImage (walkAnimation.getOneImage(Direction.fromInteger(direction), frame));
+            countdown = 6;
+        }
+    }
+    
+    
+    //currently keeps looping death animation, need to fix later
+    private void die(){
+        if (countdown > 0){
+            countdown--;
+        } else {
+            frame++;
+            if (frame > 5) {
+                frame = 1;
+            }
+            System.out.println(frame);
+            setImage(deathAnimation.getOneImage(frame));
             countdown = 6;
         }
     }
