@@ -56,10 +56,10 @@ public class Tile extends Actor
         String imageName = "";
         switch (newType){
             case 'g':
-                imageName = "tile_grass.png";
+                imageName = "tile_floor.png";
                 break;
             case 'w':
-                imageName = "tile_water.png";
+                imageName = "tile_wall.png";
                 break;
             case 'u':
                 imageName = "tile_ub.png";
