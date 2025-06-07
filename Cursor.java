@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.ArrayList;
 
 /**
  * Cursor is basically the mouse and is used for easier detection of the mouse over a Tile.
@@ -60,5 +61,14 @@ public class Cursor extends Actor
         setLocation(x, y);
         prevX = x;
         prevY = y;
+        
+        
+    }
+    /**
+     * Returns ArrayList of Actors the cursor is hovering over. Code by Neelan Thurairajah
+     * @return ArrayList<Actor> Hovered actors if available, null if not
+     */
+    public ArrayList<Actor> getHoveredActors() {
+        return (ArrayList<Actor>) getObjectsAtOffset(0, 0, Actor.class);
     }
 }
