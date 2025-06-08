@@ -31,7 +31,7 @@ public class RoomEditor extends World
         mouse = new Cursor(false);
         addObject(mouse, 0, 0);
     }
-    
+    //test
     public void act(){
         //press key to set tile type/save
         if (Greenfoot.isKeyDown("f")){
