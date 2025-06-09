@@ -6,12 +6,13 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Player extends SuperSmoothMover
+public class Player extends Scroller
 {
     private GreenfootImage image;
     private Animation walkAnimation, deathAnimation;
     private int countdown, direction, frame;
     private int xSpeed, ySpeed;
+    private boolean isNew;
 
     public Player (){
         GreenfootImage spritesheet = new GreenfootImage("testplayer.png");
@@ -23,6 +24,9 @@ public class Player extends SuperSmoothMover
         frame = 0;
         xSpeed = 0;
         ySpeed = 0;
+        realX = 0;
+        realY = 0;
+        isNew = true;
         countdown = 6;
     }
 
@@ -35,7 +39,8 @@ public class Player extends SuperSmoothMover
         checkKeys();
         if (isMoving()){
             animate();
-            setLocation(getX() + xSpeed, getY() + ySpeed);
+            realX += xSpeed; 
+            realY += ySpeed;
         } else {
             if (frame > 0){
                 if (countdown > 0){
@@ -52,6 +57,9 @@ public class Player extends SuperSmoothMover
                 }
             }
         }
+        
+        centreOn(this);
+        updateLocation();
     }
 
     private void checkKeys(){

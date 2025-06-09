@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author Angela Wang
  * @version June 4 2025
  */
-public class Tile extends Actor
+public class Tile extends Scroller
 {
     private GreenfootImage image;
     public static final int PIXEL_SIZE = 64;
@@ -19,6 +19,7 @@ public class Tile extends Actor
     }
 
     public void act(){
+        super.act();
         // if this tile is in a RoomEditor (NOT in a game world), user can edit type
         if (getWorld() instanceof RoomEditor){
             RoomEditor room = (RoomEditor) getWorld();
