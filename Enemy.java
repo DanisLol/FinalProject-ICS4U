@@ -2,7 +2,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.*;
 
 
-public abstract class Enemy extends SuperSmoothMover
+public abstract class Enemy extends Scroller
 {
     protected Player play;
     protected boolean inRange;
@@ -10,10 +10,11 @@ public abstract class Enemy extends SuperSmoothMover
     protected int cooldown;
     public void act()
     {
+        super.act();
         attacking();
     }
-    protected void addedToWorld(World world){
-        List<Player> players = world.getObjects(Player.class);
+    protected void addedToWorld(World w){
+        List<Player> players = w.getObjects(Player.class);
         if (!players.isEmpty()) {
             play = players.get(0);
         }
