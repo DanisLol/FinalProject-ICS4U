@@ -33,6 +33,13 @@ public class Coin extends Item
     public void act()
     {
         animate();
+        Player player = (Player)getOneIntersectingObject(Player.class);
+        if (player != null && player.getWorld() != null) {
+            player.pickUpCoin();
+            if (getWorld() != null) {
+                getWorld().removeObject(this);
+            }
+        }
     }
     
     private void animate(){
