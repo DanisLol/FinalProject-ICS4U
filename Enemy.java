@@ -8,6 +8,8 @@ public abstract class Enemy extends Scroller
     protected boolean inRange;
     protected int cd = 0;
     protected int cooldown;
+    int health;
+    
     public void act()
     {
         super.act();
@@ -26,4 +28,8 @@ public abstract class Enemy extends Scroller
         }
     }
     protected abstract void attack();
+    
+    protected int getHealth(){
+        return this.health;
+    }
 }
