@@ -1,20 +1,34 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.*;
 
 /**
  * Write a description of class MyWorld here.
  * 
- * @author (your name) 
+ * @Daniel Wang
  * @version (a version number or a date)
  */
 public class MyWorld extends World
 {    
     private String testLayout = "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuffuuuuuuuuuuuuufuuuwwwwuuuuuuuufuuuuuwwuuuuuuufuufuwwwwufuuuuufufffuuuuuffuuufuuffbbuuuuffuuufuuffbuuubbuffuuffffuubbbbbuffuuuuuuuuuuubbuuuuuuuuuuuuuuuuuuuu";
-
+    
+    private int currentWave = 0;
+    
+    
     private Player player;
-    /**
-     * Constructor for objects of class MyWorld.
-     * 
-     */
+    
+    //Stat bar:
+    private SuperStatBar healthStat; 
+    private SuperStatBar coinStat;
+    int health;
+    GreenfootImage image;
+    
+    //Timer:
+    int actNum;
+    public static Counter counter = new Counter();
+    SimpleTimer st = new SimpleTimer();
+    Counter counter2 = new Counter();
+    public final int GAME_LENGTH = 90; // the length of the game, in seconds.
+    
     public MyWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
@@ -25,13 +39,66 @@ public class MyWorld extends World
         addObject(board, 0, 0);
         board.display();
         
-        setPaintOrder(Player.class);
+        
+        //Health SuperStatBar:
+        //image = new GreenfootImage("heart.png");
+        //setImage(image);
+        healthStat = new SuperStatBar(50, 50, player, 200, 15, Color.RED, Color.BLACK, false, Color.BLACK, 3);
+        addObject(healthStat, 160, 23);
+        
+        //Coin SuperStatBar:
+        coinStat =  new SuperStatBar(50, 50, player, 200, 15, Color.YELLOW, Color.WHITE, false, Color.BLACK, 3);       
+        addObject(coinStat, 160, 45);
+            
+            
+        //Timer:
+        counter2.setValue(GAME_LENGTH);
+        st.mark();
+        counter2.setPrefix("Time Left: ");
+        addObject(counter2, 944, 23);
+        
+        actNum = 0;
+        
+        setPaintOrder(SuperStatBar.class,Counter.class, Player.class);
     }
 
     public void act(){
+         actNum++;
+         if (actNum % 60 == 0) counter2.add(-1); // Decrement the counter by 1
+         
+         
     }
     
+
     public Player getPlayer() {
         return player;
     }
+    
+    //Checking if all enemies are eliminated
+    //if all enemies are eleiminated, we can let the user go on to the next room in the dungeon
+    public boolean allEnemiesGone(){
+        boolean result = false;
+        //if the number of enemies killed by player is equal to that wave of enemies number
+        //set true that all enemies are killed
+        //the number one here is just a placeholder. There will be a method that gets the number
+        //of enemies that are in each wave 
+        if(player.getKilled() == 1){
+            result = true;
+        }
+        return result;
+    }
+    
+   
+    
+    public void started(){
+        
+    }
+    
+    public void stopped(){
+        
+    }
+    
+        
+    
+    
 }
