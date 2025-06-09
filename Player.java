@@ -13,7 +13,10 @@ public class Player extends Scroller
     private int countdown, direction, frame;
     private int xSpeed, ySpeed;
     private boolean isNew;
+
     private int coins;
+    //the number of enemies killed
+    private int killed;
 
     public Player (){
         GreenfootImage spritesheet = new GreenfootImage("testplayer.png");
@@ -92,16 +95,27 @@ public class Player extends Scroller
             direction = 3;
             ySpeed = 2;
         } 
+        if(Greenfoot.mouseClicked(this)){
+            attack();
+        }
     }
     
-    private boolean isMoving(){
+    public boolean isMoving(){
         if (xSpeed == 0 && ySpeed == 0){
             return false;
         }
         return true;
     }
+    
+    public void attack(){
+        Actor p = getOneIntersectingObject(Enemy.class);
+        if(p != null){
+            
+        }
+        killed++;
+    }
 
-    private void animate(){
+    public void animate(){
         if (countdown > 0){
             countdown--;
         } else {
@@ -115,7 +129,7 @@ public class Player extends Scroller
     }
     
     //currently keeps looping death animation, need to fix later
-    private void die(){
+    public void die(){
         if (countdown > 0){
             countdown--;
         } else {
@@ -127,5 +141,13 @@ public class Player extends Scroller
             setImage(deathAnimation.getOneImage(frame));
             countdown = 6;
         }
+    }
+    
+    public int getCoin(){
+        return coins; 
+    }
+    
+    public int getKilled(){
+        return killed;
     }
 }
