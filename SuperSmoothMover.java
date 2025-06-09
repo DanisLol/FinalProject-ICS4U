@@ -35,8 +35,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, and Greenfoot)
  */
 public abstract class SuperSmoothMover extends Actor
 {
-    private double exactX;
-    private double exactY;
+    protected double exactX; // coordinates according to the screen
+    protected double exactY;
+    protected double realX; // these are the "actual" coordinates of the objects, not according to the screen/player
+    protected double realY;
     private double preciseRotation;
     private boolean staticRotation = false;
     private double cosRotation;
