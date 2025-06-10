@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.*;
 
 /**
  * Write a description of class Player here.
@@ -17,6 +18,16 @@ public class Player extends Scroller
     private int coins;
     //the number of enemies killed
     private int killed;
+    
+    //Stat bar:
+    private SuperStatBar healthStat; 
+    private SuperStatBar coinStat;
+    private int health;
+    private GreenfootImage healthImage;
+    private GreenfootImage coinImage;
+    
+    //Damage
+    private int damage;
 
     public Player (){
         GreenfootImage spritesheet = new GreenfootImage("testplayer.png");
@@ -33,6 +44,15 @@ public class Player extends Scroller
         isNew = true;
         countdown = 6;
         coins = 0;
+        
+        //Health SuperStatBar:
+        healthImage = new GreenfootImage("heart.png");
+        healthStat = new SuperStatBar(50, health, this, 200, 15, Color.RED, Color.BLACK, false, Color.BLACK, 3);
+        //addObject(healthStat, 160, 23);
+        
+        //Coin SuperStatBar:
+        coinStat =  new SuperStatBar(10, coins, this, 200, 15, Color.YELLOW, Color.WHITE, false, Color.BLACK, 3);       
+        //addObject(coinStat, 160, 45);
     }
 
     /**
@@ -103,11 +123,10 @@ public class Player extends Scroller
     }
     
     public void attack(){
-        Actor p = getOneIntersectingObject(Enemy.class);
-        if(p != null){
-            
-        }
-        killed++;
+        //Add attack animation
+        
+        
+        
     }
 
     public void animate(){
@@ -150,6 +169,7 @@ public class Player extends Scroller
         }
     }
     
+    //when player needs to kill specific number of enemies to pass onto next room
     public int getKilled(){
         return killed;
     }
