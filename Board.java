@@ -34,7 +34,7 @@ public class Board extends Actor
         int x = 0;
         for (int i = 0; i < tiles.length; i++){
             for (int j = 0; j < tiles[i].length; j++){
-                System.out.println(layout.charAt(x));
+                //System.out.println(layout.charAt(x));
                 tiles[i][j] = new Tile(layout.charAt(x));
                 x++;
             }

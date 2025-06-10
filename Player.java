@@ -13,7 +13,7 @@ public class Player extends Scroller
     private int countdown, direction, frame;
     private int xSpeed, ySpeed;
     private boolean isNew;
-    
+
     private int coins;
     //the number of enemies killed
     private int killed;
@@ -63,10 +63,15 @@ public class Player extends Scroller
             }
         }
         
+        
         centreOn(this);
         updateLocation();
     }
-
+    
+    public void pickUpCoin(){
+        coins++;
+    }
+    
     private void checkKeys(){
         xSpeed = 0;
         ySpeed = 0;
@@ -122,7 +127,6 @@ public class Player extends Scroller
             countdown = 6;
         }
     }
-    
     
     //currently keeps looping death animation, need to fix later
     public void die(){

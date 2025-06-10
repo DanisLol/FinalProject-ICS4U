@@ -72,7 +72,7 @@ public class Tile extends Scroller
                 imageName = "tile_fire.png";
                 break;
             default:
-                imageName = "tile_ub.png";  
+                imageName = "tile_ub.png";
         }
 
         image = new GreenfootImage(imageName);
