@@ -81,6 +81,7 @@ public class Tile extends Scroller
                 imageName = "tile_spike0.png";
             default:
                 imageName = "tile_floor.png";  
+
         }
 
         image = new GreenfootImage(imageName);
