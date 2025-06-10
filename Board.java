@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.HashMap;
 
 /**
  * 2D Array of Tiles
@@ -9,7 +10,15 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Board extends Actor
 {
     private Tile[][] tiles;
-    private int offset = Tile.PIXEL_SIZE / 2; //since images are center anchored
+    private int offset = Tile.SIZE / 2; //since images are center anchored
+    private HashMap<String, Tile> test = new HashMap<String, Tile>(){{
+        put("w", new WaterTile());
+        put("u", new WallTile());
+        put("g", new FloorTile());
+        put("s", new SpikeTile());
+        put("f", new LavaTile());
+        put("b", new BarrelTile());
+    }};
 
     /**
      * Default Board constructor - creates room of blank tiles
@@ -17,9 +26,10 @@ public class Board extends Actor
      */
     public Board(){
         tiles = new Tile[12][16];
+
         for (int i = 0; i < tiles.length; i++){
             for (int j = 0; j < tiles[i].length; j++){
-                tiles[i][j] = new Tile('u');
+                tiles[i][j] = new FloorTile();
             }
         }
     }
@@ -31,11 +41,21 @@ public class Board extends Actor
      */
     public Board(String layout){
         tiles = new Tile[12][16];
+
         int x = 0;
         for (int i = 0; i < tiles.length; i++){
             for (int j = 0; j < tiles[i].length; j++){
-                System.out.println(layout.charAt(x));
-                tiles[i][j] = new Tile(layout.charAt(x));
+                //System.out.println(layout.charAt(x));
+                //tiles[i][j] = new Tile(layout.charAt(x));
+                Object instance;
+                try {
+                    instance = test.get(String.valueOf(layout.charAt(x))).getClass().newInstance();
+                    tiles[i][j] = (Tile) instance;
+                } catch (InstantiationException e) {
+                    System.out.println("something went wrong with loading tiles.");
+                } catch (IllegalAccessException e){
+                    System.out.println("something went wrong with loading tiles.");
+                }
                 x++;
             }
         }
@@ -47,7 +67,7 @@ public class Board extends Actor
     public void display(){
         for (int i = 0; i < tiles.length; i++){
             for (int j = 0; j < tiles[i].length; j++){
-                getWorld().addObject(tiles[i][j], j * Tile.PIXEL_SIZE + offset, i * Tile.PIXEL_SIZE + offset);
+                getWorld().addObject(tiles[i][j], j * Tile.SIZE + offset, i * Tile.SIZE + offset);
             }
         }
     }

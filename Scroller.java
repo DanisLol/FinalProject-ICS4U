@@ -49,3 +49,4 @@ public class Scroller extends SuperSmoothMover
         setLocation(realX - camX, realY - camY);
     }
 }
+
