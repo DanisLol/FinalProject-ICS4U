@@ -77,6 +77,8 @@ public class Tile extends Scroller
             case 'f':
                 imageName = "tile_fire.png";
                 break;
+            case 's':
+                imageName = "tile_spike0.png";
             default:
                 imageName = "tile_floor.png";  
         }
