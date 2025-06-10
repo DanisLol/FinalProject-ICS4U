@@ -30,7 +30,7 @@ public class Projectile extends SuperSmoothMover
             if(getWorld() != null){
                 destroy();
             }
-
+        }
         HurtableEntity victim = (HurtableEntity)getOneIntersectingObject(HurtableEntity.class);
         if (victim != null && victim.getWorld() != null) {
             victim.takeDamage(damage);
