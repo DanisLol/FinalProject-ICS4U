@@ -69,7 +69,7 @@ public class Tile extends Scroller
                 imageName = "tile_water.png";
                 break;
             case 'u':
-                imageName = "tile_floor.png";
+                imageName = "tile_wall.png";
                 break;
             case 'b':
                 imageName = "tile_barrel.png";
