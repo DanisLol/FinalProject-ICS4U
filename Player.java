@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Player extends Scroller
+public class Player extends HurtableEntity
 {
     private GreenfootImage image;
     private Animation walkAnimation, deathAnimation;
@@ -107,9 +107,11 @@ public class Player extends Scroller
         }
     }
     
-    
+    public void takeDamage(int dmg) {
+        // place holder add stuff pls
+    }
     //currently keeps looping death animation, need to fix later
-    private void die(){
+    public void die(){
         if (countdown > 0){
             countdown--;
         } else {

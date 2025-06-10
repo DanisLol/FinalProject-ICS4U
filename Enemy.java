@@ -2,7 +2,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.*;
 
 
-public abstract class Enemy extends Scroller
+public abstract class Enemy extends HurtableEntity
 {
     protected Player play;
     protected boolean inRange;
