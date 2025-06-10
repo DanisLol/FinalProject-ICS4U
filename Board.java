@@ -11,13 +11,13 @@ public class Board extends Actor
 {
     private Tile[][] tiles;
     private int offset = Tile.SIZE / 2; //since images are center anchored
-    private HashMap<String, Tile> test = new HashMap<String, Tile>(){{
-        put("w", new WaterTile());
-        put("u", new WallTile());
-        put("g", new FloorTile());
-        put("s", new SpikeTile());
-        put("f", new LavaTile());
-        put("b", new BarrelTile());
+    private HashMap<String, Class> test = new HashMap<String, Class>(){{
+        put("w", WaterTile.class);
+        put("u", WallTile.class);
+        put("g", FloorTile.class);
+        put("s", SpikeTile.class);
+        put("f", LavaTile.class);
+        put("b", BarrelTile.class);
     }};
 
     /**
@@ -49,7 +49,7 @@ public class Board extends Actor
                 //tiles[i][j] = new Tile(layout.charAt(x));
                 Object instance;
                 try {
-                    instance = test.get(String.valueOf(layout.charAt(x))).getClass().newInstance();
+                    instance = test.get(String.valueOf(layout.charAt(x))).newInstance();
                     tiles[i][j] = (Tile) instance;
                 } catch (InstantiationException e) {
                     System.out.println("something went wrong with loading tiles.");
