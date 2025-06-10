@@ -14,9 +14,10 @@ public class Tile extends Scroller
     private boolean isPassable;
     private boolean isMouseHeld;
 
-    public Tile(String imageName){
+    public Tile(String imageName, char type){
         image = new GreenfootImage(imageName);
         setImage(image);
+        this.type = type;
     }
     
     //omds i need to change sm
@@ -69,13 +70,13 @@ public class Tile extends Scroller
                 imageName = "tile_water.png";
                 break;
             case 'u':
-                imageName = "tile_floor.png";
+                imageName = "tile_wall.png";
                 break;
             case 'b':
                 imageName = "tile_barrel.png";
                 break;
             case 'f':
-                imageName = "tile_fire.png";
+                imageName = "tile_lava.png";
                 break;
             case 's':
                 imageName = "tile_spike0.png";

@@ -9,7 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class FloorTile extends Tile
 {
     public FloorTile(){
-        super("tile_floor.png");
+        super("tile_floor.png", 'g');
     }
     
     /**
