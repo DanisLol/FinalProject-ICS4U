@@ -19,8 +19,9 @@ public class MyWorld extends World
     //Stat bar:
     private SuperStatBar healthStat; 
     private SuperStatBar coinStat;
-    int health;
-    GreenfootImage image;
+    private int health;
+    private GreenfootImage healthImage;
+    private GreenfootImage coinImage;
     
     //Timer:
     int actNum;
@@ -41,21 +42,28 @@ public class MyWorld extends World
         
         
         //Health SuperStatBar:
-        //image = new GreenfootImage("heart.png");
-        //setImage(image);
+        healthImage = new GreenfootImage("heart.png");
         healthStat = new SuperStatBar(50, 50, player, 200, 15, Color.RED, Color.BLACK, false, Color.BLACK, 3);
         addObject(healthStat, 160, 23);
         
+        Actor imgActor1 = new Actor() {};  // create a basic Actor
+        imgActor1.setImage("heart.png"); // set the image (must be in the images folder)
+        addObject(imgActor1, 40, 23);
+        
         //Coin SuperStatBar:
-        coinStat =  new SuperStatBar(50, 50, player, 200, 15, Color.YELLOW, Color.WHITE, false, Color.BLACK, 3);       
+        coinStat =  new SuperStatBar(7, 0, player, 200, 15, Color.YELLOW, Color.WHITE, false, Color.BLACK, 3);       
         addObject(coinStat, 160, 45);
+        
+        Actor imgActor2 = new Actor() {};  // create a basic Actor
+        imgActor2.setImage("coin.png"); // set the image (must be in the images folder)
+        addObject(imgActor2, 40, 45);
             
             
         //Timer:
         counter2.setValue(GAME_LENGTH);
         st.mark();
         counter2.setPrefix("Time Left: ");
-        addObject(counter2, 944, 23);
+        addObject(counter2, 928, 68);
         
         actNum = 0;
         
@@ -65,8 +73,6 @@ public class MyWorld extends World
     public void act(){
          actNum++;
          if (actNum % 60 == 0) counter2.add(-1); // Decrement the counter by 1
-         
-         
     }
     
 

@@ -143,6 +143,13 @@ public class Player extends Scroller
         return coins; 
     }
     
+    public void earnCoin(){
+        Actor p = getOneIntersectingObject(Coin.class);
+        if(p != null){
+            coins++;
+        }
+    }
+    
     public int getKilled(){
         return killed;
     }
