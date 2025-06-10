@@ -12,7 +12,7 @@ public class BarrelTile extends Tile
     private static final int MAX_HEALTH = 50;
 
     public BarrelTile(){
-        super("tile_barrel.png");
+        super("tile_barrel.png", 'b');
         health = MAX_HEALTH;
         
     }

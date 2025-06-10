@@ -8,8 +8,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class LavaTile extends Tile
 {
+    //deals damage
+    
     public LavaTile(){
-        super("tile_lava.png");
+        super("tile_lava.png", 'f');
     }
     
     /**

@@ -32,7 +32,7 @@ public class MyWorld extends World
     public MyWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(1024, 768, 1); 
+        super(1024, 768, 1, false); 
         player = new Player();
         addObject(player, getWidth()/2, getHeight()/2);
         Board board = new Board(testLayout);

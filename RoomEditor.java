@@ -44,7 +44,7 @@ public class RoomEditor extends World
             newType = 'b';
         } else if (Greenfoot.isKeyDown("f")){
             newType = 'f';
-        } else if (Greenfoot.isKeyDown("s")){
+        } else if (Greenfoot.isKeyDown("Enter")){
             System.out.println("Saved.");
             System.out.println(room.getLayout());
         }
