@@ -34,6 +34,13 @@ public class Coin extends Scroller
     {
         super.act();
         animate();
+        Player player = (Player)getOneIntersectingObject(Player.class);
+        if (player != null && player.getWorld() != null) {
+            player.pickUpCoin();
+            if (getWorld() != null) {
+                getWorld().removeObject(this);
+            }
+        }
     }
     
     private void animate(){
