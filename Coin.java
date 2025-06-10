@@ -6,13 +6,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Coin extends Item
+public class Coin extends Scroller
 {
     private GreenfootImage[] images;
     private int countdown, frame;
     
     public Coin(){
-        super("coin_0.png");
         frame = 0;
         countdown = 6;
         addFrames();
@@ -24,6 +23,7 @@ public class Coin extends Item
             String fileName = "coin_" + i + ".png";
             images[i] = new GreenfootImage(fileName);
         }
+        setImage(images[frame]);
     }
     
     /**
@@ -32,6 +32,7 @@ public class Coin extends Item
      */
     public void act()
     {
+        super.act();
         animate();
     }
     

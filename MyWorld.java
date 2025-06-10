@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class MyWorld extends World
 {    
-    private String testLayout = "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuffuuuuuuuuuuuuufuuuwwwwuuuuuuuufuuuuuwwuuuuuuufuufuwwwwufuuuuufufffuuuuuffuuufuuffbbuuuuffuuufuuffbuuubbuffuuffffuubbbbbuffuuuuuuuuuuubbuuuuuuuuuuuuuuuuuuuu";
+    private String testLayout = "uuuuuugggguuuuuuugggggggggggggguugwwwwggggffffguugwggggggggggfgugggggggbbgggggggggbbggbuubggbbggggbbggbuubggbbgggggggggbbgggggggugfggggggggggwguugffffggggwwwwguugggggggggggggguuuuuuugggguuuuuu";
 
     private Player player;
     /**
