@@ -8,24 +8,31 @@ public abstract class Enemy extends HurtableEntity
     protected boolean inRange;
     protected int cd = 0;
     protected int cooldown;
-    int health;
+    private boolean isOld;
     
     public void act()
     {
         super.act();
         attacking();
     }
+    
     protected void addedToWorld(World w){
-        List<Player> players = w.getObjects(Player.class);
-        if (!players.isEmpty()) {
-            play = players.get(0);
+        super.addedToWorld(w);
+        if(!isOld) {
+            List<Player> players = w.getObjects(Player.class);
+            if (!players.isEmpty()) {
+                play = players.get(0);
+            }
+            isOld = true;
         }
     }
     protected void attacking(){
         cd++;
+        /*
         if(cd%cooldown==0){
             attack();
         }
+        */
     }
     protected abstract void attack();
     
