@@ -1,6 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.*;
 
+
 /**
  * Write a description of class MyWorld here.
  * 
@@ -9,11 +10,60 @@ import java.util.*;
  */
 public class MyWorld extends World
 {    
-    private String testLayout = "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuffuuuuuuuuuuuuufuuuwwwwuuuuuuuufuuuuuwwuuuuuuufuufuwwwwufuuuuufufffuuuuuffuuufuuffbbuuuuffuuufuuffbuuubbuffuuffffuubbbbbuffuuuuuuuuuuubbuuuuuuuuuuuuuuuuuuuu";
+    private Random random = new Random();
+
+    //private String[] testLayouts = {"uuuuuugggguuuuuuugggggggggggggguugwwwwggggffffguugwggggggggggfgugggggggbbgggggggggbbggbuubggbbggggbbggbuubggbbgggggggggbbgggggggugfggggggggggwguugffffggggwwwwguugggggggggggggguuuuuuugggguuuuuu", 
+    //                                "uuuuuugggguuuuuuugggggggggggggguugbbbgguuggbbbguugbbbgguuggbbbguggggggggggggggggggwwwwwwggggggggggggggggwwwwwwggggggggggggggggggugbbbgguuggbbbguugbbbgguuggbbbguugggggggggggggguuuuuuugggguuuuuu",
+    //                               "uuuuuugggguuuuuuugggggggggggggguugggggggggggggguuggggggbbggggggugggggggbbggggggggggbbbbbbbbbbggggggbbbbbbbbbbggggggggggbbggggggguggggggbbgggggguugggggggggggggguugggggggggggggguuuuuuugggguuuuuu",
+    //                                "uuuuuugggguuuuuuugggggggggggggguugggggggggggggguugguugggggguugguggguugggggguugggggggggggggggggggggggggggggggggggggguugggggguugggugguugggggguugguugggggggggggggguugggggggggggggguuuuuuugggguuuuuu",
+    //                                "uuuuuugggguuuuuuugggggggggggggguugggggggggggggguuuuubbbuugggggguggggggguugggggggggggggguugggggggggggggguugggggggggggggguugggggggugggggguubbbuuuuugggggggggggggguugggggggggggggguuuuuuugggguuuuuu",
+    //                                "uuuuuugggguuuuuuugggggggggggggguugggggggggggggguugguuwwwwwwuugguggggfggggggfggggggggfggggggfggggggggfggggggfggggggggfggggggfggggugguuwwwwwwuugguugggggggggggggguugggggggggggggguuuuuuugggguuuuuu", 
+    //                                "uuuuuugggguuuuuuubbbbbggggbbbbbuubbbbbggggbbbbbuubbbbbggggbbbbbuggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggubbbbbggggbbbbbuubbbbbggggbbbbbuubbbbbggggbbbbbuuuuuuugggguuuuuu",
+    //                                "uuuuuugggguuuuuuugggggggggggggguugggggggggggggguugggguuuuuugggguggggguggggggggggggggguggggggggggggggguuuugggggggggggguggggggggggugggguggggggggguugggguggggggggguugggggggggggggguuuuuuugggguuuuuu",
+    //                                "uuuuuugggguuuuuuuwwwwwggggwwwwwuuwggggggggggggwuuwgggbbbbbbgggwugggggbbbbbbggggggggggbbuubbggggggggggbbuubbggggggggggbbbbbbggggguwgggbbbbbbgggwuuwggggggggggggwuuwwwwwggggwwwwwuuuuuuugggguuuuuu",
+    //                                "uuuuuugggguuuuuuugggggggggggggguugggggggggggggguuggggbbggbbggggugggggbuggubgggggggggggguugggggggggggggguuggggggggggggbuggubggggguggggbbggbbgggguugggggggggggggguugggggggggggggguuuuuuugggguuuuuu"};
     
+    private String testLayout =
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeuuuuuuuuuuuuuuuueeeeeeuuuuuuuuuuuuuuuueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeuggggggggggggggueeeeeeussssssssssssssueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeuggggggggggggggueeeeeeusggggggggggggsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeugggggggggggggguuuuuuuusguuwwwwwwuugsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeuggggggggggggggggggggggsggfggggggfggsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeuggggggggggggggggggggggsggfggggggfggsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeuggggggggggggggggggggggsggfggggggfggsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeuggggggggggggggggggggggsggfggggggfggsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeugggggggggggggguuuuuuuusguuwwwwwwuugsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeuggggggggggggggueeeeeeusggggggggggggsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeuggggggggggggggueeeeeeussssssssssssssueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeuuuuuuuuuuuuuuuueeeeeeuuuuuugggguuuuuueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeuggggueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeuggggueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeuggggueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeuggggueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuuuuuugggguuuuuueeeeeeuuuuuuuuuuuuuuuueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuggggggggggggggueeeeeeuggggggggggggggueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeugwwwwggggffffgueeeeeeuggggggggggggggueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeugwggggggggggfguuuuuuuuggggggggggggggueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuggggggbbggggggggggggggggggggggggggggueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeugbbggbuubggbbgggggggggggggggggggggggueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeugbbggbuubggbbgggggggggggggggggggggggueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuggggggbbggggggggggggggggggggggggggggueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeugfggggggggggwguuuuuuuuggggggggggggggueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeugffffggggwwwwgueeeeeeuggggggggggggggueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuggggggggggggggueeeeeeuggggggggggggggueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuuuuuuuuuuuuuuuueeeeeeuuuuuuuuuuuuuuuueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+
     private int currentWave = 0;
-    
-    
     private Player player;
     
     //Stat bar:
@@ -33,11 +83,11 @@ public class MyWorld extends World
     public MyWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(1024, 768, 1); 
+        super(1024, 768, 1, false); 
         player = new Player();
         addObject(player, getWidth()/2, getHeight()/2);
-        Board board = new Board(testLayout);
-        addObject(board, 0, 0);
+        Board board = new Board(testLayout);//random.nextInt(testLayouts.length)
+        addObject(board,0,0);
         board.display();
         
         

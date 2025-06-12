@@ -13,4 +13,11 @@ public class Melee extends Enemy
     protected void attack(){
         //player.damage() or something
     }
+    
+    public void takeDamage(int dmg) {
+        // place holder add stuff pls
+    }
+    public void die() {
+        
+    }
 }

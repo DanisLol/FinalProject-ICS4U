@@ -22,7 +22,7 @@ public class RoomEditor extends World
     public RoomEditor()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(1024, 768, 1); 
+        super(1024, 768, 1, false); 
         
         room = new Board();
         addObject(room, 0, 0);
@@ -45,6 +45,10 @@ public class RoomEditor extends World
         } else if (Greenfoot.isKeyDown("f")){
             newType = 'f';
         } else if (Greenfoot.isKeyDown("s")){
+            newType = 's';
+        } else if (Greenfoot.isKeyDown("e")){
+            newType = 'e';
+        } else if (Greenfoot.isKeyDown("Enter")){
             System.out.println("Saved.");
             System.out.println(room.getLayout());
         }

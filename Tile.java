@@ -8,12 +8,19 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Tile extends Scroller
 {
-    private GreenfootImage image;
-    public static final int PIXEL_SIZE = 64;
+    protected GreenfootImage image;
+    public static final int SIZE = 64;
     private char type;
     private boolean isPassable;
     private boolean isMouseHeld;
 
+    public Tile(String imageName, char type){
+        image = new GreenfootImage(imageName);
+        setImage(image);
+        this.type = type;
+    }
+    
+    //omds i need to change sm
     public Tile(char type){
         setType(type);  // use setType instead of manual code
     }
@@ -60,19 +67,26 @@ public class Tile extends Scroller
                 imageName = "tile_floor.png";
                 break;
             case 'w':
-                imageName = "tile_wall.png";
+                imageName = "tile_water.png";
                 break;
             case 'u':
-                imageName = "tile_ub.png";
+                imageName = "tile_wall.png";
                 break;
             case 'b':
-                imageName = "tile_b.png";
+                imageName = "tile_barrel.png";
                 break;
             case 'f':
-                imageName = "tile_fire.png";
+                imageName = "tile_lava.png";
+                break;
+            case 's':
+                imageName = "tile_spike0.png";
+                break;
+            case 'e':
+                imageName = "tile_blank.png";
                 break;
             default:
-                imageName = "tile_ub.png";  
+                imageName = "tile_floor.png";  
+
         }
 
         image = new GreenfootImage(imageName);
