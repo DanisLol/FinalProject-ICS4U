@@ -15,7 +15,7 @@ public class Player extends HurtableEntity
     //private int countdown, direction, frame;
     private int xSpeed, ySpeed;
     private boolean isNew;
-
+    
     private int coins;
     //the number of enemies killed
     private int killed;
@@ -25,17 +25,14 @@ public class Player extends HurtableEntity
     private int lastFrame = 0;
 
     private CollisionBox collider;
-    
+
     // private int highestIndex;
     // private ActionState curAction = ActionState.NOTHING, lastAction = ActionState.NOTHING; //player starts off unmoving
 
     public Player (){
+        super("benjamin", 192);
         //need to make variable based on settingworld
-        spritesheet = new GreenfootImage("test.png");
-        spritesheetLarge = new GreenfootImage("benjamin_attack.png");
-        walkAnimation = AnimationManager.createAnimation(spritesheet, 9, 4, 9, 64, 64);
-        deathAnimation = AnimationManager.createAnimation(spritesheet, 20, 1, 6, 64, 64);
-        attackAnimation = AnimationManager.createAnimation(spritesheetLarge, 1, 4, 6, 192, 192);
+        
         curAnimation = walkAnimation;
 
         direction = 3;        
@@ -49,12 +46,12 @@ public class Player extends HurtableEntity
         isNew = true;
         countdown = 6;
         coins = 0;
-        
+
         collider = new CollisionBox(image.getWidth(), image.getHeight() / 2, this);
     }
-    
+
     public void addedToWorld(World w){
-        w.addObject(collider, ((int) (this.realX + 0.5)), ((int) (this.realY + 0.5)));
+        //w.addObject(collider, getX(), getY());
     }
 
     /**
@@ -80,21 +77,22 @@ public class Player extends HurtableEntity
                 highestIndex = 8;
                 curAnimation = walkAnimation;
             } else if (curAction == ActionState.NOTHING){ 
-                toResting = true; //tbh should've just been another action state
+                toResting = true; //should've just been another action state
                 countdown = 6;
-                //System.out.println("==============================");
             }
         }
 
-        lastFrame = frame;
+        //lastFrame = frame;
 
         //if attacking or walking, animate normally 
         if (curAction == ActionState.ATTACKING || curAction == ActionState.WALKING){
             super.animate();
             if (curAction == ActionState.WALKING){
                 //move player
-                realX += xSpeed; 
-                realY += ySpeed;
+                //if (collider.isClear()){
+                    realX += xSpeed; 
+                    realY += ySpeed;
+                //}
             }
         } else if (toResting){
             //player walking --> nothing: return to idle frame
@@ -173,30 +171,11 @@ public class Player extends HurtableEntity
         killed++;
     }
 
-    // public void animate(){
-    // if (countdown > 0){
-    // countdown--;
-    // } else {
-    // frame++;
-    // if (frame > highestIndex){
-    // if (curAction == ActionState.WALKING) {
-    // frame = 1;
-    // } else {
-    // frame = 0; 
-    // curAction = ActionState.NOTHING; //change????? 
-    // lastAction = ActionState.ATTACKING;
-    // }
-    // }
-    // setImage (curAnimation.getOneImage(Direction.fromInteger(direction), frame));
-    // countdown = 6;
-    // }
-    // }
-
     public void takeDamage(int dmg) {
         // place holder add stuff pls
     }
 
-    //currently keeps looping death animation, need to fix later
+    //fix this
     public void die(){
         if (countdown > 0){
             countdown--;

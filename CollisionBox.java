@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class CollisionBox extends SuperSmoothMover
+public class CollisionBox extends Scroller
 {
     public static final boolean VISIBLE = true;
     private Actor owner;
@@ -26,6 +26,16 @@ public class CollisionBox extends SuperSmoothMover
      */
     public void act()
     {
-        // Add your action code here.
+        setLocation(owner.getX(), owner.getY());
+    }
+    
+    public boolean isClear(){
+        Tile t = (Tile) getOneIntersectingObject(Tile.class);
+        if (t != null){
+            if (!t.getIsPassable()){
+                return false;
+            }
+        }
+        return true;
     }
 }

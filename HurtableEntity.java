@@ -16,6 +16,17 @@ public abstract class HurtableEntity extends Scroller
 
     protected int health;
     
+    public HurtableEntity(String sheetName, int largeSize){
+        String sheet1 = sheetName + ".png"; 
+        String sheet2 = sheetName + "_attack.png";
+        spritesheet = new GreenfootImage(sheet1);
+        spritesheetLarge = new GreenfootImage(sheet2);
+        
+        walkAnimation = AnimationManager.createAnimation(spritesheet, 9, 4, 9, 64, 64);
+        deathAnimation = AnimationManager.createAnimation(spritesheet, 20, 1, 6, 64, 64);
+        attackAnimation = AnimationManager.createAnimation(spritesheetLarge, 1, 4, 6, largeSize, largeSize); //don't know why but this is different for some sheets
+    }
+    
     public void act(){
         super.act();
         animate();
