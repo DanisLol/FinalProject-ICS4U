@@ -36,6 +36,8 @@ public class RoomEditor extends World
         //press key to set tile type/save
         if (Greenfoot.isKeyDown("g")){
             newType = 'g';
+        } else if (Greenfoot.isKeyDown("q")){
+            newType = 'q';
         } else if (Greenfoot.isKeyDown("w")){
             newType = 'w';
         } else if (Greenfoot.isKeyDown("u")){
