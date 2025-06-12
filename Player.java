@@ -116,22 +116,22 @@ public class Player extends HurtableEntity
 
         if (Greenfoot.isKeyDown("a")){
             direction = 1;
-            xSpeed = -2;
+            xSpeed = -10;
         } 
 
         if (Greenfoot.isKeyDown("d")){
             direction = 0;
-            xSpeed = 2;
+            xSpeed = 10;
         }
 
         if (Greenfoot.isKeyDown("w")){
             direction = 2;
-            ySpeed = -2;
+            ySpeed = -10;
         }
 
         if (Greenfoot.isKeyDown("s")){
             direction = 3;
-            ySpeed = 2;
+            ySpeed = 10;
         } 
 
         if (Greenfoot.mousePressed(null)){
