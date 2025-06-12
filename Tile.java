@@ -63,7 +63,7 @@ public class Tile extends Scroller
 
         String imageName = "";
         switch (newType){
-            case 'g':
+            case 'f':
                 imageName = "tile_floor.png";
                 break;
             case 'w':
@@ -75,7 +75,7 @@ public class Tile extends Scroller
             case 'b':
                 imageName = "tile_barrel.png";
                 break;
-            case 'f':
+            case 'l':
                 imageName = "tile_lava.png";
                 break;
             case 's':
@@ -84,9 +84,14 @@ public class Tile extends Scroller
             case 'e':
                 imageName = "tile_blank.png";
                 break;
+            case 'g':
+                imageName = "tile_gate0.png";
+                break;
+            case 'q':
+                imageName = "tile_gate0.png";
+                break;
             default:
                 imageName = "tile_floor.png";  
-
         }
 
         image = new GreenfootImage(imageName);

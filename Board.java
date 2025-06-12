@@ -14,11 +14,13 @@ public class Board extends Actor
     private HashMap<String, Class> test = new HashMap<String, Class>(){{
         put("w", WaterTile.class);
         put("u", WallTile.class);
-        put("g", FloorTile.class);
+        put("f", FloorTile.class);
         put("s", SpikeTile.class);
-        put("f", LavaTile.class);
+        put("l", LavaTile.class);
         put("b", BarrelTile.class);
         put("e", BlankTile.class);
+        put("g", GateTileEnter.class);
+        put("q", GateTileExit.class);
     }};
 
     /**
