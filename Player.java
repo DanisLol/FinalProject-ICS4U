@@ -11,8 +11,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Player extends HurtableEntity
 {
     private GreenfootImage image;
-    private Animation walkAnimation, deathAnimation, attackAnimation, curAnimation;
-    private int countdown, direction, frame;
+    //private Animation walkAnimation, deathAnimation, attackAnimation, curAnimation;
+    //private int countdown, direction, frame;
     private int xSpeed, ySpeed;
     private boolean isNew;
 
@@ -22,16 +22,18 @@ public class Player extends HurtableEntity
 
     //just to test 
     private boolean toResting = false;
+    private int lastFrame = 0;
 
-    private int highestIndex;
-    private ActionState curAction = ActionState.NOTHING, lastAction = ActionState.NOTHING; //player starts off unmoving
+    // private int highestIndex;
+    // private ActionState curAction = ActionState.NOTHING, lastAction = ActionState.NOTHING; //player starts off unmoving
 
     public Player (){
         //need to make variable based on settingworld
-        GreenfootImage spritesheet = new GreenfootImage("Benjamin.png");
+        spritesheet = new GreenfootImage("benjamin.png");
+        spritesheetLarge = new GreenfootImage("benjamin_attack.png");
         walkAnimation = AnimationManager.createAnimation(spritesheet, 9, 4, 9, 64, 64);
         deathAnimation = AnimationManager.createAnimation(spritesheet, 20, 1, 6, 64, 64);
-        attackAnimation = AnimationManager.createAnimation(new GreenfootImage("BenjaminAttacked copy.png"), 1, 4, 6, 192, 192);
+        attackAnimation = AnimationManager.createAnimation(spritesheetLarge, 1, 4, 6, 192, 192);
         curAnimation = walkAnimation;
 
         direction = 3;        
@@ -54,27 +56,33 @@ public class Player extends HurtableEntity
     public void act()
     {        
         checkActionState();
-        System.out.println("Current: " + curAction + "\t Last: " + lastAction);
+        //System.out.println("Current: " + curAction + "\t Last: " + lastAction);
+
+        if (lastFrame != frame) System.out.println(frame);
 
         //if action state changed, update what current animation needs to be
         if (curAction != lastAction){
-            countdown = 6;
+            countdown = 0;
             if (curAction == ActionState.ATTACKING){
                 frame = 0;
                 highestIndex = 5;
                 curAnimation = attackAnimation;
             } else if (curAction == ActionState.WALKING){
-                frame = 1;
+                frame = 0;
                 highestIndex = 8;
                 curAnimation = walkAnimation;
             } else if (curAction == ActionState.NOTHING){ 
                 toResting = true; //tbh should've just been another action state
+                countdown = 6;
+                //System.out.println("==============================");
             }
         }
 
+        lastFrame = frame;
+
         //if attacking or walking, animate normally 
         if (curAction == ActionState.ATTACKING || curAction == ActionState.WALKING){
-            animate();
+            super.animate();
             if (curAction == ActionState.WALKING){
                 //move player
                 realX += xSpeed; 
@@ -84,7 +92,8 @@ public class Player extends HurtableEntity
             //player walking --> nothing: return to idle frame
             if (frame == 0){
                 toResting = false;
-            } else if (frame > 0){
+            } else {
+                //System.out.println(frame);
                 if (countdown > 0){
                     countdown--;
                 } else {
@@ -156,24 +165,24 @@ public class Player extends HurtableEntity
         killed++;
     }
 
-    public void animate(){
-        if (countdown > 0){
-            countdown--;
-        } else {
-            frame++;
-            if (frame > highestIndex){
-                if (curAction == ActionState.WALKING) {
-                    frame = 1;
-                } else {
-                    frame = 0; 
-                    curAction = ActionState.NOTHING; //change????? 
-                    lastAction = ActionState.ATTACKING;
-                }
-            }
-            setImage (curAnimation.getOneImage(Direction.fromInteger(direction), frame));
-            countdown = 6;
-        }
-    }
+    // public void animate(){
+    // if (countdown > 0){
+    // countdown--;
+    // } else {
+    // frame++;
+    // if (frame > highestIndex){
+    // if (curAction == ActionState.WALKING) {
+    // frame = 1;
+    // } else {
+    // frame = 0; 
+    // curAction = ActionState.NOTHING; //change????? 
+    // lastAction = ActionState.ATTACKING;
+    // }
+    // }
+    // setImage (curAnimation.getOneImage(Direction.fromInteger(direction), frame));
+    // countdown = 6;
+    // }
+    // }
 
     public void takeDamage(int dmg) {
         // place holder add stuff pls
@@ -184,7 +193,7 @@ public class Player extends HurtableEntity
         if (countdown > 0){
             countdown--;
         } else {
-            frame++;
+            frame++; //change this
             if (frame > 5) {
                 frame = 1;
             }

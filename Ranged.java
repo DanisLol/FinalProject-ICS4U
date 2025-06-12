@@ -2,10 +2,17 @@ import greenfoot.*;
 import java.util.*;
 
 public class Ranged extends Enemy
-{
-    protected int cooldown = 180;
+{   
     public Ranged(){
         super();
+        spritesheet = new GreenfootImage("skeleton.png");
+        spritesheetLarge = new GreenfootImage("skeleton_attack.png");
+        walkAnimation = AnimationManager.createAnimation(spritesheet, 9, 4, 9, 64, 64);
+        deathAnimation = AnimationManager.createAnimation(spritesheet, 20, 1, 6, 64, 64);
+        attackAnimation = AnimationManager.createAnimation(spritesheetLarge, 1, 4, 6, 192, 192);
+        curAnimation = walkAnimation;
+        
+        cooldown = 180;
     }
     public void act()
     {
