@@ -26,7 +26,7 @@ public class Board extends Actor
      * Currently 12 by 16 but may change depending on world/tile size
      */
     public Board(){
-        tiles = new Tile[12][16];
+        tiles = new Tile[38][74];
 
         for (int i = 0; i < tiles.length; i++){
             for (int j = 0; j < tiles[i].length; j++){
@@ -41,7 +41,7 @@ public class Board extends Actor
      * @param layout    String representation of Tile types
      */
     public Board(String layout){
-        tiles = new Tile[12][16];
+        tiles = new Tile[38][74];
 
         int x = 0;
         for (int i = 0; i < tiles.length; i++){
@@ -65,10 +65,15 @@ public class Board extends Actor
     /**
      * Show Board (must be used in order for Board to show on screen because of Board's nature)
      */
-    public void display(){
-        for (int i = 0; i < tiles.length; i++){
-            for (int j = 0; j < tiles[i].length; j++){
-                getWorld().addObject(tiles[i][j], j * Tile.SIZE + offset, i * Tile.SIZE + offset);
+    public void display() {
+        int displayStartRow = 5;
+        int displayStartCol = 7;
+    
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[i].length; j++) {
+                int x = (j - displayStartCol) * Tile.SIZE + offset;
+                int y = (i - displayStartRow) * Tile.SIZE + offset;
+                getWorld().addObject(tiles[i][j], x, y);
             }
         }
     }
