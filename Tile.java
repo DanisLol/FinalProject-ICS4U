@@ -80,6 +80,10 @@ public class Tile extends Scroller
                 break;
             case 's':
                 imageName = "tile_spike0.png";
+                break;
+            case 'e':
+                imageName = "tile_blank.png";
+                break;
             default:
                 imageName = "tile_floor.png";  
 

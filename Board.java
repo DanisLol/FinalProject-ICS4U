@@ -18,6 +18,7 @@ public class Board extends Actor
         put("s", SpikeTile.class);
         put("f", LavaTile.class);
         put("b", BarrelTile.class);
+        put("e", BlankTile.class);
     }};
 
     /**
