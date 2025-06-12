@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Tile extends Scroller
 {
-    private GreenfootImage image;
+    protected GreenfootImage image;
     public static final int SIZE = 64;
     private char type;
     private boolean isPassable;
