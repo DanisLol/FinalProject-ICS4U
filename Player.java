@@ -24,12 +24,14 @@ public class Player extends HurtableEntity
     private boolean toResting = false;
     private int lastFrame = 0;
 
+    private CollisionBox collider;
+    
     // private int highestIndex;
     // private ActionState curAction = ActionState.NOTHING, lastAction = ActionState.NOTHING; //player starts off unmoving
 
     public Player (){
         //need to make variable based on settingworld
-        spritesheet = new GreenfootImage("benjamin.png");
+        spritesheet = new GreenfootImage("test.png");
         spritesheetLarge = new GreenfootImage("benjamin_attack.png");
         walkAnimation = AnimationManager.createAnimation(spritesheet, 9, 4, 9, 64, 64);
         deathAnimation = AnimationManager.createAnimation(spritesheet, 20, 1, 6, 64, 64);
@@ -47,6 +49,12 @@ public class Player extends HurtableEntity
         isNew = true;
         countdown = 6;
         coins = 0;
+        
+        collider = new CollisionBox(image.getWidth(), image.getHeight() / 2, this);
+    }
+    
+    public void addedToWorld(World w){
+        w.addObject(collider, ((int) (this.realX + 0.5)), ((int) (this.realY + 0.5)));
     }
 
     /**
@@ -68,7 +76,7 @@ public class Player extends HurtableEntity
                 highestIndex = 5;
                 curAnimation = attackAnimation;
             } else if (curAction == ActionState.WALKING){
-                frame = 0;
+                frame = 2;
                 highestIndex = 8;
                 curAnimation = walkAnimation;
             } else if (curAction == ActionState.NOTHING){ 

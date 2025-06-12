@@ -16,6 +16,11 @@ public abstract class HurtableEntity extends Scroller
 
     protected int health;
     
+    public void act(){
+        super.act();
+        animate();
+    }
+    
     public void animate(){
         if (countdown > 0){
             countdown--;
@@ -32,7 +37,8 @@ public abstract class HurtableEntity extends Scroller
                     lastAction = ActionState.ATTACKING; 
                     //why does this not work properly omds OH
                     curAnimation = walkAnimation;
-                    //setImage(walkAnimation.getOneImage(Direction.fromInteger(direction), frame));
+                    //ok ykw no i swear this was working before i give up
+                    setImage(walkAnimation.getOneImage(Direction.fromInteger(direction), frame));
                 }
             }
             countdown = 6;

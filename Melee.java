@@ -4,13 +4,25 @@ public class Melee extends Enemy
 {
     public Melee(){
         super();
-        spritesheet = new GreenfootImage("guard.png");
-        spritesheetLarge = new GreenfootImage("guard_attack.png");
+        spritesheet = new GreenfootImage("Melissa.png");
+        spritesheetLarge = new GreenfootImage("benjamin_attack.png");
         walkAnimation = AnimationManager.createAnimation(spritesheet, 9, 4, 9, 64, 64);
         deathAnimation = AnimationManager.createAnimation(spritesheet, 20, 1, 6, 64, 64);
         attackAnimation = AnimationManager.createAnimation(spritesheet, 1, 4, 6, 128, 128);
+        
         curAnimation = walkAnimation;
-        setImage(walkAnimation.getOneImage(Direction.DOWN, 0));
+        direction = 0;
+        frame = 0;
+        highestIndex = 8;
+        countdown = 6;
+        
+        setImage(curAnimation.getOneImage(Direction.fromInteger(0), 0));
+        
+        curAction = ActionState.WALKING;
+        lastAction = ActionState.WALKING;
+        
+        realX = 100;
+        realY = 100;
         
         cooldown = 120;
     }

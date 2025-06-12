@@ -11,13 +11,16 @@ public class Tile extends Scroller
     protected GreenfootImage image;
     public static final int SIZE = 64;
     private char type;
-    private boolean isPassable;
+    protected boolean isPassable;
     private boolean isMouseHeld;
 
     public Tile(String imageName, char type){
         image = new GreenfootImage(imageName);
         setImage(image);
         this.type = type;
+        if (type == 'u' || type == 'b'){
+            isPassable = true;
+        }
     }
     
     //omds i need to change sm

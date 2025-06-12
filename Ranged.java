@@ -10,6 +10,9 @@ public class Ranged extends Enemy
         walkAnimation = AnimationManager.createAnimation(spritesheet, 9, 4, 9, 64, 64);
         deathAnimation = AnimationManager.createAnimation(spritesheet, 20, 1, 6, 64, 64);
         attackAnimation = AnimationManager.createAnimation(spritesheetLarge, 1, 4, 6, 192, 192);
+        
+        curAction = ActionState.WALKING;
+        
         curAnimation = walkAnimation;
         
         cooldown = 180;
