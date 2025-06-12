@@ -117,7 +117,7 @@ public class MyWorld extends World
         
         actNum = 0;
         
-        setPaintOrder(SuperStatBar.class,Counter.class, Player.class);
+        setPaintOrder(SuperStatBar.class,Counter.class, HurtableEntity.class);
     }
 
     public void act(){
@@ -144,17 +144,33 @@ public class MyWorld extends World
         return result;
     }
     
-   
-    
     public void started(){
-        
+        spawnEnemies(10);
     }
     
     public void stopped(){
         
     }
     
-        
-    
-    
+    public void spawnEnemies(int numberOfEnemies) {
+        for(int i = 0; i < numberOfEnemies; i++ ) {
+            // spawn an enemy on a real tile, if not a real tile, try again
+            while(true) {
+                int coordX = Greenfoot.getRandomNumber(1000);
+                int coordY = Greenfoot.getRandomNumber(800);
+                
+                System.out.println(coordX + ", " + coordY);
+                
+                List<Tile> tiles = getObjectsAt(coordX, coordY, Tile.class);
+                if(!tiles.isEmpty()) {
+                    if(Greenfoot.getRandomNumber(2) == 0) {
+                        addObject(new Melee(), coordX, coordY);
+                    } else {
+                        addObject(new Ranged(), coordX, coordY);
+                    }
+                    break;
+                }
+            }
+        }
+    }
 }
