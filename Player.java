@@ -6,7 +6,7 @@ import java.util.*;
  * - benjamin animation looks weirdly cropped??
  * - what if mouse is clicked several times before attack finishes
  * 
- * @author (your name)
+ * @Daniel Wang
  * @version (a version number or a date)
  */
 public class Player extends HurtableEntity {
@@ -29,6 +29,8 @@ public class Player extends HurtableEntity {
 
     // Damage
     private int damage;
+    
+    private int weaponDamage = 10;
 
     // just to test
     private boolean toResting = false;
@@ -154,8 +156,9 @@ public class Player extends HurtableEntity {
             ySpeed = 10;
         }
 
-        if (Greenfoot.mousePressed(null)) {
+        if (Greenfoot.mouseClicked(null)) {
             curAction = ActionState.ATTACKING;
+            attack();
         }
 
         // only nothing or walking if not attacking
@@ -171,7 +174,16 @@ public class Player extends HurtableEntity {
     public void attack() {
         Actor p = getOneIntersectingObject(Enemy.class);
         if (p != null) {
+            Enemy enemy = (Enemy)p;
 
+            // Assuming Enemy has a health system
+            enemy.takeDamage(weaponDamage); // or enemy.reduceHealth(10);
+
+            // If enemy is dead after taking damage
+            if (enemy.getHealth() <= 0) {
+                getWorld().removeObject(enemy);
+                killed++; // Only increment kill count when enemy is destroyed
+            }
         }
         killed++;
     }
@@ -196,7 +208,7 @@ public class Player extends HurtableEntity {
     }
 
     public void takeDamage(int dmg) {
-        // place holder add stuff pls
+        this.health -= dmg;
     }
 
     // currently keeps looping death animation, need to fix later

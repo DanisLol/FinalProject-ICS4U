@@ -1,14 +1,32 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.*;
 
-
+/**
+ * Write a description of class MyWorld here.
+ * 
+ * @Daniel Wang 
+ * @version (a version number or a date)
+ */
 public abstract class Enemy extends HurtableEntity
 {
     protected Player play;
     protected boolean inRange;
     protected int cd = 0;
     protected int cooldown;
-    int health;
+    
+    
+    
+    private SuperStatBar healthStat;
+    private int health;
+    
+    public Enemy(){
+        healthStat = new SuperStatBar(50, health, this, 200, 15, Color.RED, Color.BLACK, false, Color.BLACK, 3);
+        
+    }
+    
+    public void chooseEnemy(){
+        
+    }
     
     public void act()
     {
@@ -31,5 +49,9 @@ public abstract class Enemy extends HurtableEntity
     
     protected int getHealth(){
         return this.health;
+    }
+    
+    public void getDamage(int damage){
+        this.health -= damage;
     }
 }
