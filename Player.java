@@ -29,7 +29,7 @@ public class Player extends HurtableEntity {
 
     // Damage
     private int damage;
-    
+
     private int weaponDamage = 10;
 
     // just to test
@@ -62,19 +62,19 @@ public class Player extends HurtableEntity {
         // Health SuperStatBar:
         healthImage = new GreenfootImage("heart.png");
         healthStat = new SuperStatBar(50, health, this, 200, 15, Color.RED, Color.BLACK, false, Color.BLACK, 3);
-<<<<<<< Updated upstream
+
         // addObject(healthStat, 160, 23);
 
         // Coin SuperStatBar:
         coinStat = new SuperStatBar(10, coins, this, 200, 15, Color.YELLOW, Color.WHITE, false, Color.BLACK, 3);
         // addObject(coinStat, 160, 45);
-=======
-        //getWorld().addObject(healthStat, 160, 23);
-        
-        //Coin SuperStatBar:
-        coinStat =  new SuperStatBar(10, coins, this, 200, 15, Color.YELLOW, Color.WHITE, false, Color.BLACK, 3);       
-        //getWorld().addObject(coinStat, 160, 45);
->>>>>>> Stashed changes
+
+        // getWorld().addObject(healthStat, 160, 23);
+
+        // Coin SuperStatBar:
+        coinStat = new SuperStatBar(10, coins, this, 200, 15, Color.YELLOW, Color.WHITE, false, Color.BLACK, 3);
+        // getWorld().addObject(coinStat, 160, 45);
+
     }
 
     /**
@@ -133,10 +133,8 @@ public class Player extends HurtableEntity {
         centreOn(this);
         updateLocation();
     }
-    
-    
-    protected void addedToWorld(World world)
-    {
+
+    protected void addedToWorld(World world) {
         world.addObject(new SuperStatBar(), getX(), getY());
     }
 
@@ -188,7 +186,7 @@ public class Player extends HurtableEntity {
     public void attack() {
         Actor p = getOneIntersectingObject(Enemy.class);
         if (p != null) {
-            Enemy enemy = (Enemy)p;
+            Enemy enemy = (Enemy) p;
 
             // Assuming Enemy has a health system
             enemy.takeDamage(weaponDamage); // or enemy.reduceHealth(10);
@@ -239,21 +237,17 @@ public class Player extends HurtableEntity {
             countdown = 6;
         }
     }
-<<<<<<< Updated upstream
 
     public int getCoin() {
         return coins;
     }
 
-    public void earnCoin() {
-=======
-    
-    public int getCoins(){
-        return coins; 
+    public int getCoins() {
+        return coins;
     }
-    
-    public void earnCoins(){
->>>>>>> Stashed changes
+
+    public void earnCoins() {
+
         Actor p = getOneIntersectingObject(Coin.class);
         if (p != null) {
             coins++;
