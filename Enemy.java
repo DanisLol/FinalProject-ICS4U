@@ -7,14 +7,20 @@ public abstract class Enemy extends HurtableEntity
     protected Player play;
     protected boolean inRange;
     protected int cd = 0;
-    protected int cooldown;
+    protected int cooldown; 
+    protected int direction;
     int health;
+    
+    public Enemy(String sheetName, int largeSize){
+        super(sheetName, largeSize);
+    }
     
     public void act()
     {
         super.act();
-        attacking();
+        //attacking();
     }
+    
     protected void addedToWorld(World w){
         List<Player> players = w.getObjects(Player.class);
         if (!players.isEmpty()) {
