@@ -45,8 +45,7 @@ public class Player extends HurtableEntity
                 animate();
                 if (curAction == ActionState.WALKING){
                     //move player
-                    realX += xSpeed; 
-                    realY += ySpeed;
+                    tryMove(xSpeed, ySpeed);
                 }
             } else if (toResting){
                 //player walking --> nothing: return to idle frame
@@ -55,6 +54,7 @@ public class Player extends HurtableEntity
                 } else if (frame > 0){
                     if (countdown > 0){
                         countdown--;
+
                     } else {
                         if (frame < 5){
                             frame--;
@@ -404,9 +404,47 @@ public class Player extends HurtableEntity
     public int getKilled(){
         return killed;
     }
-
     public void setImageSize(int length, int width)
     {
         image.scale(length, width);
     }
+}    
+    public void tryMove(int dx, int dy) {
+        int oldX = getX();
+        int oldY = getY();
+        double oldRealX = realX;
+        double oldRealY = realY;
+    
+        // Try X movement
+        realX += dx;
+        setLocation(oldX + dx, oldY);
+    
+        java.util.List<Tile> touchingX = getIntersectingObjects(Tile.class);
+        for (Tile tile : touchingX) {
+            if (!tile.getIsPassable()) {
+                realX = oldRealX;
+                setLocation(oldX, oldY);
+                break;
+            }
+        }
+    
+        // Try Y movement
+        oldX = getX();  
+        oldY = getY();
+        oldRealX = realX;
+        oldRealY = realY;
+    
+        realY += dy;
+        setLocation(oldX, oldY + dy);
+    
+        java.util.List<Tile> touchingY = getIntersectingObjects(Tile.class);
+        for (Tile tile : touchingY) {
+            if (!tile.getIsPassable()) {
+                realY = oldRealY;
+                setLocation(oldX, oldY);
+                break;
+            }
+        }
+    }
+
 }
