@@ -163,6 +163,12 @@ public class MyWorld extends World
                 
                 List<Tile> tiles = getObjectsAt(coordX, coordY, Tile.class);
                 if(!tiles.isEmpty()) {
+                    // additional check to see if the tile is passible
+                    // placed here to prevent out of scope exception
+                    if(!tiles.get(0).getIsPassable()) {
+                        continue;
+                    }
+                    
                     if(Greenfoot.getRandomNumber(2) == 0) {
                         addObject(new Melee(), coordX, coordY);
                     } else {
