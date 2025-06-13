@@ -66,15 +66,12 @@ public class MyWorld extends World
     private int currentWave = 0;
     private Player player;
     
-    //Stat bar:
-    private SuperStatBar healthStat; 
-    private SuperStatBar coinStat;
-    private int health;
-    private GreenfootImage healthImage;
-    private GreenfootImage coinImage;
+    
+    
+    
     
     //Timer:
-    int actNum;
+    private int actNum;
     public static Counter counter = new Counter();
     SimpleTimer st = new SimpleTimer();
     Counter counter2 = new Counter();
@@ -91,18 +88,12 @@ public class MyWorld extends World
         board.display();
         
         
-        //Health SuperStatBar:
-        healthImage = new GreenfootImage("heart.png");
-        healthStat = new SuperStatBar(50, 50, player, 200, 15, Color.RED, Color.BLACK, false, Color.BLACK, 3);
-        addObject(healthStat, 160, 23);
+        
         
         Actor imgActor1 = new Actor() {};  // create a basic Actor
         imgActor1.setImage("heart.png"); // set the image (must be in the images folder)
         addObject(imgActor1, 40, 23);
         
-        //Coin SuperStatBar:
-        coinStat =  new SuperStatBar(7, 0, player, 200, 15, Color.YELLOW, Color.WHITE, false, Color.BLACK, 3);       
-        addObject(coinStat, 160, 45);
         
         Actor imgActor2 = new Actor() {};  // create a basic Actor
         imgActor2.setImage("coin.png"); // set the image (must be in the images folder)
@@ -144,7 +135,6 @@ public class MyWorld extends World
         return result;
     }
     
-   
     
     public void started(){
         
@@ -152,6 +142,13 @@ public class MyWorld extends World
     
     public void stopped(){
         
+    }
+    
+    //If weapon is upgraded return true
+    public boolean weaponUpgraded(){
+        boolean result = false;
+        
+        return result;
     }
     
         
