@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Write a description of class MyWorld here.
  * 
- * @Daniel Wang
+ * @Daniel Wang 
  * @version (a version number or a date)
  */
 public class MyWorld extends World
