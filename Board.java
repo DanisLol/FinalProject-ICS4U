@@ -54,6 +54,7 @@ public class Board extends Actor
                 try {
                     instance = test.get(String.valueOf(layout.charAt(x))).newInstance();
                     tiles[i][j] = (Tile) instance;
+                    tiles[i][j].setType(layout.charAt(x));
                 } catch (InstantiationException e) {
                     System.out.println("something went wrong with loading tiles.");
                 } catch (IllegalAccessException e){
@@ -76,7 +77,10 @@ public class Board extends Actor
                 int x = (j - displayStartCol) * Tile.SIZE + offset;
                 int y = (i - displayStartRow) * Tile.SIZE + offset;
                 getWorld().addObject(tiles[i][j], x, y);
-            }
+                if (i<13){
+                    if (j<17){
+                System.out.println("Placing tile at (" + j + "," + i + ") type: " + tiles[i][j].getType());
+            }}}
         }
     }
 
