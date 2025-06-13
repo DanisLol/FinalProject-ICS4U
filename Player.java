@@ -1,5 +1,5 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * NOTES:
  * - benjamin animation looks weirdly cropped??
@@ -61,6 +61,9 @@ public class Player extends HurtableEntity
      */
     public void act()
     {        
+        if(getWorld() instanceof ShopWorld) 
+            return;
+
         checkActionState();
         //System.out.println("Current: " + curAction + "\t Last: " + lastAction);
 
@@ -91,10 +94,9 @@ public class Player extends HurtableEntity
             super.animate();
             if (curAction == ActionState.WALKING){
                 //move player
-                //if (collider.isClear()){
-                realX += xSpeed; 
-                realY += ySpeed;
-                //}
+                //realX += xSpeed; 
+                //realY += ySpeed;
+                tryMove(xSpeed, ySpeed);
             }
         } 
 
@@ -112,25 +114,32 @@ public class Player extends HurtableEntity
         xSpeed = 0;
         ySpeed = 0;
 
-        if (Greenfoot.isKeyDown("a")){
-            direction = 1;
-            xSpeed = -10;
-        } 
-
-        if (Greenfoot.isKeyDown("d")){
-            direction = 0;
-            xSpeed = 10;
+        if(getWorld() instanceof ShopWorld)
+        {
         }
+        else
+        {
 
-        if (Greenfoot.isKeyDown("w")){
-            direction = 2;
-            ySpeed = -10;
+            if (Greenfoot.isKeyDown("a")){
+                direction = 1;
+                xSpeed = -2;
+            } 
+
+            if (Greenfoot.isKeyDown("d")){
+                direction = 0;
+                xSpeed = 2;
+            }
+
+            if (Greenfoot.isKeyDown("w")){
+                direction = 2;
+                ySpeed = -2;
+            }
+
+            if (Greenfoot.isKeyDown("s")){
+                direction = 3;
+                ySpeed = 2;
+            } 
         }
-
-        if (Greenfoot.isKeyDown("s")){
-            direction = 3;
-            ySpeed = 10;
-        } 
 
         if (Greenfoot.mousePressed(null)){
             curAction = ActionState.ATTACKING;
@@ -187,4 +196,48 @@ public class Player extends HurtableEntity
     public int getKilled(){
         return killed;
     }
+
+    public void setImageSize(int length, int width)
+    {
+        image.scale(length, width);
+    }
+    
+    public void tryMove(int dx, int dy) {
+        int oldX = getX();
+        int oldY = getY();
+        double oldRealX = realX;
+        double oldRealY = realY;
+    
+        // Try X movement
+        realX += dx;
+        setLocation(oldX + dx, oldY);
+    
+        java.util.List<Tile> touchingX = getIntersectingObjects(Tile.class);
+        for (Tile tile : touchingX) {
+            if (!tile.getIsPassable()) {
+                realX = oldRealX;
+                setLocation(oldX, oldY);
+                break;
+            }
+        }
+    
+        // Try Y movement
+        oldX = getX();  
+        oldY = getY();
+        oldRealX = realX;
+        oldRealY = realY;
+    
+        realY += dy;
+        setLocation(oldX, oldY + dy);
+    
+        java.util.List<Tile> touchingY = getIntersectingObjects(Tile.class);
+        for (Tile tile : touchingY) {
+            if (!tile.getIsPassable()) {
+                realY = oldRealY;
+                setLocation(oldX, oldY);
+                break;
+            }
+        }
+    }
 }
+
