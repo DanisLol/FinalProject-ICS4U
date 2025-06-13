@@ -27,7 +27,7 @@ public class ShopWorld extends World
     private ImageDisplay speedBoost,invisibility, randomBoost; 
 
     private ImageDisplay purchasePopUp, deletePopUp, chestboxPopUp;
-    private ImageDisplay upgradePopUp, deletePopUp, purchaseChestboxPopUp;
+    private ImageDisplay upgradePopUp, purchaseChestboxPopUp;
 
     public ShopWorld()
     {    
@@ -162,7 +162,7 @@ public class ShopWorld extends World
             addObject(deletePopUp, 740, 295); 
             if(Greenfoot.mouseClicked(buyChestbox))
             {
-                int i = Greenfoot.getRandomNumber(2); 
+                i = Greenfoot.getRandomNumber(2); 
                 if (i==0)
                 {
                     purchaseChestboxPopUp = new ImageDisplay("speedPopup.png");
@@ -179,5 +179,5 @@ public class ShopWorld extends World
                 addObject(purchaseChestboxPopUp, 500, 455);
             }
         }
-        」
     }
+}
