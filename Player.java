@@ -28,6 +28,7 @@ public class Player extends Scroller
         realY = 0;
         isNew = true;
         countdown = 6;
+
     }
 
     /**
@@ -37,6 +38,8 @@ public class Player extends Scroller
     public void act()
     {        
         checkKeys();
+        if(getWorld() instanceof ShopWorld) 
+            return;
         if (isMoving()){
             animate();
             realX += xSpeed; 
@@ -57,7 +60,7 @@ public class Player extends Scroller
                 }
             }
         }
-        
+
         centreOn(this);
         updateLocation();
     }
@@ -66,27 +69,34 @@ public class Player extends Scroller
         xSpeed = 0;
         ySpeed = 0;
         
-        if (Greenfoot.isKeyDown("a")){
-            direction = 1;
-            xSpeed = -2;
-        } 
-        
-        if (Greenfoot.isKeyDown("d")){
-            direction = 0;
-            xSpeed = 2;
+        if(getWorld() instanceof ShopWorld)
+        {
         }
-        
-        if (Greenfoot.isKeyDown("w")){
-            direction = 2;
-            ySpeed = -2;
+        else
+        {
+
+            if (Greenfoot.isKeyDown("a")){
+                direction = 1;
+                xSpeed = -2;
+            } 
+
+            if (Greenfoot.isKeyDown("d")){
+                direction = 0;
+                xSpeed = 2;
+            }
+
+            if (Greenfoot.isKeyDown("w")){
+                direction = 2;
+                ySpeed = -2;
+            }
+
+            if (Greenfoot.isKeyDown("s")){
+                direction = 3;
+                ySpeed = 2;
+            } 
         }
-        
-        if (Greenfoot.isKeyDown("s")){
-            direction = 3;
-            ySpeed = 2;
-        } 
     }
-    
+
     private boolean isMoving(){
         if (xSpeed == 0 && ySpeed == 0){
             return false;
@@ -94,7 +104,7 @@ public class Player extends Scroller
         return true;
     }
 
-    private void animate(){
+    public void animate(){
         if (countdown > 0){
             countdown--;
         } else {
@@ -106,8 +116,7 @@ public class Player extends Scroller
             countdown = 6;
         }
     }
-    
-    
+
     //currently keeps looping death animation, need to fix later
     private void die(){
         if (countdown > 0){
@@ -121,5 +130,10 @@ public class Player extends Scroller
             setImage(deathAnimation.getOneImage(frame));
             countdown = 6;
         }
+    }
+    
+    public void setImageSize(int length, int width)
+    {
+        image.scale(length, width);
     }
 }

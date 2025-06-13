@@ -15,7 +15,6 @@ public class SettingsImage extends Actor
     private GreenfootImage image; 
     //transparent color
     private static final Color transparent = new Color(0,0,0,0);
-    private GreenfootImage text; 
     public void act()
     {
         // Add your action code here.
