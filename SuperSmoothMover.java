@@ -141,7 +141,7 @@ public abstract class SuperSmoothMover extends Actor
      * @param x the x coordinate to face
      * @param y the y coordinate to face
      */
-    @Override
+    
     public void turnTowards (int x, int y){
         setRotation( Math.toDegrees(Math.atan2(y - getY() , x - getX())));
     }
@@ -310,4 +310,5 @@ public abstract class SuperSmoothMover extends Actor
         }
     }
 
+   
 }
