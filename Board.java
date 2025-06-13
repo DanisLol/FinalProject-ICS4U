@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.HashMap;
 
 /**
  * 2D Array of Tiles
@@ -9,17 +10,29 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Board extends Actor
 {
     private Tile[][] tiles;
-    private int offset = Tile.PIXEL_SIZE / 2; //since images are center anchored
+    private int offset = Tile.SIZE / 2; //since images are center anchored
+    private HashMap<String, Class> test = new HashMap<String, Class>(){{
+        put("w", WaterTile.class);
+        put("u", WallTile.class);
+        put("f", FloorTile.class);
+        put("s", SpikeTile.class);
+        put("l", LavaTile.class);
+        put("b", BarrelTile.class);
+        put("e", BlankTile.class);
+        put("g", GateTileEnter.class);
+        put("q", GateTileExit.class);
+    }};
 
     /**
      * Default Board constructor - creates room of blank tiles
      * Currently 12 by 16 but may change depending on world/tile size
      */
     public Board(){
-        tiles = new Tile[12][16];
+        tiles = new Tile[38][74];
+
         for (int i = 0; i < tiles.length; i++){
             for (int j = 0; j < tiles[i].length; j++){
-                tiles[i][j] = new Tile('u');
+                tiles[i][j] = new FloorTile();
             }
         }
     }
@@ -30,12 +43,22 @@ public class Board extends Actor
      * @param layout    String representation of Tile types
      */
     public Board(String layout){
-        tiles = new Tile[12][16];
+        tiles = new Tile[38][74];
+
         int x = 0;
         for (int i = 0; i < tiles.length; i++){
             for (int j = 0; j < tiles[i].length; j++){
-                System.out.println(layout.charAt(x));
-                tiles[i][j] = new Tile(layout.charAt(x));
+                //System.out.println(layout.charAt(x));
+                //tiles[i][j] = new Tile(layout.charAt(x));
+                Object instance;
+                try {
+                    instance = test.get(String.valueOf(layout.charAt(x))).newInstance();
+                    tiles[i][j] = (Tile) instance;
+                } catch (InstantiationException e) {
+                    System.out.println("something went wrong with loading tiles.");
+                } catch (IllegalAccessException e){
+                    System.out.println("something went wrong with loading tiles.");
+                }
                 x++;
             }
         }
@@ -44,10 +67,15 @@ public class Board extends Actor
     /**
      * Show Board (must be used in order for Board to show on screen because of Board's nature)
      */
-    public void display(){
-        for (int i = 0; i < tiles.length; i++){
-            for (int j = 0; j < tiles[i].length; j++){
-                getWorld().addObject(tiles[i][j], j * Tile.PIXEL_SIZE + offset, i * Tile.PIXEL_SIZE + offset);
+    public void display() {
+        int displayStartRow = 5;
+        int displayStartCol = 7;
+    
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[i].length; j++) {
+                int x = (j - displayStartCol) * Tile.SIZE + offset;
+                int y = (i - displayStartRow) * Tile.SIZE + offset;
+                getWorld().addObject(tiles[i][j], x, y);
             }
         }
     }
