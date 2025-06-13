@@ -212,14 +212,14 @@ public class Player extends HurtableEntity
         realX += dx;
         setLocation(oldX + dx, oldY);
     
-        java.util.List<Tile> touchingX = getIntersectingObjects(Tile.class);
-        for (Tile tile : touchingX) {
-            if (!tile.getIsPassable()) {
-                realX = oldRealX;
-                setLocation(oldX, oldY);
-                break;
-            }
-        }
+        // java.util.List<Tile> touchingX = getIntersectingObjects(Tile.class);
+        // for (Tile tile : touchingX) {
+            // if (!tile.getIsPassable()) {
+                // realX = oldRealX;
+                // setLocation(oldX, oldY);
+                // break;
+            // }
+        // }
     
         // Try Y movement
         oldX = getX();  
@@ -230,14 +230,14 @@ public class Player extends HurtableEntity
         realY += dy;
         setLocation(oldX, oldY + dy);
     
-        java.util.List<Tile> touchingY = getIntersectingObjects(Tile.class);
-        for (Tile tile : touchingY) {
-            if (!tile.getIsPassable()) {
-                realY = oldRealY;
-                setLocation(oldX, oldY);
-                break;
-            }
-        }
+        // java.util.List<Tile> touchingY = getIntersectingObjects(Tile.class);
+        // for (Tile tile : touchingY) {
+            // if (!tile.getIsPassable()) {
+                // realY = oldRealY;
+                // setLocation(oldX, oldY);
+                // break;
+            // }
+        // }
     }
 }
 

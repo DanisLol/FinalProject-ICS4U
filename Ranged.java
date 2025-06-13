@@ -3,7 +3,6 @@ import java.util.*;
 
 public class Ranged extends Enemy
 {   
-    
     public Ranged(){
         super("skeleton", 192);
         

@@ -29,7 +29,7 @@ public abstract class HurtableEntity extends Scroller
     
     public void act(){
         super.act();
-        animate();
+        //if (this instanceof Player) animate();
     }
     
     public void animate(){

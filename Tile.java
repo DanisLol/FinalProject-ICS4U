@@ -11,7 +11,7 @@ public class Tile extends Scroller
     protected GreenfootImage image;
     public static final int SIZE = 64;
     private char type;
-    protected boolean isPassable;
+    protected boolean isPassable = true;
     private boolean isMouseHeld;
 
     public Tile(String imageName, char type){
@@ -19,7 +19,7 @@ public class Tile extends Scroller
         setImage(image);
         this.type = type;
         if (type == 'u' || type == 'b'){
-            isPassable = true;
+            isPassable = false;
         }
     }
     
@@ -68,42 +68,33 @@ public class Tile extends Scroller
         switch (newType){
             case 'f':
                 imageName = "tile_floor.png";
-                isPassable = true;
                 break;
             case 'w':
                 imageName = "tile_water.png";
-                isPassable = true;
                 break;
             case 'u':
                 imageName = "tile_wall.png";
-                isPassable = false;
                 break;
             case 'b':
                 imageName = "tile_barrel.png";
-                isPassable = false;
                 break;
             case 'l':
                 imageName = "tile_lava.png";
-                isPassable = true;
                 break;
             case 's':
                 imageName = "tile_spike0.png";
-                isPassable = true;
                 break;
             case 'e':
                 imageName = "tile_blank.png";
                 break;
             case 'g':
                 imageName = "tile_gate0.png";
-                isPassable = true;
                 break;
             case 'q':
                 imageName = "tile_gate0.png";
-                isPassable = true;
                 break;
             default:
                 imageName = "tile_floor.png";
-                isPassable = true;
         }
 
         image = new GreenfootImage(imageName);

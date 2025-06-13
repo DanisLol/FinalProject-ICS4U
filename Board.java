@@ -11,17 +11,19 @@ public class Board extends Actor
 {
     private Tile[][] tiles;
     private int offset = Tile.SIZE / 2; //since images are center anchored
-    private HashMap<String, Class> test = new HashMap<String, Class>(){{
-        put("w", WaterTile.class);
-        put("u", WallTile.class);
-        put("f", FloorTile.class);
-        put("s", SpikeTile.class);
-        put("l", LavaTile.class);
-        put("b", BarrelTile.class);
-        put("e", BlankTile.class);
-        put("g", GateTileEnter.class);
-        put("q", GateTileExit.class);
-    }};
+    private HashMap<String, Class> test = new HashMap<String, Class>(){
+            {
+                put("w", WaterTile.class);
+                put("u", WallTile.class);
+                put("f", FloorTile.class);
+                put("s", SpikeTile.class);
+                put("l", LavaTile.class);
+                put("b", BarrelTile.class);
+                put("e", BlankTile.class);
+                put("g", GateTileEnter.class);
+                put("q", GateTileExit.class);
+            }
+        };
 
     /**
      * Default Board constructor - creates room of blank tiles
@@ -71,7 +73,7 @@ public class Board extends Actor
     public void display() {
         int displayStartRow = 5;
         int displayStartCol = 7;
-    
+
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
                 int x = (j - displayStartCol) * Tile.SIZE + offset;
@@ -79,8 +81,10 @@ public class Board extends Actor
                 getWorld().addObject(tiles[i][j], x, y);
                 if (i<13){
                     if (j<17){
-                System.out.println("Placing tile at (" + j + "," + i + ") type: " + tiles[i][j].getType());
-            }}}
+                        System.out.println("Placing tile at (" + j + "," + i + ") type: " + tiles[i][j].getType());
+                    }
+                }
+            }
         }
     }
 
