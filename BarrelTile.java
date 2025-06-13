@@ -15,6 +15,7 @@ public class BarrelTile extends Tile
         super("tile_barrel.png", 'b');
         health = MAX_HEALTH;
         
+        isPassable = false;
     }
 
     /**

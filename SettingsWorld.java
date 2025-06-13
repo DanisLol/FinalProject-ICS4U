@@ -43,6 +43,7 @@ public class SettingsWorld extends World
         difficultyLevel.choose("bob_run1.png", "Amelia_run1.png", "Alex_run1.png"); 
 
     }
+
     public void backWorld()
     {
     }
@@ -65,6 +66,16 @@ public class SettingsWorld extends World
         Greenfoot.setWorld(world1);
         }
          */ 
+    }
+
+    public static String getPlayerSkinImage()
+    {
+        return difficultyLevel.getChoosenImage(); 
+    }
+    
+    public static String getDifficultiyLevelImage()
+    {
+        return playerSkin.getChoosenImage(); 
     }
 
     protected class StatChooseImage
