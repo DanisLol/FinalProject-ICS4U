@@ -21,5 +21,6 @@ public class LavaTile extends Tile
     public void act()
     {
         super.act();
+        
     }
 }
