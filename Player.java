@@ -15,7 +15,193 @@
         private int countdown, direction, frame;
         private int xSpeed, ySpeed;
         private boolean isNew;
+    public void act()
+    {        
+        checkKeys();
+        if(getWorld() instanceof ShopWorld) 
+            return;
+        if (isMoving()){
+            checkActionState();
+            System.out.println("Current: " + curAction + "\t Last: " + lastAction);
 
+            //if action state changed, update what current animation needs to be
+            if (curAction != lastAction){
+                countdown = 6;
+                if (curAction == ActionState.ATTACKING){
+                    frame = 0;
+                    highestIndex = 5;
+                    curAnimation = attackAnimation;
+                } else if (curAction == ActionState.WALKING){
+                    frame = 1;
+                    highestIndex = 8;
+                    curAnimation = walkAnimation;
+                } else if (curAction == ActionState.NOTHING){ 
+                    toResting = true; //tbh should've just been another action state
+                }
+            }
+
+            //if attacking or walking, animate normally 
+            if (curAction == ActionState.ATTACKING || curAction == ActionState.WALKING){
+                animate();
+                if (curAction == ActionState.WALKING){
+                    //move player
+                    realX += xSpeed; 
+                    realY += ySpeed;
+                }
+            } else if (toResting){
+                //player walking --> nothing: return to idle frame
+                if (frame == 0){
+                    toResting = false;
+                } else if (frame > 0){
+                    if (countdown > 0){
+                        countdown--;
+                    } else {
+                        if (frame < 5){
+                            frame--;
+                        } else {
+                            frame++;
+                            if (frame > 8) frame = 0;
+                        }
+                        setImage(walkAnimation.getOneImage(Direction.fromInteger(direction), frame));
+                        countdown = 3;
+                    }
+                }
+            }
+
+            centreOn(this);
+            updateLocation();
+        }
+    }
+
+    public void pickUpCoin(){
+        coins++;
+    }
+
+    private void checkActionState(){
+        lastAction = curAction;
+
+        xSpeed = 0;
+        ySpeed = 0;        
+        if(getWorld() instanceof ShopWorld)
+        {
+        }
+        else
+        {
+
+            if (Greenfoot.isKeyDown("a")){
+                direction = 1;
+                xSpeed = -2;
+            } 
+
+            if (Greenfoot.isKeyDown("d")){
+                direction = 0;
+                xSpeed = 2;
+            }
+
+            if (Greenfoot.isKeyDown("w")){
+                direction = 2;
+                ySpeed = -2;
+            }
+
+            if (Greenfoot.isKeyDown("s")){
+                direction = 3;
+                ySpeed = 2;
+            } 
+        }
+    }
+
+    private boolean isMoving(){
+        if (xSpeed == 0 && ySpeed == 0){
+            return false;
+
+            if (Greenfoot.isKeyDown("a")){
+                direction = 1;
+                xSpeed = -10;
+            } 
+
+            if (Greenfoot.isKeyDown("d")){
+                direction = 0;
+                xSpeed = 10;
+            }
+
+            if (Greenfoot.isKeyDown("w")){
+                direction = 2;
+                ySpeed = -10;
+            }
+
+            if (Greenfoot.isKeyDown("s")){
+                direction = 3;
+                ySpeed = 10;
+            } 
+
+            if (Greenfoot.mousePressed(null)){
+                curAction = ActionState.ATTACKING;
+            }
+
+            //only nothing or walking if not attacking
+            if (curAction != ActionState.ATTACKING){
+                if (xSpeed == 0 && ySpeed == 0) {
+                    curAction = ActionState.NOTHING; 
+                } else {
+                    curAction = ActionState.WALKING;
+                }
+            }
+        }
+    }
+
+    public void attack(){
+        Actor p = getOneIntersectingObject(Enemy.class);
+        if(p != null){
+        }
+        killed++;
+    }
+
+    public void animate(){
+        if (countdown > 0){
+            countdown--;
+        } else {
+            frame++;
+            if (frame > highestIndex){
+                if (curAction == ActionState.WALKING) {
+                    frame = 1;
+                } else {
+                    frame = 0; 
+                    curAction = ActionState.NOTHING; //change????? 
+                    lastAction = ActionState.ATTACKING;
+                }
+            }
+            setImage (curAnimation.getOneImage(Direction.fromInteger(direction), frame));
+            countdown = 6;
+        }
+    }
+
+    public void takeDamage(int dmg) {
+        // place holder add stuff pls
+    }
+
+    //currently keeps looping death animation, need to fix later
+    public void die(){
+        if (countdown > 0){
+            countdown--;
+        } else {
+            frame++;
+            if (frame > 5) {
+                frame = 1;
+            }
+            System.out.println(frame);
+            setImage(deathAnimation.getOneImage(frame));
+            countdown = 6;
+        }
+    }
+
+    public void setImageSize(int length, int width)
+    {
+        image.scale(length, width);
+    }
+
+    public int getCoin(){
+        return coins; 
+    }
         private int coins;
         //the number of enemies killed
         private int killed;
