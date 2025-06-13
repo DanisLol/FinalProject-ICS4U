@@ -26,7 +26,7 @@ public class ShopWorld extends World
 
     private ImageDisplay speedBoost,invisibility, randomBoost; 
 
-    private ImageDisplay purchasePopUp, deletePopUp; 
+    private ImageDisplay purchasePopUp, deletePopUp, chestboxPopUp;
 
     public ShopWorld()
     {    
@@ -101,15 +101,15 @@ public class ShopWorld extends World
         addObject(randomBoost, 395, 682);
 
         purchasePopUp = new ImageDisplay ("popup.png", 500, 340); 
-
         deletePopUp = new ImageDisplay ("deletePopup.png", 50, 50);
+
         setPaintOrder(ImageDisplay.class, Button.class); 
     }
 
     public void act()
     {
+        addObject(player, 820, 560); 
         player.animate(); 
-
         checkPurchase();
         removePopUp(); 
     }
@@ -118,16 +118,44 @@ public class ShopWorld extends World
     {
         if(Greenfoot.mouseClicked(deletePopUp))
         {
-            removeObject(purchasePopUp); 
+            if(getObjects(ImageDisplay.class).contains(purchasePopUp))
+            {
+                removeObject(purchasePopUp); 
+            }
+            else
+            {
+                removeObject(chestboxPopUp); 
+            }
             removeObject(deletePopUp);
         }
     }
 
     public void checkPurchase()
     {
-        if(Greenfoot.mouseClicked(upgradeArmor) ||Greenfoot.mouseClicked(upgradeWeapon) || Greenfoot.mouseClicked(upgradeHealth) || Greenfoot.mouseClicked(buyChestbox))
+        if(Greenfoot.mouseClicked(upgradeArmor) ||Greenfoot.mouseClicked(upgradeWeapon) || Greenfoot.mouseClicked(upgradeHealth))
         {
             addObject(purchasePopUp, 500, 455);
+            addObject(deletePopUp, 740, 295); 
+        }
+        else if (Greenfoot.mouseClicked(buyChestbox))
+        {
+            int i = Greenfoot.getRandomNumber(2);
+            String fileName; 
+            if (i == 0)
+            {
+                fileName = "speedPopup.png";
+            }
+            else if (i==1)
+            {
+                fileName = "invisibilityPopup.png";
+            }
+            else 
+            {
+                fileName = "invisibilityPopup.png";
+            }
+
+            chestboxPopUp = new ImageDisplay(fileName, 500, 340); 
+            addObject (chestboxPopUp , 500, 455);
             addObject(deletePopUp, 740, 295); 
         }
     }
