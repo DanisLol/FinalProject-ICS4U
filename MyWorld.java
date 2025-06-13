@@ -119,7 +119,7 @@ public class MyWorld extends World
         
         //addObject(new Melee(), 534, 232);
         
-        setPaintOrder(SuperStatBar.class, Counter.class, Player.class, Enemy.class, Coin.class, CollisionBox.class, Tile.class);
+        setPaintOrder(SuperStatBar.class, Counter.class, Player.class, Enemy.class, Coin.class, CollisionBox.class, Actor.class, Tile.class, Board.class);
     }
 
     public void act(){

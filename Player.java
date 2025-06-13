@@ -15,7 +15,7 @@ public class Player extends HurtableEntity
     //private int countdown, direction, frame;
     private int xSpeed, ySpeed;
     private boolean isNew;
-    
+
     private int coins;
     //the number of enemies killed
     private int killed;
@@ -32,7 +32,7 @@ public class Player extends HurtableEntity
     public Player (){
         super("benjamin", 192);
         //need to make variable based on settingworld
-        
+
         curAnimation = walkAnimation;
 
         direction = 3;        
@@ -47,11 +47,12 @@ public class Player extends HurtableEntity
         countdown = 6;
         coins = 0;
 
-        collider = new CollisionBox(image.getWidth(), image.getHeight() / 2, this);
+        collider = new CollisionBox(image.getWidth(), image.getHeight(), this);
+        System.out.println("Width: " + image.getWidth() + " Height: " + image.getHeight());
     }
 
     public void addedToWorld(World w){
-        //w.addObject(collider, getX(), getY());
+        w.addObject(collider, getX(), getY());
     }
 
     /**
@@ -73,13 +74,14 @@ public class Player extends HurtableEntity
                 highestIndex = 5;
                 curAnimation = attackAnimation;
             } else if (curAction == ActionState.WALKING){
-                frame = 2;
+                frame = 1;
                 highestIndex = 8;
                 curAnimation = walkAnimation;
             } else if (curAction == ActionState.NOTHING){ 
-                toResting = true; //should've just been another action state
-                countdown = 6;
-            }
+                curAnimation = walkAnimation;
+                frame = 0;
+                setImage(walkAnimation.getOneImage(Direction.fromInteger(direction), frame));
+            } 
         }
 
         //lastFrame = frame;
@@ -90,30 +92,11 @@ public class Player extends HurtableEntity
             if (curAction == ActionState.WALKING){
                 //move player
                 //if (collider.isClear()){
-                    realX += xSpeed; 
-                    realY += ySpeed;
+                realX += xSpeed; 
+                realY += ySpeed;
                 //}
             }
-        } else if (toResting){
-            //player walking --> nothing: return to idle frame
-            if (frame == 0){
-                toResting = false;
-            } else {
-                //System.out.println(frame);
-                if (countdown > 0){
-                    countdown--;
-                } else {
-                    if (frame < 5){
-                        frame--;
-                    } else {
-                        frame++;
-                        if (frame > 8) frame = 0;
-                    }
-                    setImage(walkAnimation.getOneImage(Direction.fromInteger(direction), frame));
-                    countdown = 3;
-                }
-            }
-        }
+        } 
 
         centreOn(this);
         updateLocation();
