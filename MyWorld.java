@@ -102,8 +102,12 @@ public class MyWorld extends World
         return result;
     }
     
-    public void started(){
+    boolean isnew = true;
+    public void started() {
+        if(isnew) {
         spawnEnemies(10);
+            isnew = false;
+        }
     }
     
     public void stopped(){
