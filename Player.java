@@ -1,4 +1,3 @@
-
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * NOTES:
@@ -263,4 +262,3 @@ public class Player extends HurtableEntity
         }
     }
 }
-
