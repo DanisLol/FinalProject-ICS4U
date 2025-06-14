@@ -5,22 +5,24 @@ public class Melee extends Enemy
     public Melee(){
         super("guard", 128);
         
-        curAnimation = walkAnimation;
-        direction = 0;
-        frame = 0;
-        highestIndex = 8;
-        countdown = 6;
+        // curAnimation = walkAnimation;
+        // direction = 0;
+        // frame = 0;
+        // highestIndex = 8;
+        // countdown = 6;
         
-        setImage(curAnimation.getOneImage(Direction.fromInteger(0), 0));
+        // setImage(curAnimation.getOneImage(Direction.fromInteger(0), 0));
         
-        curAction = ActionState.WALKING;
-        lastAction = ActionState.WALKING;
+        // curAction = ActionState.WALKING;
+        // lastAction = ActionState.WALKING;
         
-        realX = 100;
-        realY = 100;
+        //??????
+        // realX = 100;
+        // realY = 100;
         
         cooldown = 120;
     }
+    
     public void act()
     {
         super.act();

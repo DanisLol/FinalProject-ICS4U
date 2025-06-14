@@ -12,26 +12,39 @@ public abstract class HurtableEntity extends Scroller
     protected Animation walkAnimation, deathAnimation, attackAnimation, curAnimation = walkAnimation;
     protected int countdown, direction, frame = 0;
     protected int highestIndex;
-    protected ActionState curAction = ActionState.NOTHING, lastAction = ActionState.NOTHING;
+    protected ActionState curAction = ActionState.WALKING, lastAction = ActionState.WALKING;
 
     protected int health;
-    
+
     public HurtableEntity(String sheetName, int largeSize){
         String sheet1 = sheetName + ".png"; 
         String sheet2 = sheetName + "_attack.png";
         spritesheet = new GreenfootImage(sheet1);
-        spritesheetLarge = new GreenfootImage(sheet2);
-        
         walkAnimation = AnimationManager.createAnimation(spritesheet, 9, 4, 9, 64, 64);
         deathAnimation = AnimationManager.createAnimation(spritesheet, 20, 1, 6, 64, 64);
-        attackAnimation = AnimationManager.createAnimation(spritesheetLarge, 1, 4, 6, largeSize, largeSize); //don't know why but this is different for some sheets
+        if (this instanceof Ranged) {
+            attackAnimation = AnimationManager.createAnimation(spritesheet, 4, 4, 7, 64, 64);
+        } else { 
+            spritesheetLarge = new GreenfootImage(sheet2);
+            attackAnimation = AnimationManager.createAnimation(spritesheetLarge, 1, 4, 6, largeSize, largeSize); //don't know why but this is different for some sheets
+        }
+        
+        direction = 3;
+        frame = 0;
+        curAnimation = walkAnimation;
+        frame = 0;
+        highestIndex = 8;
+        countdown = 6;
+        
+        curAnimation = walkAnimation;
+        setImage(curAnimation.getOneImage(Direction.fromInteger(direction), frame));
     }
-    
+
     public void act(){
         super.act();
         //if (this instanceof Player) animate();
     }
-    
+
     public void animate(){
         if (countdown > 0){
             countdown--;

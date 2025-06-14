@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.List;
 
 /**
  * Write a description of class CollisionBox here.
@@ -11,9 +12,11 @@ public class CollisionBox extends Scroller
     public static final boolean VISIBLE = true;
     private Actor owner;
     private GreenfootImage image;
+    private int yOffset;
 
-    public CollisionBox(int width, int height, Actor owner){
+    public CollisionBox(int width, int height, int yOffset, Actor owner){
         this.owner = owner;
+        this.yOffset = yOffset;
         image = new GreenfootImage(width, height);
         if (VISIBLE) image.setColor(Color.RED); else image.setColor(new Color(0, 0, 0, 0));
         image.fill();
@@ -26,16 +29,20 @@ public class CollisionBox extends Scroller
      */
     public void act()
     {
-        setLocation(owner.getX(), owner.getY());
+        setLocation(owner.getX(), owner.getY() + yOffset);
     }
 
-    public boolean isClear(){
-        Tile t = (Tile) getOneIntersectingObject(Tile.class);
-        if (t != null){
-            if (!t.getIsPassable()){
-                return false;
-            }
-        }
-        return true;
+    // public boolean isClear(){
+        // Tile t = (Tile) getOneIntersectingObject(Tile.class);
+        // if (t != null){
+            // if (!t.getIsPassable()){
+                // return false;
+            // }
+        // }
+        // return true;
+    // }
+    
+    public List<Tile> getIntersectingTiles(){
+        return getIntersectingObjects(Tile.class);        
     }
 }

@@ -6,10 +6,6 @@ public class Ranged extends Enemy
     public Ranged(){
         super("skeleton", 192);
         
-        curAction = ActionState.WALKING;
-        
-        curAnimation = walkAnimation;
-        
         cooldown = 180;
     }
     public void act()

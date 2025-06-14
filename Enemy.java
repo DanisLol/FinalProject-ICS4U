@@ -32,6 +32,7 @@ public abstract class Enemy extends HurtableEntity
     public void act()
     {
         super.act();
+        super.animate();
         attacking();
         pathFindTowardPlayer();
     }

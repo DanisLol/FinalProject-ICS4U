@@ -1,5 +1,7 @@
 
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.List;
+
 /**
  * NOTES:
  * - benjamin animation looks weirdly cropped??
@@ -10,7 +12,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Player extends HurtableEntity
 {
-    private GreenfootImage image;
+    //private GreenfootImage image;
     //private Animation walkAnimation, deathAnimation, attackAnimation, curAnimation;
     //private int countdown, direction, frame;
     private int xSpeed, ySpeed;
@@ -33,12 +35,13 @@ public class Player extends HurtableEntity
         super("benjamin", 192);
         //need to make variable based on settingworld
 
-        curAnimation = walkAnimation;
+        curAction = ActionState.NOTHING; lastAction = ActionState.NOTHING;
+        // curAnimation = walkAnimation;
 
-        direction = 3;        
-        image = walkAnimation.getOneImage(Direction.fromInteger(direction), 0); 
-        setImage(image);
-        frame = 0;
+        //direction = 3;        
+        //image = walkAnimation.getOneImage(Direction.fromInteger(direction), 0); 
+        //setImage(image);
+        //frame = 0;
         xSpeed = 0;
         ySpeed = 0;
         realX = 0;
@@ -47,11 +50,11 @@ public class Player extends HurtableEntity
         countdown = 6;
         coins = 0;
 
-        collider = new CollisionBox(image.getWidth(), image.getHeight(), this);
-        System.out.println("Width: " + image.getWidth() + " Height: " + image.getHeight());
+        collider = new CollisionBox(32, 32, 16, this);
     }
 
     public void addedToWorld(World w){
+        super.addedToWorld(w);
         w.addObject(collider, getX(), getY());
     }
 
@@ -114,6 +117,7 @@ public class Player extends HurtableEntity
         xSpeed = 0;
         ySpeed = 0;
 
+        //is this if statement not redundant 
         if(getWorld() instanceof ShopWorld)
         {
         }
@@ -197,10 +201,10 @@ public class Player extends HurtableEntity
         return killed;
     }
 
-    public void setImageSize(int length, int width)
-    {
-        image.scale(length, width);
-    }
+    // public void setImageSize(int length, int width)
+    // {
+        // image.scale(length, width);
+    // }
     
     public void tryMove(int dx, int dy) {
         int oldX = getX();
@@ -212,14 +216,16 @@ public class Player extends HurtableEntity
         realX += dx;
         setLocation(oldX + dx, oldY);
     
-        // java.util.List<Tile> touchingX = getIntersectingObjects(Tile.class);
-        // for (Tile tile : touchingX) {
-            // if (!tile.getIsPassable()) {
-                // realX = oldRealX;
-                // setLocation(oldX, oldY);
-                // break;
-            // }
-        // }
+        List<Tile> touchingX = getIntersectingObjects(Tile.class);
+        //List<Tile> touchingX = collider.getIntersectingTiles();
+        
+        for (Tile tile : touchingX) {
+            if (!tile.getIsPassable()) {
+                realX = oldRealX;
+                setLocation(oldX, oldY);
+                break;
+            }
+        }
     
         // Try Y movement
         oldX = getX();  
@@ -230,14 +236,16 @@ public class Player extends HurtableEntity
         realY += dy;
         setLocation(oldX, oldY + dy);
     
-        // java.util.List<Tile> touchingY = getIntersectingObjects(Tile.class);
-        // for (Tile tile : touchingY) {
-            // if (!tile.getIsPassable()) {
-                // realY = oldRealY;
-                // setLocation(oldX, oldY);
-                // break;
-            // }
-        // }
+        List<Tile> touchingY = getIntersectingObjects(Tile.class);
+        //List<Tile> touchingY = collider.getIntersectingTiles();
+        
+        for (Tile tile : touchingY) {
+            if (!tile.getIsPassable()) {
+                realY = oldRealY;
+                setLocation(oldX, oldY);
+                break;
+            }
+        }
     }
 }
 

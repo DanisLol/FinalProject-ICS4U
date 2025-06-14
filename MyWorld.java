@@ -114,7 +114,7 @@ public class MyWorld extends World
 
         actNum = 0;
 
-        setPaintOrder(SuperStatBar.class,Counter.class, HurtableEntity.class);
+        setPaintOrder(SuperStatBar.class,Counter.class, HurtableEntity.class, CollisionBox.class, Tile.class);
         prepare();
     }
 
