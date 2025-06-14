@@ -34,8 +34,8 @@ public class MyWorld extends World
     "eeeeeeeuffffffffffffffueeeeeeusffffffffffffsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
     "eeeeeeeuffffffffffffffuuuuuuuusfuuwwwwwwuufsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
     "eeeeeeeufffffffffffffffffffffgsfflfffffflffsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
-    "eeeeeeeufffffffffffffffffffffgsfflfffffflffsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
-    "eeeeeeeufffffffffffffffffffffgsfflfffffflffsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeufffffffffffffffffffffgsfflfffpfflffsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeufffffffffffffffffffffgsfflffpffflffsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
     "eeeeeeeufffffffffffffffffffffgsfflfffffflffsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
     "eeeeeeeuffffffffffffffuuuuuuuusfuuwwwwwwuufsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
     "eeeeeeeuffffffffffffffueeeeeeusffffffffffffsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
@@ -48,12 +48,12 @@ public class MyWorld extends World
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuuuuuugggguuuuuueeeeeeuuuuuuuuuuuuuuuueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuffffffffffffffueeeeeeuffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufwwwwffffllllfueeeeeeuffffffffffffffueeeeeee" +
-    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufwfffffffffflfuuuuuuuuffffffffffffffueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufwfpffffffpflfuuuuuuuuffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuffffffbbffffffqfffffffffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufbbffbuubffbbfqfffffffffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufbbffbuubffbbfqfffffffffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuffffffbbffffffqfffffffffffffffffffffueeeeeee" +
-    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuflffffffffffwfuuuuuuuuffffffffffffffueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuflfpffffffpfwfuuuuuuuuffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufllllffffwwwwfueeeeeeuffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuffffffffffffffueeeeeeuffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuuuuuuuuuuuuuuuueeeeeeuuuuuuuuuuuuuuuueeeeeee" +
@@ -145,14 +145,13 @@ public class MyWorld extends World
     }
     
     public void started(){
-        spawnEnemies(10);
     }
     
     public void stopped(){
         
     }
     
-    public void spawnEnemies(int numberOfEnemies) {
+    /*public void spawnEnemies(int numberOfEnemies) {
         for(int i = 0; i < numberOfEnemies; i++ ) {
             // spawn an enemy on a real tile, if not a real tile, try again
             while(true) {
@@ -177,6 +176,20 @@ public class MyWorld extends World
                     break;
                 }
             }
+        }
+    }*/
+    
+    public void activateGate() {
+        List<GateTileEnter> gates = getObjects(GateTileEnter.class);
+        for (GateTileEnter gate : gates) {
+            gate.activate();
+        }
+    }
+    
+    public void deactivateGate() {
+        List<GateTileEnter> gates = getObjects(GateTileEnter.class);
+        for (GateTileEnter gate : gates) {
+            gate.deactivate();
         }
     }
 }

@@ -98,6 +98,10 @@ public class Tile extends Scroller
                 imageName = "tile_gate0.png";
                 isPassable = true;
                 break;
+            case 'p':
+                imageName = "tile_floor.png";
+                isPassable = true;
+                break;
             default:
                 imageName = "tile_floor.png";
                 isPassable = true;
@@ -105,5 +109,9 @@ public class Tile extends Scroller
 
         image = new GreenfootImage(imageName);
         setImage(image);
+    }
+    
+    public void setIsPassable(boolean bool){
+        isPassable = bool;
     }
 }

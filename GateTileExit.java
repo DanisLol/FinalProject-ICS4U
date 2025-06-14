@@ -1,19 +1,32 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
 
-/**
- * Write a description of class GateTileExit here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class GateTileExit extends Tile
 {
-    public GateTileExit(){
-        super("tile_gate0.png", 'q');
+    private boolean activated = false;
+
+    public GateTileExit() {
+        super("tile_gate0.png", 'q'); // initially open
+        setIsPassable(true);
+    }
+
+    public void act() {
+        super.act();
+    }
+
+    public void activate() {
+        if (activated) return;
+        activated = true;
+        setIsPassable(false);
+        setImage(new GreenfootImage("tile_gate1.png"));
+    }
+
+    public void deactivate() {
+        activated = false;
+        setIsPassable(true);
+        setImage(new GreenfootImage("tile_gate0.png"));
     }
     
-    public void act()
-    {
-        super.act();
+    public boolean isActivated(){
+        return activated;
     }
 }

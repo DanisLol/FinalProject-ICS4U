@@ -56,7 +56,7 @@ public class Player extends HurtableEntity
             return;
 
         checkActionState();
-        System.out.println("Current: " + curAction + "\t Last: " + lastAction);
+        //System.out.println("Current: " + curAction + "\t Last: " + lastAction);
 
         //if action state changed, update what current animation needs to be
         if (curAction != lastAction){
