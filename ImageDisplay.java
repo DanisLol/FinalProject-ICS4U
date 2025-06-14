@@ -8,19 +8,23 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class ImageDisplay extends Actor
 {
-    /**
-     * Act - do whatever the ImageDisplay wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
     private GreenfootImage image;
     private static final Color transparent = new Color(0,0,0,0);
-
+    
+    /**
+     * Description for constructor
+     * @param text  desc parameters
+     * @param size
+     */
     public ImageDisplay(int text, int size)
     {
         image = new GreenfootImage(Integer.toString(text), size, Color.BLACK, transparent);
         setImage(image);
     }
 
+    /**
+     * 
+     */
     public ImageDisplay(String text, int size)
     {
         image = new GreenfootImage(text, size, Color.BLACK, transparent);
