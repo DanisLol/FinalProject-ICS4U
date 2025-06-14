@@ -2,10 +2,11 @@ import greenfoot.*;
 import java.util.*;
 
 public class Ranged extends Enemy
-{
-    protected int cooldown = 180;
+{   
     public Ranged(){
-        super();
+        super("skeleton", 192);
+        
+        cooldown = 180;
     }
     public void act()
     {

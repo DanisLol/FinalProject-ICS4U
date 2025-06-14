@@ -82,10 +82,10 @@ public class AnimationManager
             System.out.println("Error in AnimationManager: GetSlice: You specified a SpriteSheet that was smaller than your desired output");
             return null;
         }
-        GreenfootImage small = new GreenfootImage (frameWidth-8, frameHeight);
+        GreenfootImage small = new GreenfootImage (frameWidth, frameHeight);
         // negatively offset the larger sprite sheet image so that a correct, small portion
         // of it is drawn onto the smaller, resulting image.
-        small.drawImage (spriteSheet, -xPos+4, -yPos);
+        small.drawImage (spriteSheet, -xPos, -yPos);
         return small;
     }
 
