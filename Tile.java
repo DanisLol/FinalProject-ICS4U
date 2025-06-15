@@ -8,15 +8,16 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Tile extends Scroller
 {
-    private GreenfootImage image;
+    protected GreenfootImage image;
     public static final int SIZE = 64;
     private char type;
-    protected boolean isPassable = true;
+    protected boolean isPassable;
     private boolean isMouseHeld;
 
-    public Tile(String imageName){
+    public Tile(String imageName, char type){
         image = new GreenfootImage(imageName);
         setImage(image);
+        this.type = type;
     }
     
     //omds i need to change sm
@@ -62,29 +63,55 @@ public class Tile extends Scroller
 
         String imageName = "";
         switch (newType){
-            case 'g':
+            case 'f':
                 imageName = "tile_floor.png";
+                isPassable = true;
                 break;
             case 'w':
                 imageName = "tile_water.png";
+                isPassable = true;
                 break;
             case 'u':
-                imageName = "tile_floor.png";
+                imageName = "tile_wall.png";
+                isPassable = false;
                 break;
             case 'b':
                 imageName = "tile_barrel.png";
+                isPassable = false;
                 break;
-            case 'f':
-                imageName = "tile_fire.png";
+            case 'l':
+                imageName = "tile_lava.png";
+                isPassable = true;
                 break;
             case 's':
                 imageName = "tile_spike0.png";
+                isPassable = true;
+                break;
+            case 'e':
+                imageName = "tile_blank.png";
+                break;
+            case 'g':
+                imageName = "tile_gate0.png";
+                isPassable = true;
+                break;
+            case 'q':
+                imageName = "tile_gate0.png";
+                isPassable = true;
+                break;
+            case 'p':
+                imageName = "tile_floor.png";
+                isPassable = true;
+                break;
             default:
-                imageName = "tile_floor.png";  
-
+                imageName = "tile_floor.png";
+                isPassable = true;
         }
 
         image = new GreenfootImage(imageName);
         setImage(image);
+    }
+    
+    public void setIsPassable(boolean bool){
+        isPassable = bool;
     }
 }

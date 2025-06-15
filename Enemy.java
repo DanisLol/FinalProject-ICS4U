@@ -35,6 +35,7 @@ public abstract class Enemy extends HurtableEntity
         super.act();
         attacking();
         pathFindTowardPlayer();
+        updateLocation();
     }
     
     protected void addedToWorld(World w){

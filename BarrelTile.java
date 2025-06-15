@@ -12,7 +12,7 @@ public class BarrelTile extends Tile
     private static final int MAX_HEALTH = 50;
 
     public BarrelTile(){
-        super("tile_barrel.png");
+        super("tile_barrel.png", 'b');
         health = MAX_HEALTH;
         
         isPassable = false;
@@ -28,26 +28,22 @@ public class BarrelTile extends Tile
         
         //just to test
         if (Greenfoot.mouseClicked(this)){
-            health = 0;
+            health -= 50;
         }
 
-        if (health <= 0){
+        if (health == 0){
+            health = -99999999;
             rupture();
         }
     }
 
     private void rupture(){
-        FloorTile floor = new FloorTile();
-        Coin coin = new Coin();
-                        
-        getWorld().addObject(floor, ((int) (this.realX + 0.5)), ((int) (this.realY + 0.5)));
-        floor.updateLocation();
-        
+        setType('f'); // this updates image + isPassable
+        isPassable = true; // redundant but safe        
+        Coin coin = new Coin();        
         //drop coin
         getWorld().addObject(coin, ((int) (this.realX + 0.5)), ((int) (this.realY + 0.5)));
-        coin.updateLocation();
         
-        getWorld().removeObject(this);
-        //?? 
+        this.updateLocation();
     }
 }

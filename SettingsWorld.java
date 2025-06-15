@@ -26,23 +26,24 @@ public class SettingsWorld extends World
         addObject(cursor, 0, 0); 
 
         next = new Button(cursor, false); 
-        addObject(next, 924,600);
+        addObject(next, 880,650);
         back = new Button(cursor, true);
-        addObject(back, 100, 600); 
+        addObject(back, 140, 650); 
 
         playerSkinNumber = 0;
-        playerSkin = new StatChooseImage(512,270,754,530, playerSkinNumber); 
+        playerSkin = new StatChooseImage(512,270,754,400, playerSkinNumber); 
 
         difficultyLevelNumber = 0;
-        difficultyLevel = new StatChooseImage(512,270,754,340, difficultyLevelNumber); 
+        difficultyLevel = new StatChooseImage(512,270,754,650, difficultyLevelNumber); 
     }
 
     public void act()
     {   
         playerSkin.choose("Benjamin_pose.png", "Melissa_pose.png", "Kevin_pose.png","Gojo_pose.png"); 
-        difficultyLevel.choose("bob_run1.png", "Amelia_run1.png", "Alex_run1.png"); 
+        difficultyLevel.choose("easy.png", "medium.png", "hard.png"); 
 
     }
+
     public void backWorld()
     {
     }
@@ -65,6 +66,16 @@ public class SettingsWorld extends World
         Greenfoot.setWorld(world1);
         }
          */ 
+    }
+
+    public static String getPlayerSkinImage()
+    {
+        return difficultyLevel.getChoosenImage(); 
+    }
+    
+    public static String getDifficultiyLevelImage()
+    {
+        return playerSkin.getChoosenImage(); 
     }
 
     protected class StatChooseImage
@@ -157,17 +168,17 @@ public class SettingsWorld extends World
             }
             if(number%3==0)
             {
-                object.setImageFile(image1); 
+                object.setImageFile(image1, 300, 75); 
                 choosenImage = image1;
             }
             else if (number%3==1 || number%3==-1)
             {
-                object.setImageFile(image2); 
+                object.setImageFile(image2, 300, 75); 
                 choosenImage = image2;
             }
             else if (number%3 == 2 || number%3==-2)
             {
-                object.setImageFile(image3); 
+                object.setImageFile(image3, 300, 75); 
                 choosenImage = image3;
             }
         }

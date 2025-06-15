@@ -15,7 +15,6 @@ public class SettingsImage extends Actor
     private GreenfootImage image; 
     //transparent color
     private static final Color transparent = new Color(0,0,0,0);
-    private GreenfootImage text; 
     public void act()
     {
         // Add your action code here.
@@ -25,6 +24,13 @@ public class SettingsImage extends Actor
     {
         image = new GreenfootImage(imageFile); 
         image.scale(120, 190); 
+        setImage(image); 
+    }
+    
+    public void setImageFile(String imageFile, int x, int y)
+    {
+        image = new GreenfootImage(imageFile); 
+        image.scale(x, y); 
         setImage(image); 
     }
 }
