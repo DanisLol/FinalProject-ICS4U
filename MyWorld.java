@@ -114,13 +114,14 @@ public class MyWorld extends World
 
         actNum = 0;
 
-        setPaintOrder(SuperStatBar.class,Counter.class, CollisionBox.class, HurtableEntity.class, Coin.class, Tile.class);
+        setPaintOrder(Tile.class,SuperStatBar.class,Counter.class, CollisionBox.class, HurtableEntity.class, Coin.class, Player.class,Enemy.class);
         prepare();
     }
 
     public void act(){
         actNum++;
         if (actNum % 60 == 0) counter2.add(-1); // Decrement the counter by 1
+        setPaintOrder(Projectile.class);
     }
 
     public Player getPlayer() {
@@ -193,7 +194,7 @@ public class MyWorld extends World
      * Prepare the world for the start of the program.
      * That is: create the initial objects and add them to the world.
      */
-    private void prepare()
+    public void prepare()
     {
     }
 }

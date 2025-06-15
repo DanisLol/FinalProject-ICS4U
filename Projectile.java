@@ -9,9 +9,11 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Projectile extends SuperSmoothMover
 {
     private int damage, speed;
-    public Projectile(int d, int s){
+    private HurtableEntity e;
+    public Projectile(HurtableEntity e, int d, int s){
         damage=d;
         speed=s;
+        this.e=e;
         GreenfootImage img = new GreenfootImage("Gojo_pose.png");
         setImage(img);
         System.out.println("Projectile created " + damage + "  " + speed);
@@ -28,7 +30,7 @@ public class Projectile extends SuperSmoothMover
             }
         }
         HurtableEntity victim = (HurtableEntity)getOneIntersectingObject(HurtableEntity.class);
-        if (victim != null && victim.getWorld() != null) {
+        if (victim != null && victim.getWorld() != null && victim!=e) {
             victim.takeDamage(damage);
             if (getWorld() != null) {
                 destroy();
