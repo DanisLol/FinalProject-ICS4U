@@ -78,11 +78,6 @@ public class Board extends Actor
                 int x = (j - displayStartCol) * Tile.SIZE + offset;
                 int y = (i - displayStartRow) * Tile.SIZE + offset;
                 getWorld().addObject(tiles[i][j], x, y);
-                if (i<13){
-                    if (j<17){
-                        System.out.println("Placing tile at (" + j + "," + i + ") type: " + tiles[i][j].getType());
-                    }
-                }
             }
         }
     }
@@ -100,5 +95,9 @@ public class Board extends Actor
         }
 
         return layout;
+    }
+    
+    public int getTileRowCount(){
+        return tiles.length;
     }
 }
