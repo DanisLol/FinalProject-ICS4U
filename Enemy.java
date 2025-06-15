@@ -187,6 +187,10 @@ public abstract class Enemy extends HurtableEntity
                 dx = 0;
                 verticalSideSteppingCommenced = true;
             }
+            // if the path you're moving is also blocked, stop!
+            if( (Math.signum(dy) < 0 && !s[1]) || (Math.signum(dy) > 0 && !s[5]) ) {
+                attemptingSideStepVertically = false;
+            }
             realY += dy;
             return;
         } else {
@@ -202,6 +206,9 @@ public abstract class Enemy extends HurtableEntity
                     dx = speed;
                 dy = 0;
                 horizontalSideSteppingCommenced = true;
+            }
+            if( (Math.signum(dx) < 0 && !s[7]) || (Math.signum(dx) > 0 && !s[3]) ) {
+                attemptingSideStepHorizontally = false;
             }
             realX += dx;
             return;
@@ -315,7 +322,7 @@ public abstract class Enemy extends HurtableEntity
         }
 
         if(surroundingTiles[0] == false) {
-            moveOffUnPassableTile();
+            //moveOffUnPassableTile();
         }
         
         return surroundingTiles;
