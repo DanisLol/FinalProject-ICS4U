@@ -26,8 +26,7 @@ public class ShopWorld extends World
 
     private ImageDisplay speedBoost,invisibility, randomBoost; 
 
-    private ImageDisplay purchasePopUp, deletePopUp, chestboxPopUp;
-    private ImageDisplay upgradePopUp, purchaseChestboxPopUp;
+    private ImageDisplay upgradePopUp, deletePopUp, chestboxPopUp;
 
     public ShopWorld()
     {    
@@ -101,7 +100,6 @@ public class ShopWorld extends World
         addObject(invisibility, 384, 648); 
         addObject(randomBoost, 395, 682);
 
-        purchasePopUp = new ImageDisplay ("popup.png", 500, 340); 
         deletePopUp = new ImageDisplay ("deletePopup.png", 50, 50);
         upgradePopUp = new ImageDisplay ("popup.png", 500, 340); 
 
@@ -120,14 +118,15 @@ public class ShopWorld extends World
     {
         if(Greenfoot.mouseClicked(deletePopUp))
         {
-            if(getObjects(ImageDisplay.class).contains(purchasePopUp))
+            if(getObjects(ImageDisplay.class).contains(upgradePopUp))
             {
-                removeObject(purchasePopUp); 
+                removeObject(upgradePopUp); 
             }
             else
             {
                 removeObject(chestboxPopUp); 
             }
+
             removeObject(upgradePopUp); 
             removeObject(deletePopUp);
         }
@@ -160,24 +159,7 @@ public class ShopWorld extends World
             chestboxPopUp = new ImageDisplay(fileName, 500, 340); 
             addObject (chestboxPopUp , 500, 455);
             addObject(deletePopUp, 740, 295); 
-            if(Greenfoot.mouseClicked(buyChestbox))
-            {
-                i = Greenfoot.getRandomNumber(2); 
-                if (i==0)
-                {
-                    purchaseChestboxPopUp = new ImageDisplay("speedPopup.png");
-                }
-                else if (i==1)
-                {
-                    purchaseChestboxPopUp = new ImageDisplay("invisibilityPopup.png");
-                }
-                else
-                {
-                    purchaseChestboxPopUp = new ImageDisplay("invisibilityPopup.png");
-                }
-                addObject(deletePopUp, 740, 295); 
-                addObject(purchaseChestboxPopUp, 500, 455);
-            }
+
         }
     }
 }
