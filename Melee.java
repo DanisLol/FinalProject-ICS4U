@@ -31,10 +31,10 @@ public class Melee extends Enemy
         //player.damage() or something
     }
     
-    public void takeDamage(int dmg) {
-        // place holder add stuff pls
-    }
-    public void die() {
-        
-    }
+    // public void takeDamage(int dmg) {
+        // // place holder add stuff pls
+    // }
+    // public void die() {
+        // getWorld().removeObject(this);
+    // }
 }

@@ -71,15 +71,24 @@ public class Button extends Actor
 
         this.cursor = cursor;
         //array of click sounds --> can click quickly
-        /*
+
         clicks = new GreenfootSound[5];
         for (int i = 0; i < 5; i++){
-        clicks[i] = new GreenfootSound("click.wav");
+            clicks[i] = new GreenfootSound("click.wav");
         }
 
         curIndex = 0;
-         */
 
+    }
+    public Button(Cursor cursor, String imageBase){
+        image = new GreenfootImage(imageBase + ".png");
+        hoverImage = new GreenfootImage(imageBase + "_hover.png");
+        this.cursor = cursor;
+        clicks = new GreenfootSound[5];
+        for (int i = 0; i < 5; i++){
+            clicks[i] = new GreenfootSound("click.wav");
+        }
+        curIndex = 0;
     }
 
     /**
@@ -92,18 +101,20 @@ public class Button extends Actor
         //if the cursor is hovering over the button, change the image
         if (cursor.getHoveredActors().contains(this)){
             setImage(hoverImage);
+            
+            // not working?!?!?
+            // if button is clicked, play sound
+            // if (Greenfoot.mousePressed(this)){
 
-            //if button is clicked, play sound
-            if (Greenfoot.mouseClicked(this)){
-                /*
-                curIndex++;
-                //if current index exceeds maximum possible index, reset to 0
-                if (curIndex > clicks.length - 1){
-                curIndex = 0;
-                }
-                clicks[curIndex].play();
-                 */
-            }
+                // curIndex++;
+                // //if current index exceeds maximum possible index, reset to 0
+                // if (curIndex > clicks.length - 1){
+                    // curIndex = 0;
+                // }
+                // clicks[curIndex].play();
+                
+
+            // }
         } else {
             //if not hovered over, normal image
             setImage(image);

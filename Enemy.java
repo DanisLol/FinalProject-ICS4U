@@ -17,7 +17,7 @@ public abstract class Enemy extends HurtableEntity
     protected double speed; //magnitude of movement
     protected double dx, dy; // directions
     protected int distanceFromPlayer; // the range at which the enemy will stop moving toward
-
+    
     public Enemy (String sheetName, int largeSize) {
         // GreenfootImage img = new GreenfootImage(16, 16);
         // img.setColor(Color.RED);
@@ -27,18 +27,24 @@ public abstract class Enemy extends HurtableEntity
         super(sheetName, largeSize);
 
         speed = 0.9;
+
+        health = 10;
     }
 
     public void act()
     {
         super.act();
-        super.animate();
-        attacking();
-        pathFindTowardPlayer();
+        if (!dead){
+            attacking();
+            pathFindTowardPlayer();
+            //updateLocation(collider, dx, dy);
+            super.animate(); 
+        }
     }
 
-    protected void addedToWorld(World w){
+    public void addedToWorld(World w){
         super.addedToWorld(w);
+        w.addObject(collider, getX(), getY() + 16);
         if(!isOld) {
             List<Player> players = w.getObjects(Player.class);
             if (!players.isEmpty()) {

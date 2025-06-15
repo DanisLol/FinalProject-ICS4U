@@ -24,9 +24,9 @@ public class Ranged extends Enemy
         p.setRotation((int)angle);
     }
     
-    public void takeDamage(int dmg) {
-        // place holder add stuff pls
-    }
+    // public void takeDamage(int dmg) {
+        // // place holder add stuff pls
+    // }
     public void die() {
         
     }

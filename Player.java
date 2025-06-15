@@ -25,8 +25,8 @@ public class Player extends HurtableEntity
     //just to test 
     private boolean toResting = false;
     private int lastFrame = 0;
-
-    private CollisionBox collider;
+    
+    //private CollisionBox collider;
 
     // private int highestIndex;
     // private ActionState curAction = ActionState.NOTHING, lastAction = ActionState.NOTHING; //player starts off unmoving
@@ -49,14 +49,18 @@ public class Player extends HurtableEntity
         isNew = true;
         countdown = 6;
         coins = 0;
+        
+        attackSound = new GreenfootSound("player_attack.wav");
+        
+        damage = 10; //test
 
-        collider = new CollisionBox(32, 32, 16, this);
+        //collider = new CollisionBox(32, 32, 16, this);
     }
 
-    public void addedToWorld(World w){
-        super.addedToWorld(w);
-        w.addObject(collider, getX(), getY());
-    }
+    // public void addedToWorld(World w){
+        // super.addedToWorld(w);
+        // w.addObject(collider, getX(), getY());
+    // }
 
     /**
      * Act - do whatever the Goblin wants to do. This method is called whenever
@@ -76,6 +80,7 @@ public class Player extends HurtableEntity
         if (curAction != lastAction){
             countdown = 0;
             if (curAction == ActionState.ATTACKING){
+                attackSound.play();
                 frame = 0;
                 highestIndex = 5;
                 curAnimation = attackAnimation;
@@ -126,22 +131,22 @@ public class Player extends HurtableEntity
 
             if (Greenfoot.isKeyDown("a")){
                 direction = 1;
-                xSpeed = -2;
+                xSpeed = -10;
             } 
 
             if (Greenfoot.isKeyDown("d")){
                 direction = 0;
-                xSpeed = 2;
+                xSpeed = 10;
             }
 
             if (Greenfoot.isKeyDown("w")){
                 direction = 2;
-                ySpeed = -2;
+                ySpeed = -10;
             }
 
             if (Greenfoot.isKeyDown("s")){
                 direction = 3;
-                ySpeed = 2;
+                ySpeed = 10;
             } 
         }
 
@@ -167,9 +172,9 @@ public class Player extends HurtableEntity
         killed++;
     }
 
-    public void takeDamage(int dmg) {
-        // place holder add stuff pls
-    }
+    // public void takeDamage(int dmg) {
+        // health -= damage;
+    // }
 
     //fix this
     public void die(){
@@ -214,15 +219,15 @@ public class Player extends HurtableEntity
     
         // Try X movement
         realX += dx;
-        setLocation(oldX + dx, oldY);
+        collider.setLocation(oldX + dx, oldY + 16);
     
-        List<Tile> touchingX = getIntersectingObjects(Tile.class);
-        //List<Tile> touchingX = collider.getIntersectingTiles();
+        //List<Tile> touchingX = getIntersectingObjects(Tile.class);
+        List<Tile> touchingX = collider.getIntersectingTiles();
         
         for (Tile tile : touchingX) {
             if (!tile.getIsPassable()) {
                 realX = oldRealX;
-                setLocation(oldX, oldY);
+                collider.setLocation(oldX, oldY + 16);
                 break;
             }
         }
@@ -234,15 +239,15 @@ public class Player extends HurtableEntity
         oldRealY = realY;
     
         realY += dy;
-        setLocation(oldX, oldY + dy);
+        collider.setLocation(oldX, oldY + dy + 16);
     
-        List<Tile> touchingY = getIntersectingObjects(Tile.class);
-        //List<Tile> touchingY = collider.getIntersectingTiles();
+        //List<Tile> touchingY = getIntersectingObjects(Tile.class);
+        List<Tile> touchingY = collider.getIntersectingTiles();
         
         for (Tile tile : touchingY) {
             if (!tile.getIsPassable()) {
                 realY = oldRealY;
-                setLocation(oldX, oldY);
+                collider.setLocation(oldX, oldY + 16);
                 break;
             }
         }

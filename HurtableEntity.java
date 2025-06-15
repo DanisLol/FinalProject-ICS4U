@@ -13,6 +13,10 @@ public abstract class HurtableEntity extends Scroller
     protected int countdown, direction, frame = 0;
     protected int highestIndex;
     protected ActionState curAction = ActionState.WALKING, lastAction = ActionState.WALKING;
+    protected CollisionBox collider;
+    protected GreenfootSound attackSound;
+    protected int damage;
+    protected boolean dead = false;
 
     protected int health;
 
@@ -28,16 +32,23 @@ public abstract class HurtableEntity extends Scroller
             spritesheetLarge = new GreenfootImage(sheet2);
             attackAnimation = AnimationManager.createAnimation(spritesheetLarge, 1, 4, 6, largeSize, largeSize); //don't know why but this is different for some sheets
         }
-        
+
         direction = 3;
         frame = 0;
         curAnimation = walkAnimation;
         frame = 0;
         highestIndex = 8;
         countdown = 6;
-        
+
         curAnimation = walkAnimation;
         setImage(curAnimation.getOneImage(Direction.fromInteger(direction), frame));
+
+        collider = new CollisionBox(32, 32, 16, this);
+    }
+
+    public void addedToWorld(World w){
+        super.addedToWorld(w);
+        w.addObject(collider, getX(), getY() + 16);
     }
 
     public void act(){
@@ -49,27 +60,59 @@ public abstract class HurtableEntity extends Scroller
         if (countdown > 0){
             countdown--;
         } else {
-            setImage (curAnimation.getOneImage(Direction.fromInteger(direction), frame));
+            countdown = 6;
+            if (curAnimation == deathAnimation){
+                setImage(curAnimation.getOneImage(frame));
+            } else {  
+                setImage (curAnimation.getOneImage(Direction.fromInteger(direction), frame));
+            }
 
             frame++;
+
             if (frame > highestIndex){
                 if (curAction == ActionState.WALKING) {
                     frame = 1;
-                } else {
+                } else if (curAction == ActionState.ATTACKING){
+                    if (curAnimation == attackAnimation){
+                        if (this instanceof Enemy){
+                            java.util.List<Player> p = getWorld().getObjects(Player.class);
+                            if (p != null){
+                                p.get(0).takeDamage(damage);
+                            }
+                        } else {
+                            java.util.List<Enemy> enemies = getIntersectingObjects(Enemy.class);
+                            if (enemies.size() != 0){
+                                enemies.get(0).takeDamage(damage);
+                            }
+                        }
+                    }
+
                     frame = 0; 
                     curAction = ActionState.NOTHING; //change????? 
                     lastAction = ActionState.ATTACKING; 
-                    //why does this not work properly omds OH
                     curAnimation = walkAnimation;
-                    //ok ykw no i swear this was working before i give up
                     setImage(walkAnimation.getOneImage(Direction.fromInteger(direction), frame));
+
+                } else if (curAction == ActionState.DYING){
+                    //die(); I DON'T KNOW WHY BUT THIS CAUSES ACTORREMOVEDFROMWORLD ERROR tried return everywhere too fried for this
+                    dead = true;
+                    //return;
                 }
             }
-            countdown = 6;
         }
     }
 
-    public abstract void takeDamage(int dmg);
+    public void takeDamage(int dmg){
+        health -= dmg;
+        if (health <= 0){
+            curAction = ActionState.DYING;
+            curAnimation = deathAnimation;
+            frame = 0;
+            highestIndex = 5;
+        }
+    }
 
-    public abstract void die();
+    public void die(){
+        getWorld().removeObject(this);
+    }
 }

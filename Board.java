@@ -27,7 +27,6 @@ public class Board extends Actor
 
     /**
      * Default Board constructor - creates room of blank tiles
-     * Currently 12 by 16 but may change depending on world/tile size
      */
     public Board(){
         tiles = new Tile[38][74];

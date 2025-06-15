@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class CollisionBox extends Scroller
 {
-    public static final boolean VISIBLE = true;
+    public static final boolean VISIBLE = false;
     private Actor owner;
     private GreenfootImage image;
     private int yOffset;
@@ -44,5 +44,9 @@ public class CollisionBox extends Scroller
     
     public List<Tile> getIntersectingTiles(){
         return getIntersectingObjects(Tile.class);        
+    }
+    
+    public List<CollisionBox> getIntersectingCollisionBoxes(){
+        return getIntersectingObjects(CollisionBox.class);
     }
 }

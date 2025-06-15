@@ -11,7 +11,7 @@ public class LavaTile extends Tile
     //deals damage
     
     public LavaTile(){
-        super("tile_lava.png", 'f');
+        super("tile_lava.png", 'l');
     }
     
     /**
