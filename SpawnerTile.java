@@ -1,7 +1,9 @@
 import greenfoot.*;
+import java.util.Random;
 
 public class SpawnerTile extends Tile {
     private boolean spawned = false;
+    Random random = new Random();
 
     public SpawnerTile() {
         super("tile_floor.png", 'p');
@@ -51,10 +53,7 @@ public class SpawnerTile extends Tile {
             int dy = Greenfoot.getRandomNumber(257) - 128;
 
             Enemy enemy = Greenfoot.getRandomNumber(2) == 0 ? new Melee() : new Ranged();
-            enemy.setRealLocation(centerX + dx, centerY + dy);
-            System.out.println("Enemy " + i + ": realX=" + (centerX + dx) + ", realY=" + (centerY + dy));
-            world.addObject(enemy, 0, 0); // placeholder on-screen position
-            System.out.println("Added enemy to world: " + enemy);
+            world.addObject(enemy, (int)this.getRealX() + random.nextInt(257) - 128, (int)this.getRealY() + random.nextInt(257)-128); // placeholder on-screen position
             enemy.updateLocation();      // applies real position visually
         }
     }
