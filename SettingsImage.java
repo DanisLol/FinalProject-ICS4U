@@ -26,4 +26,11 @@ public class SettingsImage extends Actor
         image.scale(120, 190); 
         setImage(image); 
     }
+    
+    public void setImageFile(String imageFile, int x, int y)
+    {
+        image = new GreenfootImage(imageFile); 
+        image.scale(x, y); 
+        setImage(image); 
+    }
 }
