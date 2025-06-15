@@ -31,16 +31,6 @@ public class CollisionBox extends Scroller
     {
         setLocation(owner.getX(), owner.getY() + yOffset);
     }
-
-    // public boolean isClear(){
-        // Tile t = (Tile) getOneIntersectingObject(Tile.class);
-        // if (t != null){
-            // if (!t.getIsPassable()){
-                // return false;
-            // }
-        // }
-        // return true;
-    // }
     
     public List<Tile> getIntersectingTiles(){
         return getIntersectingObjects(Tile.class);        

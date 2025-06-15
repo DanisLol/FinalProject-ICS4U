@@ -13,6 +13,7 @@ public abstract class Enemy extends HurtableEntity
     protected boolean inRange;
     protected int cd = 0;
     protected int cooldown;
+    private int counter;
     private boolean isOld;
     protected double speed; //magnitude of movement
     protected double dx, dy; // directions
@@ -21,28 +22,31 @@ public abstract class Enemy extends HurtableEntity
     private boolean horizontalSideSteppingCommenced, verticalSideSteppingCommenced;
     private boolean attemptingSideStepHorizontally, attemptingSideStepVertically;
     
+    private int direction; //for animation
+    
     public Enemy (String sheetName, int largeSize) {
         super(sheetName, largeSize);
-        GreenfootImage img = new GreenfootImage(16, 16);
-        img.setColor(Color.RED);
-        img.fillRect(0, 0, 16, 16);
-        setImage(img);
         speed = 0.9;
         distanceFromPlayer = 20;
         health = 10;
+        
+        counter = 0; //no cooldown for first attack
     }
 
     public void act()
     {
         super.act();
+        if (counter > 0) counter--;
         if (!dead){
-            attacking();
+            //attacking();
             pathFindTowardPlayer();
+            pushEntities();
             //updateLocation(collider, dx, dy);
+            getDirection();
             super.animate(); 
         }
     }
-
+    
     public void addedToWorld(World w){
         super.addedToWorld(w);
         w.addObject(collider, getX(), getY() + 16);
@@ -54,14 +58,38 @@ public abstract class Enemy extends HurtableEntity
             isOld = true;
         }
     }
+    
+    private void getDirection(){
+    }
+    
+    private void pushEntities(){
+        List<HurtableEntity> enemies = getWorld().getObjects(HurtableEntity.class);
+        for(HurtableEntity e:enemies){
+            if(e!=this){
+                double dist = Math.hypot(getX()-e.getX(), getY()-e.getY());
+                if(dist<30){ //adjust if necesary
+                    double dx = getX()-e.getX();
+                    double dy= getY()-e.getY();
+                    double mag = Math.hypot(dx, dy);
+                    if(mag!=0){
+                        dx/=mag;
+                        dy/=mag;
+                        realX+=dx*5;
+                        realY+=dy*5;
+                    }
+                }
+            }
 
+        }
+    }
+    
     protected void attacking(){
         cd++;
-        /*
+        
         if(cd%cooldown==0){
-        attack();
+            attack();
         }
-         */
+         
     }
 
     public void pathFindTowardPlayer() {
@@ -208,7 +236,19 @@ public abstract class Enemy extends HurtableEntity
         double yDiff = play.getY() - getY();
         double distance = Math.hypot(xDiff, yDiff); 
 
-        if (distance <= distanceFromPlayer) return; // stop if within correct range
+        // stop if within correct range + attack also change for ranged to be farther
+        if (distance <= distanceFromPlayer + 50) {
+            //inRange = true;
+            if (counter == 0){
+                //if cooldown has passed, attack player
+                curAction = ActionState.ATTACKING;
+                curAnimation = attackAnimation;
+                frame = 0;
+                highestIndex = 5;
+                counter = cooldown;
+            }
+            return; 
+        }
         
         dx = (xDiff / distance) * speed; //unit vector times magnitude
         dy = (yDiff / distance) * speed;
@@ -296,5 +336,9 @@ public abstract class Enemy extends HurtableEntity
 
     protected int getHealth(){
         return this.health;
+    }
+    
+    public boolean isDead(){
+        return dead;
     }
 }
