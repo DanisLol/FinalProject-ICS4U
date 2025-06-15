@@ -41,7 +41,6 @@ public abstract class Enemy extends HurtableEntity
             //attacking();
             pathFindTowardPlayer();
             pushEntities();
-            //updateLocation(collider, dx, dy);
             getDirection();
             super.animate(); 
         }
@@ -238,6 +237,7 @@ public abstract class Enemy extends HurtableEntity
         dx = dy = 0; // dont move there's not a good route..
     }
 
+
     private void moveDirectlyTowardPlayer() {
         double xDiff = play.getX() - getX();
         double yDiff = play.getY() - getY();
@@ -258,6 +258,7 @@ public abstract class Enemy extends HurtableEntity
         }
         
         dx = (xDiff / distance) * speed; //unit vector times magnitude
+
         dy = (yDiff / distance) * speed;
 
         realX += dx;
@@ -285,6 +286,27 @@ public abstract class Enemy extends HurtableEntity
             }
         }
         return false;                     // couldn’t move
+    }
+    
+    private void pushEntities(){
+        List<HurtableEntity> enemies = getWorld().getObjects(HurtableEntity.class);
+        for(HurtableEntity e:enemies){
+            if(e!=this){
+                double dist = Math.hypot(getX()-e.getX(), getY()-e.getY());
+                if(dist<30){ //adjust if necesary
+                    double dx = getX()-e.getX();
+                    double dy= getY()-e.getY();
+                    double mag = Math.hypot(dx, dy);
+                    if(mag!=0){
+                        dx/=mag;
+                        dy/=mag;
+                        realX+=dx*5;
+                        realY+=dy*5;
+                    }
+                }
+            }
+            
+        }
     }
     
     /** returns a boolean array of the surrounding tiles. 
