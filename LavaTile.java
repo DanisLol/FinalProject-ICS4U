@@ -21,7 +21,6 @@ public class LavaTile extends Tile
     public void act()
     {
         super.act();
-
         java.util.List<HurtableEntity> hurtables = getWorld().getObjects(HurtableEntity.class);
         if (hurtables.size() != 0){
             for (HurtableEntity h : hurtables){

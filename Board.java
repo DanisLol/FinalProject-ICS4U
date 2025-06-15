@@ -11,20 +11,19 @@ public class Board extends Actor
 {
     private Tile[][] tiles;
     private int offset = Tile.SIZE / 2; //since images are center anchored
-    private HashMap<String, Class> test = new HashMap<String, Class>(){
-            {
-                put("w", WaterTile.class);
-                put("u", WallTile.class);
-                put("f", FloorTile.class);
-                put("s", SpikeTile.class);
-                put("l", LavaTile.class);
-                put("b", BarrelTile.class);
-                put("e", BlankTile.class);
-                put("g", GateTileEnter.class);
-                put("q", GateTileExit.class);
-                put("p", SpawnerTile.class);
-            }
-        };
+
+    private HashMap<String, Class> test = new HashMap<String, Class>(){{
+        put("w", WaterTile.class);
+        put("u", WallTile.class);
+        put("f", FloorTile.class);
+        put("s", SpikeTile.class);
+        put("l", LavaTile.class);
+        put("b", BarrelTile.class);
+        put("e", BlankTile.class);
+        put("g", GateTileEnter.class);
+        put("q", GateTileExit.class);
+        put("p", SpawnerTile.class);
+    }};
 
     /**
      * Default Board constructor - creates room of blank tiles

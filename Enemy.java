@@ -106,21 +106,29 @@ public abstract class Enemy extends HurtableEntity
 
         double absX   = Math.abs(xDiff);
         double absY   = Math.abs(yDiff);
-        
-        if(!(attemptingSideStepHorizontally || attemptingSideStepVertically)) {
-            boolean canMoveDiagonally = false;
-            if (xDiff < 0 && yDiff < 0)        // NW
-                canMoveDiagonally = s[1] && s[7] && s[8];
-            else if (xDiff > 0 && yDiff < 0)   // NE
-                canMoveDiagonally = s[1] && s[2] && s[3];
-            else if (xDiff > 0 && yDiff > 0)   // SE
-                canMoveDiagonally = s[3] && s[4] && s[5];
-            else if (xDiff < 0 && yDiff > 0)   // SW
-                canMoveDiagonally = s[5] && s[6] && s[7];
-        
-            if (canMoveDiagonally) {           // clear diagonal tiles means normal vector move
-                moveDirectlyTowardPlayer();
-                return;
+
+        boolean canMoveDiagonally = false;
+        if (xDiff < 0 && yDiff < 0)        // NW
+            canMoveDiagonally = s[7] && s[1] && s[8];
+        else if (xDiff > 0 && yDiff < 0)   // NE
+            canMoveDiagonally = s[3] && s[1] && s[2];
+        else if (xDiff > 0 && yDiff > 0)   // SE
+            canMoveDiagonally = s[3] && s[5] && s[4];
+        else if (xDiff < 0 && yDiff > 0)   // SW
+            canMoveDiagonally = s[7] && s[5] && s[6];
+
+        if (canMoveDiagonally) {           // clear diagonal tiles means normal vector move
+            moveDirectlyTowardPlayer();
+            return;
+        }
+
+        // if diagonal is blocked, then try this
+        if (absX >= absY) {      // favour horizontal first
+            if (xDiff < 0 && s[7]) { 
+                dx = -speed; 
+                dy = 0; 
+                realX += dx; 
+                return; 
             }
         
             // if diagonal is blocked, then try moving horizontally or vertically
@@ -227,7 +235,6 @@ public abstract class Enemy extends HurtableEntity
             attemptingSideStepHorizontally = false;
             horizontalSideSteppingCommenced = false;
         }
-        
         dx = dy = 0; // dont move there's not a good route..
     }
 
@@ -316,7 +323,6 @@ public abstract class Enemy extends HurtableEntity
                 surroundingTiles[i] = false;
             }
         }
-        
         if(surroundingTiles[0] == false) {
             moveOffUnPassableTile();
         }
