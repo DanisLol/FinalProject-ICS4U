@@ -16,10 +16,9 @@ public class Ranged extends Enemy
         if(!inRange)return;
         double angle = Math.toDegrees(Math.atan2(play.getY()-getY(), play.getX()-getX()));
         int damage = 0, speed = 5;
-        Projectile p = new Projectile(this,damage,speed);
+        Projectile p = new Projectile(this,damage,speed,angle);
         int offsetX = (int)(25*Math.cos(Math.toRadians(angle)));
         int offsetY = (int)(25*Math.sin(Math.toRadians(angle)));
-        System.out.println("Spawning projectile " + (getX() + offsetX) + " " + (getY() + offsetY));
         getWorld().addObject(p,getX()+offsetX,getY()+offsetY);
         p.setRotation((int)angle);
     }

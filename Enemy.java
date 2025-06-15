@@ -218,7 +218,7 @@ public abstract class Enemy extends HurtableEntity
         double xDiff = play.getX() - getX();
         double yDiff = play.getY() - getY();
         double distance = Math.hypot(xDiff, yDiff); 
-        int dist = this instanceof Ranged?200:50;
+        int dist = this instanceof Ranged?300:50;
         if (distance <= distanceFromPlayer+dist){
             inRange=true;
             return;

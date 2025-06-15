@@ -114,14 +114,13 @@ public class MyWorld extends World
 
         actNum = 0;
 
-        setPaintOrder(Tile.class,SuperStatBar.class,Counter.class, CollisionBox.class, HurtableEntity.class, Coin.class, Player.class,Enemy.class);
+        setPaintOrder(SuperStatBar.class,Counter.class, CollisionBox.class, HurtableEntity.class, Coin.class, Player.class,Enemy.class,Projectile.class);
         prepare();
     }
 
     public void act(){
         actNum++;
         if (actNum % 60 == 0) counter2.add(-1); // Decrement the counter by 1
-        setPaintOrder(Projectile.class);
     }
 
     public Player getPlayer() {
