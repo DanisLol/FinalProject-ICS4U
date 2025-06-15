@@ -1,11 +1,28 @@
 import greenfoot.*;
 import java.util.*;
 public class Melee extends Enemy
-{
-    protected int cooldown = 120;
+{      
     public Melee(){
-        super();
+        super("guard", 128);
+        
+        // curAnimation = walkAnimation;
+        // direction = 0;
+        // frame = 0;
+        // highestIndex = 8;
+        // countdown = 6;
+        
+        // setImage(curAnimation.getOneImage(Direction.fromInteger(0), 0));
+        
+        // curAction = ActionState.WALKING;
+        // lastAction = ActionState.WALKING;
+        
+        //??????
+        // realX = 100;
+        // realY = 100;
+        
+        cooldown = 120;
     }
+    
     public void act()
     {
         super.act();
@@ -14,10 +31,10 @@ public class Melee extends Enemy
         //player.damage() or something
     }
     
-    public void takeDamage(int dmg) {
-        // place holder add stuff pls
-    }
-    public void die() {
-        
-    }
+    // public void takeDamage(int dmg) {
+        // // place holder add stuff pls
+    // }
+    // public void die() {
+        // getWorld().removeObject(this);
+    // }
 }

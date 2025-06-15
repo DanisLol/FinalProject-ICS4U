@@ -17,29 +17,38 @@ public abstract class Enemy extends HurtableEntity
     protected double speed; //magnitude of movement
     protected double dx, dy; // directions
     protected int distanceFromPlayer; // the range at which the enemy will stop moving toward
+
     private boolean horizontallyBlocked, verticallyBlocked;
     private boolean horizontalSideSteppingCommenced, verticalSideSteppingCommenced;
     private boolean attemptingSideStepHorizontally, attemptingSideStepVertically;
     
-    public Enemy () {
+    public Enemy (String sheetName, int largeSize) {
+        super(sheetName, largeSize);
         GreenfootImage img = new GreenfootImage(16, 16);
         img.setColor(Color.RED);
         img.fillRect(0, 0, 16, 16);
         setImage(img);
         speed = 0.9;
+        health = 10;
         distanceFromPlayer = 20;
     }
-    
+
     public void act()
     {
         super.act();
-        attacking();
-        pathFindTowardPlayer();
-        updateLocation();
+        if (!dead){
+            attacking();
+            pathFindTowardPlayer();
+            updateLocation();
+            //updateLocation(collider, dx, dy);
+            super.animate(); 
+        }
+
     }
-    
-    protected void addedToWorld(World w){
+
+    public void addedToWorld(World w){
         super.addedToWorld(w);
+        w.addObject(collider, getX(), getY() + 16);
         if(!isOld) {
             List<Player> players = w.getObjects(Player.class);
             if (!players.isEmpty()) {
@@ -48,44 +57,53 @@ public abstract class Enemy extends HurtableEntity
             isOld = true;
         }
     }
+
     protected void attacking(){
         cd++;
         /*
         if(cd%cooldown==0){
-            attack();
+        attack();
         }
-        */
+         */
     }
-    
+
     public void pathFindTowardPlayer() {
 
         boolean[] s = checkSurroundingTiles(); // 0-8 as documented
-    
+
         double xDiff = play.getX() - getX();
         double yDiff = play.getY() - getY();
         double distance = Math.hypot(xDiff, yDiff); 
-        
+
         if(distance <= distanceFromPlayer) {
             dx = dy = 0; // dont move you're close enough
         }
-        
+
         double absX   = Math.abs(xDiff);
         double absY   = Math.abs(yDiff);
-        
-        if(!(attemptingSideStepHorizontally || attemptingSideStepVertically)) {
-            boolean canMoveDiagonally = false;
-            if (xDiff < 0 && yDiff < 0)        // NW
-                canMoveDiagonally = s[1] && s[7] && s[8];
-            else if (xDiff > 0 && yDiff < 0)   // NE
-                canMoveDiagonally = s[1] && s[2] && s[3];
-            else if (xDiff > 0 && yDiff > 0)   // SE
-                canMoveDiagonally = s[3] && s[4] && s[5];
-            else if (xDiff < 0 && yDiff > 0)   // SW
-                canMoveDiagonally = s[5] && s[6] && s[7];
-        
-            if (canMoveDiagonally) {           // clear diagonal tiles means normal vector move
-                moveDirectlyTowardPlayer();
-                return;
+
+        boolean canMoveDiagonally = false;
+        if (xDiff < 0 && yDiff < 0)        // NW
+            canMoveDiagonally = s[7] && s[1] && s[8];
+        else if (xDiff > 0 && yDiff < 0)   // NE
+            canMoveDiagonally = s[3] && s[1] && s[2];
+        else if (xDiff > 0 && yDiff > 0)   // SE
+            canMoveDiagonally = s[3] && s[5] && s[4];
+        else if (xDiff < 0 && yDiff > 0)   // SW
+            canMoveDiagonally = s[7] && s[5] && s[6];
+
+        if (canMoveDiagonally) {           // clear diagonal tiles means normal vector move
+            moveDirectlyTowardPlayer();
+            return;
+        }
+
+        // if diagonal is blocked, then try this
+        if (absX >= absY) {      // favour horizontal first
+            if (xDiff < 0 && s[7]) { 
+                dx = -speed; 
+                dy = 0; 
+                realX += dx; 
+                return; 
             }
         
             // if diagonal is blocked, then try moving horizontally or vertically
@@ -192,24 +210,24 @@ public abstract class Enemy extends HurtableEntity
             attemptingSideStepHorizontally = false;
             horizontalSideSteppingCommenced = false;
         }
-        
+
         dx = dy = 0; // dont move there's not a good route..
     }
-    
+
     private void moveDirectlyTowardPlayer() {
         double xDiff = play.getX() - getX();
         double yDiff = play.getY() - getY();
         double distance = Math.hypot(xDiff, yDiff); 
-        
+
         if (distance <= distanceFromPlayer) return; // stop if within correct range
-        
+
         dx = (xDiff / distance) * speed; //unit vector times magnitude
         dy = (yDiff / distance) * speed;
-        
+
         realX += dx;
         realY += dy;
     }
-    
+
     private boolean simpleSideStep(boolean sameCol, boolean sameRow, boolean[] s, double speed) {
         if (sameCol) {                    // blocked north/south, so go E/W
             int[] picks = { 3, 7 };       // east, west
@@ -249,17 +267,17 @@ public abstract class Enemy extends HurtableEntity
     public boolean[] checkSurroundingTiles() {
         boolean[] surroundingTiles = new boolean[9];
         int[][] offsets = {
-            {0, 0},
-            {0, -32},
-            {32, -32},
-            {32, 0},
-            {32, 32},
-            {0, 32},
-            {-32, 32},
-            {-32, 0},
-            {-32, -32}
-        };
-        
+                {0, 0},
+                {0, -32},
+                {32, -32},
+                {32, 0},
+                {32, 32},
+                {0, 32},
+                {-32, 32},
+                {-32, 0},
+                {-32, -32}
+            };
+
         for(int i = 0; i < offsets.length; i++) {
             Tile tile = (Tile)getOneObjectAtOffset(offsets[i][0], offsets[i][1], Tile.class);
             if (tile != null) {
@@ -269,7 +287,7 @@ public abstract class Enemy extends HurtableEntity
                 surroundingTiles[i] = false;
             }
         }
-        
+
         if(surroundingTiles[0] == false) {
             moveOffUnPassableTile();
         }
@@ -286,7 +304,7 @@ public abstract class Enemy extends HurtableEntity
     }
     
     protected abstract void attack();
-    
+
     protected int getHealth(){
         return this.health;
     }

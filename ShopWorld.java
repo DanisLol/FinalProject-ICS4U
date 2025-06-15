@@ -48,7 +48,7 @@ public class ShopWorld extends World
         setBackground(background);
         player = new Player();
         addObject(player, 820, 560); 
-        player.setImageSize(80,90);
+        player.getImage().scale(80,90);
 
         damageToEnemyDisplay = new ImageDisplay(upgradeCostDamageToEnemy, 30); 
         damageIntakeDisplay = new ImageDisplay(upgradeCostDamageIntake, 30);
