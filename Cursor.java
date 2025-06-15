@@ -16,20 +16,14 @@ public class Cursor extends Actor
 
     /**
      * Cursor constructor 
-     * @param show      True to show red square where Cursor is, false otherwise
+     * @param show      True to show green square where Cursor is, false otherwise
      */
     public Cursor(boolean show){
-        image = new GreenfootImage(10, 10);
-        if (show == true){
-            image.setColor(Color.RED);
-        } else {
-            image.setColor(new Color(0, 0, 0, 0)); //transparent
-        }
-        image.fill();
+        image = new GreenfootImage(5, 5);
+        image.setColor(Color.GREEN);
+        if (show) image.fill();
+        
         setImage(image);
-
-        prevX = 0;
-        prevY = 0;
     }
 
     /**
@@ -39,30 +33,12 @@ public class Cursor extends Actor
     public void act()
     {
         //get mouse information
-        mouse = Greenfoot.getMouseInfo();
-        //if mouse is within World boundaries
+        MouseInfo mouse = Greenfoot.getMouseInfo();
+        
+        //if mouse is in world bounds, set cursor to location
         if (mouse != null){
-            //set x to mouse x if mouse is within World x
-            if (mouse.getX() > 0 || mouse.getX() < getWorld().getWidth()){
-                x = mouse.getX();
-            } else {
-                x = prevX;
-            }
-            
-            //set y to mouse y if mouse is within World y
-            if (mouse.getY() > 0 || mouse.getY() < getWorld().getHeight()){
-                y = mouse.getY();
-            } else {
-                y = prevY;
-            }
+            setLocation(mouse.getX(), mouse.getY());
         }
-        
-        //set cursor to follow mouse position (mouse's last position if mouse is outside)
-        setLocation(x, y);
-        prevX = x;
-        prevY = y;
-        
-        
     }
     /**
      * Returns ArrayList of Actors the cursor is hovering over. Code by Neelan Thurairajah

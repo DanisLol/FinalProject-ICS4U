@@ -1,4 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.List;
+
 /**
  * NOTES:
  * - benjamin animation looks weirdly cropped??
@@ -9,9 +11,6 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Player extends HurtableEntity
 {
-    private GreenfootImage image;
-    private Animation walkAnimation, deathAnimation, attackAnimation, curAnimation;
-    private int countdown, direction, frame;
     private int xSpeed, ySpeed;
     private boolean isNew;
 
@@ -19,24 +18,17 @@ public class Player extends HurtableEntity
     //the number of enemies killed
     private int killed;
 
-    //just to test 
-    private boolean toResting = false;
-
-    private int highestIndex;
-    private ActionState curAction = ActionState.NOTHING, lastAction = ActionState.NOTHING; //player starts off unmoving
-
     public Player (){
+        super("benjamin", 192);
         //need to make variable based on settingworld
-        GreenfootImage spritesheet = new GreenfootImage("Benjamin.png");
-        walkAnimation = AnimationManager.createAnimation(spritesheet, 9, 4, 9, 64, 64);
-        deathAnimation = AnimationManager.createAnimation(spritesheet, 20, 1, 6, 64, 64);
-        attackAnimation = AnimationManager.createAnimation(new GreenfootImage("BenjaminAttacked copy.png"), 1, 4, 6, 192, 192);
-        curAnimation = walkAnimation;
 
-        direction = 3;        
-        image = walkAnimation.getOneImage(Direction.fromInteger(direction), 0); 
-        setImage(image);
-        frame = 0;
+        curAction = ActionState.NOTHING; lastAction = ActionState.NOTHING;
+        // curAnimation = walkAnimation;
+
+        //direction = 3;        
+        //image = walkAnimation.getOneImage(Direction.fromInteger(direction), 0); 
+        //setImage(image);
+        //frame = 0;
         xSpeed = 0;
         ySpeed = 0;
         realX = 0;
@@ -44,6 +36,12 @@ public class Player extends HurtableEntity
         isNew = true;
         countdown = 6;
         coins = 0;
+
+        attackSound = new GreenfootSound("player_attack.wav");
+
+        damage = 10; //test
+        health = 100;
+
     }
 
     /**
@@ -55,13 +53,15 @@ public class Player extends HurtableEntity
         if(getWorld() instanceof ShopWorld) 
             return;
 
-        checkActionState();
-        System.out.println("Current: " + curAction + "\t Last: " + lastAction);
+        if (health > 0) checkActionState();
 
+
+        ///WHY IS IT NOT FUCKING DYING 
         //if action state changed, update what current animation needs to be
         if (curAction != lastAction){
-            countdown = 6;
+            countdown = 0;
             if (curAction == ActionState.ATTACKING){
+                attackSound.play();
                 frame = 0;
                 highestIndex = 5;
                 curAnimation = attackAnimation;
@@ -70,38 +70,22 @@ public class Player extends HurtableEntity
                 highestIndex = 8;
                 curAnimation = walkAnimation;
             } else if (curAction == ActionState.NOTHING){ 
-                toResting = true; //tbh should've just been another action state
-            }
+                curAnimation = walkAnimation;
+                frame = 0;
+                setImage(walkAnimation.getOneImage(Direction.fromInteger(direction), frame));
+            } 
         }
 
-        //if attacking or walking, animate normally 
-        if (curAction == ActionState.ATTACKING || curAction == ActionState.WALKING){
-            animate();
+        //if not unmoving, animate
+        if (curAction != ActionState.NOTHING){
+            super.animate();
             if (curAction == ActionState.WALKING){
                 //move player
                 //realX += xSpeed; 
                 //realY += ySpeed;
                 tryMove(xSpeed, ySpeed);
             }
-        } else if (toResting){
-            //player walking --> nothing: return to idle frame
-            if (frame == 0){
-                toResting = false;
-            } else if (frame > 0){
-                if (countdown > 0){
-                    countdown--;
-                } else {
-                    if (frame < 5){
-                        frame--;
-                    } else {
-                        frame++;
-                        if (frame > 8) frame = 0;
-                    }
-                    setImage(walkAnimation.getOneImage(Direction.fromInteger(direction), frame));
-                    countdown = 3;
-                }
-            }
-        }
+        } 
 
         centreOn(this);
         updateLocation();
@@ -117,6 +101,7 @@ public class Player extends HurtableEntity
         xSpeed = 0;
         ySpeed = 0;
 
+        //is this if statement not redundant 
         if(getWorld() instanceof ShopWorld)
         {
         }
@@ -125,22 +110,22 @@ public class Player extends HurtableEntity
 
             if (Greenfoot.isKeyDown("a")){
                 direction = 1;
-                xSpeed = -2;
+                xSpeed = -10;
             } 
 
             if (Greenfoot.isKeyDown("d")){
                 direction = 0;
-                xSpeed = 2;
+                xSpeed = 10;
             }
 
             if (Greenfoot.isKeyDown("w")){
                 direction = 2;
-                ySpeed = -2;
+                ySpeed = -10;
             }
 
             if (Greenfoot.isKeyDown("s")){
                 direction = 3;
-                ySpeed = 2;
+                ySpeed = 10;
             } 
         }
 
@@ -166,43 +151,9 @@ public class Player extends HurtableEntity
         killed++;
     }
 
-    public void animate(){
-        if (countdown > 0){
-            countdown--;
-        } else {
-            frame++;
-            if (frame > highestIndex){
-                if (curAction == ActionState.WALKING) {
-                    frame = 1;
-                } else {
-                    frame = 0; 
-                    curAction = ActionState.NOTHING; //change????? 
-                    lastAction = ActionState.ATTACKING;
-                }
-            }
-            setImage (curAnimation.getOneImage(Direction.fromInteger(direction), frame));
-            countdown = 6;
-        }
-    }
-
-    public void takeDamage(int dmg) {
-        // place holder add stuff pls
-    }
-
-    //currently keeps looping death animation, need to fix later
-    public void die(){
-        if (countdown > 0){
-            countdown--;
-        } else {
-            frame++;
-            if (frame > 5) {
-                frame = 1;
-            }
-            System.out.println(frame);
-            setImage(deathAnimation.getOneImage(frame));
-            countdown = 6;
-        }
-    }
+    // public void takeDamage(int dmg) {
+    // health -= damage;
+    // }
 
     public int getCoin(){
         return coins; 
@@ -219,44 +170,48 @@ public class Player extends HurtableEntity
         return killed;
     }
 
-    public void setImageSize(int length, int width)
-    {
-        image.scale(length, width);
-    }
-    
+    // public void setImageSize(int length, int width)
+    // {
+    // image.scale(length, width);
+    // }
+
     public void tryMove(int dx, int dy) {
         int oldX = getX();
         int oldY = getY();
         double oldRealX = realX;
         double oldRealY = realY;
-    
+
         // Try X movement
         realX += dx;
-        setLocation(oldX + dx, oldY);
-    
-        java.util.List<Tile> touchingX = getIntersectingObjects(Tile.class);
+        collider.setLocation(oldX + dx, oldY + 16);
+
+        //List<Tile> touchingX = getIntersectingObjects(Tile.class);
+        List<Tile> touchingX = collider.getIntersectingTiles();
+
         for (Tile tile : touchingX) {
             if (!tile.getIsPassable()) {
                 realX = oldRealX;
-                setLocation(oldX, oldY);
+                collider.setLocation(oldX, oldY + 16);
                 break;
             }
         }
-    
+
         // Try Y movement
         oldX = getX();  
         oldY = getY();
         oldRealX = realX;
         oldRealY = realY;
-    
+
         realY += dy;
-        setLocation(oldX, oldY + dy);
-    
-        java.util.List<Tile> touchingY = getIntersectingObjects(Tile.class);
+        collider.setLocation(oldX, oldY + dy + 16);
+
+        //List<Tile> touchingY = getIntersectingObjects(Tile.class);
+        List<Tile> touchingY = collider.getIntersectingTiles();
+
         for (Tile tile : touchingY) {
             if (!tile.getIsPassable()) {
                 realY = oldRealY;
-                setLocation(oldX, oldY);
+                collider.setLocation(oldX, oldY + 16);
                 break;
             }
         }

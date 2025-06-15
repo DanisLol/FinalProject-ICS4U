@@ -35,7 +35,7 @@ public class Scroller extends SuperSmoothMover
 
     public void act()
     {
-           updateLocation();
+        updateLocation();
     }
 
     public void centreOn(SuperSmoothMover target) { // this is essentially static, only being called ONCE per act (not instance) on the player.
@@ -45,8 +45,22 @@ public class Scroller extends SuperSmoothMover
         }
     }
 
-    public void updateLocation() {
+    public void updateLocation(){
         setLocation(realX - camX, realY - camY);
+    }
+    
+
+    public double getRealX(){
+        return realX;
+    }
+    
+    public double getRealY(){
+        return realY;
+    }
+    
+    public void setRealLocation(double x, double y) {
+        this.realX = x;
+        this.realY = y;
     }
 }
 

@@ -9,12 +9,14 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Coin extends Scroller
 {
     private GreenfootImage[] images;
+    private GreenfootSound coinSound;
     private int countdown, frame;
     
     public Coin(){
         frame = 0;
         countdown = 6;
         addFrames();
+        coinSound = new GreenfootSound("coin.mp3");
     }
     
     private void addFrames(){
@@ -37,6 +39,7 @@ public class Coin extends Scroller
         Player player = (Player)getOneIntersectingObject(Player.class);
         if (player != null && player.getWorld() != null) {
             player.pickUpCoin();
+            coinSound.play();
             if (getWorld() != null) {
                 getWorld().removeObject(this);
             }
