@@ -38,6 +38,7 @@ public class Player extends HurtableEntity
         coins = 0;
 
         attackSound = new GreenfootSound("player_attack.wav");
+        attackSound.setVolume(70);
 
         damage = 10; //test
         health = 100;
@@ -55,8 +56,6 @@ public class Player extends HurtableEntity
 
         if (health > 0) checkActionState();
 
-
-        ///WHY IS IT NOT FUCKING DYING 
         //if action state changed, update what current animation needs to be
         if (curAction != lastAction){
             countdown = 0;
@@ -77,7 +76,7 @@ public class Player extends HurtableEntity
         }
 
         //if not unmoving, animate
-        if (curAction != ActionState.NOTHING){
+        if (curAction != ActionState.NOTHING && !dead){
             super.animate();
             if (curAction == ActionState.WALKING){
                 //move player

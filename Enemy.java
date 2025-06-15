@@ -13,40 +13,39 @@ public abstract class Enemy extends HurtableEntity
     protected boolean inRange;
     protected int cd = 0;
     protected int cooldown;
+    private int counter;
     private boolean isOld;
     protected double speed; //magnitude of movement
     protected double dx, dy; // directions
     protected int distanceFromPlayer; // the range at which the enemy will stop moving toward
-
     private boolean horizontallyBlocked, verticallyBlocked;
     private boolean horizontalSideSteppingCommenced, verticalSideSteppingCommenced;
     private boolean attemptingSideStepHorizontally, attemptingSideStepVertically;
     
+    private int direction; //for animation
+    
     public Enemy (String sheetName, int largeSize) {
         super(sheetName, largeSize);
-        GreenfootImage img = new GreenfootImage(16, 16);
-        img.setColor(Color.RED);
-        img.fillRect(0, 0, 16, 16);
-        setImage(img);
         speed = 0.9;
-        health = 10;
         distanceFromPlayer = 20;
+        health = 10;
+        
+        counter = 0; //no cooldown for first attack
     }
 
     public void act()
     {
         super.act();
+        if (counter > 0) counter--;
         if (!dead){
-            attacking();
+            //attacking();
             pathFindTowardPlayer();
             pushEntities();
-            updateLocation();
-            //updateLocation(collider, dx, dy);
+            getDirection();
             super.animate(); 
         }
-
     }
-
+    
     public void addedToWorld(World w){
         super.addedToWorld(w);
         w.addObject(collider, getX(), getY() + 16);
@@ -58,14 +57,38 @@ public abstract class Enemy extends HurtableEntity
             isOld = true;
         }
     }
+    
+    private void getDirection(){
+    }
+    
+    private void pushEntities(){
+        List<HurtableEntity> enemies = getWorld().getObjects(HurtableEntity.class);
+        for(HurtableEntity e:enemies){
+            if(e!=this){
+                double dist = Math.hypot(getX()-e.getX(), getY()-e.getY());
+                if(dist<30){ //adjust if necesary
+                    double dx = getX()-e.getX();
+                    double dy= getY()-e.getY();
+                    double mag = Math.hypot(dx, dy);
+                    if(mag!=0){
+                        dx/=mag;
+                        dy/=mag;
+                        realX+=dx*5;
+                        realY+=dy*5;
+                    }
+                }
+            }
 
+        }
+    }
+    
     protected void attacking(){
         cd++;
-        /*
+        
         if(cd%cooldown==0){
-        attack();
+            attack();
         }
-         */
+         
     }
 
     public void pathFindTowardPlayer() {
@@ -211,7 +234,6 @@ public abstract class Enemy extends HurtableEntity
             attemptingSideStepHorizontally = false;
             horizontalSideSteppingCommenced = false;
         }
-
         dx = dy = 0; // dont move there's not a good route..
     }
 
@@ -220,8 +242,20 @@ public abstract class Enemy extends HurtableEntity
         double xDiff = play.getX() - getX();
         double yDiff = play.getY() - getY();
         double distance = Math.hypot(xDiff, yDiff); 
-        
-        if (distance <= distanceFromPlayer+50) return; // stop if within correct range
+
+        // stop if within correct range + attack also change for ranged to be farther
+        if (distance <= distanceFromPlayer + 50) {
+            //inRange = true;
+            if (counter == 0){
+                //if cooldown has passed, attack player
+                curAction = ActionState.ATTACKING;
+                curAnimation = attackAnimation;
+                frame = 0;
+                highestIndex = 5;
+                counter = cooldown;
+            }
+            return; 
+        }
         
         dx = (xDiff / distance) * speed; //unit vector times magnitude
 
@@ -230,7 +264,7 @@ public abstract class Enemy extends HurtableEntity
         realX += dx;
         realY += dy;
     }
-
+    
     private boolean simpleSideStep(boolean sameCol, boolean sameRow, boolean[] s, double speed) {
         if (sameCol) {                    // blocked north/south, so go E/W
             int[] picks = { 3, 7 };       // east, west
@@ -311,7 +345,6 @@ public abstract class Enemy extends HurtableEntity
                 surroundingTiles[i] = false;
             }
         }
-
         if(surroundingTiles[0] == false) {
             moveOffUnPassableTile();
         }
@@ -331,5 +364,9 @@ public abstract class Enemy extends HurtableEntity
 
     protected int getHealth(){
         return this.health;
+    }
+    
+    public boolean isDead(){
+        return dead;
     }
 }

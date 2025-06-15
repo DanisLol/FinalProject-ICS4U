@@ -68,11 +68,12 @@ public abstract class HurtableEntity extends Scroller
             }
 
             frame++;
-            if (this instanceof Player) System.out.println(frame);
+            
             if (frame > highestIndex){
                 if (curAction == ActionState.WALKING) {
                     frame = 1;
                 } else if (curAction == ActionState.ATTACKING){
+                    //on last frame of attack animation, deal damage 
                     if (curAnimation == attackAnimation){
                         if (this instanceof Enemy){
                             java.util.List<Player> p = getWorld().getObjects(Player.class);
@@ -88,16 +89,14 @@ public abstract class HurtableEntity extends Scroller
                     }
 
                     frame = 0; 
-                    curAction = ActionState.NOTHING; //change????? 
+                    
+                    //i do not know why but if i don't add this if statement the enemy animation will break
+                    if (this instanceof Player )curAction = ActionState.NOTHING;  else curAction = ActionState.WALKING;
                     lastAction = ActionState.ATTACKING; 
                     curAnimation = walkAnimation;
                     setImage(walkAnimation.getOneImage(Direction.fromInteger(direction), frame));
-
                 } else if (curAction == ActionState.DYING){
-                    //die(); I DON'T KNOW WHY BUT THIS CAUSES ACTORREMOVEDFROMWORLD ERROR tried return everywhere too fried for this
                     dead = true;
-                    //System.out.println("Reached");
-                    //return;
                 }
             }
         }
@@ -106,18 +105,20 @@ public abstract class HurtableEntity extends Scroller
     public void takeDamage(int dmg){
         health -= dmg;
         if (health <= 0){
-            curAction = ActionState.DYING;
-            lastAction = ActionState.DYING;
-            curAnimation = deathAnimation;
-            frame = 0;
-            highestIndex = 5;
+            if (lastAction != ActionState.DYING){
+                curAction = ActionState.DYING;
+                lastAction = ActionState.DYING;
+                curAnimation = deathAnimation;
+                frame = 0;
+                highestIndex = 5;
+            }
         }
     }
 
     public void die(){
         getWorld().removeObject(this);
     }
-    
+
     public CollisionBox getCollider(){
         return collider;
     }
