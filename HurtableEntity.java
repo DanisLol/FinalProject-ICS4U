@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class HurtableEntity here.
+ * A abstract class comprised of all of the entities that can be hurt
  * 
  * @author Zachary Zhao
  * @version 0.0.1
