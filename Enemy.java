@@ -214,14 +214,14 @@ public abstract class Enemy extends HurtableEntity
 
         dx = dy = 0; // dont move there's not a good route..
     }
-
-
+    
+    
     private void moveDirectlyTowardPlayer() {
         double xDiff = play.getX() - getX();
         double yDiff = play.getY() - getY();
         double distance = Math.hypot(xDiff, yDiff); 
-        
-        if (distance <= distanceFromPlayer+50) return; // stop if within correct range
+        int dist = this instanceof Ranged?200:50;
+        if (distance <= distanceFromPlayer+dist) return; // stop if within correct range
         
         dx = (xDiff / distance) * speed; //unit vector times magnitude
 
