@@ -33,7 +33,9 @@ public class Fader extends Actor
         } else if (type.equals("out")){
             transparency = diffPerAct * ACTS_TO_FADE; //sometimes transparency isn't perfectly divisible by acts to fade (no double transparency)
         }
-        
+    }
+    
+    public void addedToWorld(World w){
         drawImage();
     }
 
@@ -52,7 +54,7 @@ public class Fader extends Actor
 
     //draw black image
     private void drawImage(){
-        image = new GreenfootImage(1024, 800);
+        image = new GreenfootImage(getWorld().getWidth(), getWorld().getHeight());
         image.setColor(Color.BLACK);
         image.fill();
         image.setTransparency(transparency);

@@ -251,7 +251,7 @@ public abstract class Enemy extends HurtableEntity
                 curAction = ActionState.ATTACKING;
                 curAnimation = attackAnimation;
                 frame = 0;
-                highestIndex = 5;
+                if (this instanceof Ranged) highestIndex = 6; else highestIndex = 5;
                 counter = cooldown;
             }
             return; 

@@ -13,14 +13,14 @@ public class Player extends HurtableEntity
 {
     private int xSpeed, ySpeed;
     private boolean isNew;
-
+    private String player;
     private int coins;
     //the number of enemies killed
     private int killed;
 
     public Player (){
-        super("benjamin", 192);
-        //need to make variable based on settingworld
+        super(SettingsWorld.getPlayerSkinImage(), 192);
+        player = SettingsWorld.getPlayerSkinImage();        
 
         curAction = ActionState.NOTHING; lastAction = ActionState.NOTHING;
         // curAnimation = walkAnimation;
@@ -41,8 +41,7 @@ public class Player extends HurtableEntity
         attackSound.setVolume(70);
 
         damage = 10; //test
-        health = 100;
-
+        health = 100;        
     }
 
     /**
@@ -54,7 +53,12 @@ public class Player extends HurtableEntity
         if(getWorld() instanceof ShopWorld) 
             return;
 
-        if (health > 0) checkActionState();
+        if (health > 0) {
+            checkActionState();
+        } else if (curAnimation == deathAnimation && frame == highestIndex){
+            //finished animating death
+            getWorld().addObject(new Fader("in", new DeathWorld()), getWorld().getWidth() / 2, getWorld().getHeight() / 2);
+        }
 
         //if action state changed, update what current animation needs to be
         if (curAction != lastAction){
@@ -62,7 +66,7 @@ public class Player extends HurtableEntity
             if (curAction == ActionState.ATTACKING){
                 attackSound.play();
                 frame = 0;
-                highestIndex = 5;
+                if (player.equals("melissa")) highestIndex = 7; else highestIndex = 5;
                 curAnimation = attackAnimation;
             } else if (curAction == ActionState.WALKING){
                 frame = 1;

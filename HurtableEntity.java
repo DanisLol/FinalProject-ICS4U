@@ -28,7 +28,11 @@ public abstract class HurtableEntity extends Scroller
         deathAnimation = AnimationManager.createAnimation(spritesheet, 20, 1, 6, 64, 64);
         if (this instanceof Ranged) {
             attackAnimation = AnimationManager.createAnimation(spritesheet, 4, 4, 7, 64, 64);
-        } else { 
+        } else if (this instanceof Player && sheetName.equals("melissa")){
+            spritesheetLarge = new GreenfootImage(sheet2);
+            attackAnimation = AnimationManager.createAnimation(spritesheetLarge, 1, 4, 8, largeSize, largeSize);
+        }
+        else { 
             spritesheetLarge = new GreenfootImage(sheet2);
             attackAnimation = AnimationManager.createAnimation(spritesheetLarge, 1, 4, 6, largeSize, largeSize); //don't know why but this is different for some sheets
         }
@@ -68,7 +72,7 @@ public abstract class HurtableEntity extends Scroller
             }
 
             frame++;
-            
+
             if (frame > highestIndex){
                 if (curAction == ActionState.WALKING) {
                     frame = 1;
@@ -89,7 +93,7 @@ public abstract class HurtableEntity extends Scroller
                     }
 
                     frame = 0; 
-                    
+
                     //i do not know why but if i don't add this if statement the enemy animation will break
                     if (this instanceof Player )curAction = ActionState.NOTHING;  else curAction = ActionState.WALKING;
                     lastAction = ActionState.ATTACKING; 
