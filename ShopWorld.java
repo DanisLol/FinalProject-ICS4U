@@ -159,24 +159,7 @@ public class ShopWorld extends World
             chestboxPopUp = new ImageDisplay(fileName, 500, 340); 
             addObject (chestboxPopUp , 500, 455);
             addObject(deletePopUp, 740, 295); 
-            if(Greenfoot.mouseClicked(buyChestbox))
-            {
-                i = Greenfoot.getRandomNumber(2); 
-                if (i==0)
-                {
-                    chestboxPopUp = new ImageDisplay("speedPopup.png");
-                }
-                else if (i==1)
-                {
-                    chestboxPopUp = new ImageDisplay("invisibilityPopup.png");
-                }
-                else
-                {
-                    chestboxPopUp = new ImageDisplay("invisibilityPopup.png");
-                }
-                addObject(deletePopUp, 740, 295); 
-                addObject(chestboxPopUp, 500, 455);
-            }
+
         }
     }
 }
