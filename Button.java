@@ -32,12 +32,16 @@ public class Button extends Actor
             image = new GreenfootImage ("SettingsArrowL.png"); 
             setImage(image);
             hoverImage = new GreenfootImage("SettingsArrowHoverL.png"); 
+            image.scale(80, 100);
+            hoverImage.scale(80,100);
         }
         else 
         {
             image = new GreenfootImage ("SettingsArrowR.png"); 
             setImage(image);
             hoverImage = new GreenfootImage("SettingsArrowHoverR.png"); 
+            image.scale(80, 100);
+            hoverImage.scale(80, 100);
         }
         this.cursor = cursor;
 
