@@ -61,14 +61,14 @@ public abstract class HurtableEntity extends Scroller
             countdown--;
         } else {
             countdown = 6;
-            if (curAnimation == deathAnimation){
+            if (curAction == ActionState.DYING){
                 setImage(curAnimation.getOneImage(frame));
             } else {  
                 setImage (curAnimation.getOneImage(Direction.fromInteger(direction), frame));
             }
 
             frame++;
-
+            if (this instanceof Player) System.out.println(frame);
             if (frame > highestIndex){
                 if (curAction == ActionState.WALKING) {
                     frame = 1;
@@ -96,6 +96,7 @@ public abstract class HurtableEntity extends Scroller
                 } else if (curAction == ActionState.DYING){
                     //die(); I DON'T KNOW WHY BUT THIS CAUSES ACTORREMOVEDFROMWORLD ERROR tried return everywhere too fried for this
                     dead = true;
+                    //System.out.println("Reached");
                     //return;
                 }
             }
@@ -106,6 +107,7 @@ public abstract class HurtableEntity extends Scroller
         health -= dmg;
         if (health <= 0){
             curAction = ActionState.DYING;
+            lastAction = ActionState.DYING;
             curAnimation = deathAnimation;
             frame = 0;
             highestIndex = 5;
@@ -114,5 +116,9 @@ public abstract class HurtableEntity extends Scroller
 
     public void die(){
         getWorld().removeObject(this);
+    }
+    
+    public CollisionBox getCollider(){
+        return collider;
     }
 }

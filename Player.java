@@ -11,24 +11,12 @@ import java.util.List;
  */
 public class Player extends HurtableEntity
 {
-    //private GreenfootImage image;
-    //private Animation walkAnimation, deathAnimation, attackAnimation, curAnimation;
-    //private int countdown, direction, frame;
     private int xSpeed, ySpeed;
     private boolean isNew;
 
     private int coins;
     //the number of enemies killed
     private int killed;
-
-    //just to test 
-    private boolean toResting = false;
-    private int lastFrame = 0;
-    
-    //private CollisionBox collider;
-
-    // private int highestIndex;
-    // private ActionState curAction = ActionState.NOTHING, lastAction = ActionState.NOTHING; //player starts off unmoving
 
     public Player (){
         super("benjamin", 192);
@@ -48,18 +36,13 @@ public class Player extends HurtableEntity
         isNew = true;
         countdown = 6;
         coins = 0;
-        
+
         attackSound = new GreenfootSound("player_attack.wav");
-        
+
         damage = 10; //test
+        health = 100;
 
-        //collider = new CollisionBox(32, 32, 16, this);
     }
-
-    // public void addedToWorld(World w){
-        // super.addedToWorld(w);
-        // w.addObject(collider, getX(), getY());
-    // }
 
     /**
      * Act - do whatever the Goblin wants to do. This method is called whenever
@@ -70,11 +53,9 @@ public class Player extends HurtableEntity
         if(getWorld() instanceof ShopWorld) 
             return;
 
-        checkActionState();
-        //System.out.println("Current: " + curAction + "\t Last: " + lastAction);
+        if (health > 0) checkActionState();
 
-        if (lastFrame != frame) System.out.println(frame);
-
+        ///WHY IS IT NOT FUCKING DYING 
         //if action state changed, update what current animation needs to be
         if (curAction != lastAction){
             countdown = 0;
@@ -94,10 +75,8 @@ public class Player extends HurtableEntity
             } 
         }
 
-        //lastFrame = frame;
-
-        //if attacking or walking, animate normally 
-        if (curAction == ActionState.ATTACKING || curAction == ActionState.WALKING){
+        //if not unmoving, animate
+        if (curAction != ActionState.NOTHING){
             super.animate();
             if (curAction == ActionState.WALKING){
                 //move player
@@ -172,23 +151,8 @@ public class Player extends HurtableEntity
     }
 
     // public void takeDamage(int dmg) {
-        // health -= damage;
+    // health -= damage;
     // }
-
-    //fix this
-    public void die(){
-        if (countdown > 0){
-            countdown--;
-        } else {
-            frame++; //change this
-            if (frame > 5) {
-                frame = 1;
-            }
-            System.out.println(frame);
-            setImage(deathAnimation.getOneImage(frame));
-            countdown = 6;
-        }
-    }
 
     public int getCoin(){
         return coins; 
@@ -207,22 +171,22 @@ public class Player extends HurtableEntity
 
     // public void setImageSize(int length, int width)
     // {
-        // image.scale(length, width);
+    // image.scale(length, width);
     // }
-    
+
     public void tryMove(int dx, int dy) {
         int oldX = getX();
         int oldY = getY();
         double oldRealX = realX;
         double oldRealY = realY;
-    
+
         // Try X movement
         realX += dx;
         collider.setLocation(oldX + dx, oldY + 16);
-    
+
         //List<Tile> touchingX = getIntersectingObjects(Tile.class);
         List<Tile> touchingX = collider.getIntersectingTiles();
-        
+
         for (Tile tile : touchingX) {
             if (!tile.getIsPassable()) {
                 realX = oldRealX;
@@ -230,19 +194,19 @@ public class Player extends HurtableEntity
                 break;
             }
         }
-    
+
         // Try Y movement
         oldX = getX();  
         oldY = getY();
         oldRealX = realX;
         oldRealY = realY;
-    
+
         realY += dy;
         collider.setLocation(oldX, oldY + dy + 16);
-    
+
         //List<Tile> touchingY = getIntersectingObjects(Tile.class);
         List<Tile> touchingY = collider.getIntersectingTiles();
-        
+
         for (Tile tile : touchingY) {
             if (!tile.getIsPassable()) {
                 realY = oldRealY;

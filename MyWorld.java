@@ -114,7 +114,7 @@ public class MyWorld extends World
 
         actNum = 0;
 
-        setPaintOrder(SuperStatBar.class,Counter.class, CollisionBox.class, HurtableEntity.class, Tile.class);
+        setPaintOrder(SuperStatBar.class,Counter.class, CollisionBox.class, HurtableEntity.class, Coin.class, Tile.class);
         prepare();
     }
 
@@ -142,7 +142,7 @@ public class MyWorld extends World
     }
 
     public void started(){
-        //spawnEnemies(10);
+        spawnEnemies(10);
     }
 
     public void stopped(){
