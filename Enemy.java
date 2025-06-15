@@ -13,7 +13,6 @@ public abstract class Enemy extends HurtableEntity
     protected boolean inRange;
     protected int cd = 0;
     protected int cooldown;
-    private int counter;
     private boolean isOld;
     protected double speed; //magnitude of movement
     protected double dx, dy; // directions
@@ -84,11 +83,9 @@ public abstract class Enemy extends HurtableEntity
     
     protected void attacking(){
         cd++;
-        
         if(cd%cooldown==0){
             attack();
         }
-         
     }
 
     public void pathFindTowardPlayer() {
@@ -212,6 +209,10 @@ public abstract class Enemy extends HurtableEntity
                 dx = 0;
                 verticalSideSteppingCommenced = true;
             }
+            // if the path you're moving is also blocked, stop!
+            if( (Math.signum(dy) < 0 && !s[1]) || (Math.signum(dy) > 0 && !s[5]) ) {
+                attemptingSideStepVertically = false;
+            }
             realY += dy;
             return;
         } else {
@@ -228,6 +229,9 @@ public abstract class Enemy extends HurtableEntity
                 dy = 0;
                 horizontalSideSteppingCommenced = true;
             }
+            if( (Math.signum(dx) < 0 && !s[7]) || (Math.signum(dx) > 0 && !s[3]) ) {
+                attemptingSideStepHorizontally = false;
+            }
             realX += dx;
             return;
         } else {
@@ -236,26 +240,22 @@ public abstract class Enemy extends HurtableEntity
         }
         dx = dy = 0; // dont move there's not a good route..
     }
-
-
+    
+    
     private void moveDirectlyTowardPlayer() {
         double xDiff = play.getX() - getX();
         double yDiff = play.getY() - getY();
         double distance = Math.hypot(xDiff, yDiff); 
-
-        // stop if within correct range + attack also change for ranged to be farther
-        if (distance <= distanceFromPlayer + 50) {
-            //inRange = true;
-            if (counter == 0){
-                //if cooldown has passed, attack player
-                curAction = ActionState.ATTACKING;
+        int dist = this instanceof Ranged?300:50;
+        if (distance <= distanceFromPlayer+dist){
+            inRange=true;
+            curAction = ActionState.ATTACKING;
                 curAnimation = attackAnimation;
                 frame = 0;
                 if (this instanceof Ranged) highestIndex = 6; else highestIndex = 5;
-                counter = cooldown;
-            }
-            return; 
+            return;
         }
+        inRange=false;
         
         dx = (xDiff / distance) * speed; //unit vector times magnitude
 
@@ -346,7 +346,7 @@ public abstract class Enemy extends HurtableEntity
             }
         }
         if(surroundingTiles[0] == false) {
-            moveOffUnPassableTile();
+            //moveOffUnPassableTile();
         }
         
         return surroundingTiles;

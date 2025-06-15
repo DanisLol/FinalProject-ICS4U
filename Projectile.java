@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+import java.util.*;
 /**
  * Write a description of class Projectile here.
  * 
@@ -9,41 +9,69 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Projectile extends SuperSmoothMover
 {
     private int damage, speed;
-    // x and y is the location the character will be pointing towards
-    public Projectile(int x, int y, int d, int s){
+    private HurtableEntity e;
+    private int moveX,moveY;
+    private double angle;
+    public Projectile(HurtableEntity e, int d, int s, double a){
         damage=d;
         speed=s;
-        turnTowards(x, y);
-        //image
-    }
-    
-    // actor target is the actor that the projectile will be pointing towards
-    public Projectile(Actor target, int d,  int s) {
-        damage=d;
-        speed=s;
-        turnTowards(target);
+        this.e=e;
+        angle =a ;
+        GreenfootImage img = new GreenfootImage("Gojo_pose.png");
+        setImage(img);
+        moveX = (int) (speed * Math.cos(Math.toRadians(angle)));
+        moveY = (int) (speed * Math.sin(Math.toRadians(angle)));
     }
     
     public void act()
     {
-        move(speed);
+        moving();
         Tile tile = (Tile)getOneIntersectingObject(Tile.class);
         if (!tile.getIsPassable()){
             if(getWorld() != null){
-                destroy();
+                if(this!=null){
+                    destroy();
+                }else{
+                    return;
+                }
             }
         }
         HurtableEntity victim = (HurtableEntity)getOneIntersectingObject(HurtableEntity.class);
-        if (victim != null && victim.getWorld() != null) {
+        if (victim != null && victim.getWorld() != null && victim!=e) {
             victim.takeDamage(damage);
             if (getWorld() != null) {
-                destroy();
+                if(this!=null){
+                    destroy();
+                }else{
+                    return;
+                }
             }
         }
+    }
+    
+    private void moving(){
+        setLocation(getX() + moveX, getY() + moveY);
+        int moveXInput = 0;
+        int moveYInput = 0;
+
+        if(Greenfoot.isKeyDown("a")){
+            moveXInput = 10;
+        }
+        if(Greenfoot.isKeyDown("d")){
+            moveXInput = -10;
+        }
+        if(Greenfoot.isKeyDown("w")){
+            moveYInput = 10;
+        }
+        if(Greenfoot.isKeyDown("s")){
+            moveYInput = -10;
+        }
+        setLocation(getX() + moveXInput, getY() + moveYInput);
     }
     
     private void destroy() {
         // play an animation before destroying
         getWorld().removeObject(this);
+        return;
     }
 }
