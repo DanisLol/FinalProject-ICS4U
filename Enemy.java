@@ -61,11 +61,9 @@ public abstract class Enemy extends HurtableEntity
 
     protected void attacking(){
         cd++;
-        /*
         if(cd%cooldown==0){
-        attack();
+            attack();
         }
-         */
     }
 
     public void pathFindTowardPlayer() {
@@ -221,7 +219,11 @@ public abstract class Enemy extends HurtableEntity
         double yDiff = play.getY() - getY();
         double distance = Math.hypot(xDiff, yDiff); 
         int dist = this instanceof Ranged?200:50;
-        if (distance <= distanceFromPlayer+dist) return; // stop if within correct range
+        if (distance <= distanceFromPlayer+dist){
+            inRange=true;
+            return;
+        }
+        inRange=false;
         
         dx = (xDiff / distance) * speed; //unit vector times magnitude
 

@@ -9,19 +9,13 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Projectile extends SuperSmoothMover
 {
     private int damage, speed;
-    // x and y is the location the character will be pointing towards
-    public Projectile(int x, int y, int d, int s){
+    public Projectile(int d, int s){
         damage=d;
         speed=s;
-        turnTowards(x, y);
+        GreenfootImage img = new GreenfootImage("Gojo_pose.png");
+        setImage(img);
+        System.out.println("Projectile created " + damage + "  " + speed);
         //image
-    }
-    
-    // actor target is the actor that the projectile will be pointing towards
-    public Projectile(Actor target, int d,  int s) {
-        damage=d;
-        speed=s;
-        turnTowards(target);
     }
     
     public void act()
