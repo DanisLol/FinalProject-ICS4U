@@ -55,6 +55,7 @@ public class Player extends HurtableEntity
 
         if (health > 0) checkActionState();
 
+
         ///WHY IS IT NOT FUCKING DYING 
         //if action state changed, update what current animation needs to be
         if (curAction != lastAction){

@@ -93,11 +93,19 @@ public class Tile extends Scroller
             case 'q':
                 imageName = "tile_gate0.png";
                 break;
+            case 'p':
+                imageName = "tile_floor.png";
+                isPassable = true;
+                break;
             default:
                 imageName = "tile_floor.png";
         }
 
         image = new GreenfootImage(imageName);
         setImage(image);
+    }
+    
+    public void setIsPassable(boolean bool){
+        isPassable = bool;
     }
 }
