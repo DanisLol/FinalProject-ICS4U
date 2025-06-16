@@ -88,7 +88,8 @@ public class Player extends HurtableEntity
                 //realY += ySpeed;
                 tryMove(xSpeed, ySpeed);
             }
-        } 
+        }
+        //} 
 
         centreOn(this);
         updateLocation();
@@ -147,11 +148,32 @@ public class Player extends HurtableEntity
     }
 
     public void attack(){
-        Actor p = getOneIntersectingObject(Enemy.class);
-        if(p != null){
-
+        //add a collision box based on the player's current direction
+        int xOffset, yOffset, x, y;
+        if (direction < 2){
+            x = 32; 
+            y = 50; 
+            yOffset = 0;
+            xOffset = direction == 0? 32: -32;
+        } else {
+            x = 50;
+            y = 32;
+            xOffset = 0;
+            yOffset = direction == 3? 32 : -32;
         }
-        killed++;
+        CollisionBox attackCollider = new CollisionBox(x, y, 0, null, false);
+        getWorld().addObject(attackCollider, getX() + xOffset, getY() + yOffset);
+        
+        //get intersecting enemies with attack collider instead of player img
+        List<Enemy> enemies = attackCollider.getIntersectingEnemies();
+        for (Enemy e : enemies){
+            e.takeDamage(damage);
+            killed++;
+            //but enemy doesn't necessarily die after one attack??? 
+        }
+        
+        getWorld().removeObject(attackCollider);
+        //killed++; 
     }
 
     // public void takeDamage(int dmg) {

@@ -28,16 +28,13 @@ public abstract class Enemy extends HurtableEntity
         speed = 0.9;
         distanceFromPlayer = 20;
         health = 10;
-        
-        counter = 0; //no cooldown for first attack
-    }
+            }
 
     public void act()
     {
         super.act();
-        if (counter > 0) counter--;
         if (!dead){
-            //attacking();
+            attacking();
             pathFindTowardPlayer();
             pushEntities();
             getDirection();
@@ -83,8 +80,12 @@ public abstract class Enemy extends HurtableEntity
     
     protected void attacking(){
         cd++;
-        if(cd%cooldown==0){
-            attack();
+        if(cd%cooldown==0 && inRange && health > 0){
+            //attack(); --> move this to be called in HurtableEntity
+            curAction = ActionState.ATTACKING;
+            curAnimation = attackAnimation;
+            frame = 0;
+            if (this instanceof Melee) highestIndex = 5; else highestIndex = 6;
         }
     }
 
@@ -249,10 +250,6 @@ public abstract class Enemy extends HurtableEntity
         int dist = this instanceof Ranged?300:50;
         if (distance <= distanceFromPlayer+dist){
             inRange=true;
-            curAction = ActionState.ATTACKING;
-                curAnimation = attackAnimation;
-                frame = 0;
-                if (this instanceof Ranged) highestIndex = 6; else highestIndex = 5;
             return;
         }
         inRange=false;
@@ -287,27 +284,7 @@ public abstract class Enemy extends HurtableEntity
         }
         return false;                     // couldn’t move
     }
-    
-    private void pushEntities(){
-        List<HurtableEntity> enemies = getWorld().getObjects(HurtableEntity.class);
-        for(HurtableEntity e:enemies){
-            if(e!=this){
-                double dist = Math.hypot(getX()-e.getX(), getY()-e.getY());
-                if(dist<30){ //adjust if necesary
-                    double dx = getX()-e.getX();
-                    double dy= getY()-e.getY();
-                    double mag = Math.hypot(dx, dy);
-                    if(mag!=0){
-                        dx/=mag;
-                        dy/=mag;
-                        realX+=dx*5;
-                        realY+=dy*5;
-                    }
-                }
-            }
-            
-        }
-    }
+
     
     /** returns a boolean array of the surrounding tiles. 
      *  true means that the tile is passible,
@@ -360,13 +337,15 @@ public abstract class Enemy extends HurtableEntity
         }
     }
     
-    protected abstract void attack();
-
     protected int getHealth(){
         return this.health;
     }
     
     public boolean isDead(){
         return dead;
+    }
+    
+    public double getSpeed(){
+        return speed;
     }
 }

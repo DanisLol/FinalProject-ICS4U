@@ -17,7 +17,7 @@ public class Projectile extends SuperSmoothMover
         speed=s;
         this.e=e;
         angle =a ;
-        GreenfootImage img = new GreenfootImage("Gojo_pose.png");
+        GreenfootImage img = new GreenfootImage("projectile.png");
         setImage(img);
         moveX = (int) (speed * Math.cos(Math.toRadians(angle)));
         moveY = (int) (speed * Math.sin(Math.toRadians(angle)));
@@ -31,6 +31,7 @@ public class Projectile extends SuperSmoothMover
             if(getWorld() != null){
                 if(this!=null){
                     destroy();
+                    return;
                 }else{
                     return;
                 }

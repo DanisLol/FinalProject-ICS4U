@@ -47,7 +47,7 @@ public abstract class HurtableEntity extends Scroller
         curAnimation = walkAnimation;
         setImage(curAnimation.getOneImage(Direction.fromInteger(direction), frame));
 
-        collider = new CollisionBox(32, 32, 16, this);
+        collider = new CollisionBox(32, 32, 16, this, false);
     }
 
     public void addedToWorld(World w){
@@ -57,7 +57,6 @@ public abstract class HurtableEntity extends Scroller
 
     public void act(){
         super.act();
-        //if (this instanceof Player) animate();
     }
 
     public void animate(){
@@ -79,22 +78,24 @@ public abstract class HurtableEntity extends Scroller
                 } else if (curAction == ActionState.ATTACKING){
                     //on last frame of attack animation, deal damage 
                     if (curAnimation == attackAnimation){
-                        if (this instanceof Enemy){
-                            java.util.List<Player> p = getWorld().getObjects(Player.class);
-                            if (p != null){
-                                p.get(0).takeDamage(damage);
-                            }
-                        } else {
-                            java.util.List<Enemy> enemies = getIntersectingObjects(Enemy.class);
-                            if (enemies.size() != 0){
-                                enemies.get(0).takeDamage(damage);
-                            }
-                        }
+                        attack();
+                        // if (this instanceof Enemy){
+                        // java.util.List<Player> p = getWorld().getObjects(Player.class);
+                        // if (p != null){
+                        // p.get(0).takeDamage(damage);
+                        // }
+                        // } else {
+
+                        // java.util.List<Enemy> enemies = getIntersectingObjects(Enemy.class);
+                        // if (enemies.size() != 0){
+                        // enemies.get(0).takeDamage(damage);
+                        // }
+                        // }
                     }
 
                     frame = 0; 
 
-                    //i do not know why but if i don't add this if statement the enemy animation will break
+                    //need to change this probably
                     if (this instanceof Player )curAction = ActionState.NOTHING;  else curAction = ActionState.WALKING;
                     lastAction = ActionState.ATTACKING; 
                     curAnimation = walkAnimation;
@@ -105,6 +106,8 @@ public abstract class HurtableEntity extends Scroller
             }
         }
     }
+
+    public abstract void attack(); 
 
     public void takeDamage(int dmg){
         health -= dmg;
