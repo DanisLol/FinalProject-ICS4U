@@ -63,7 +63,7 @@ public class SettingsWorld extends World
     {   
         playerSkinNumber = playerSkin.getNumber(); 
         difficultyLevelNumber = difficultyLevel.getNumber(); 
-        
+
         playerSkin.choose("benjamin_pose.png", "Melissa_pose.png", "Kevin_pose.png","Gojo_pose.png"); 
         difficultyLevel.choose("easy.png", "medium.png", "hard.png"); 
 
@@ -81,27 +81,26 @@ public class SettingsWorld extends World
 
     public void nextWorld()
     {
+          if (Greenfoot.mouseClicked(next)){
+            Greenfoot.setWorld(new MyWorld());
+        }
+
         if(UserInfo.isStorageAvailable())
         {
             user = UserInfo.getMyInfo();
             //if (user != null){
-                user.setInt(0, playerSkinNumber); 
-                user.setInt(1, difficultyLevelNumber); 
-                user.store(); 
+            user.setInt(0, playerSkinNumber); 
+            user.setInt(1, difficultyLevelNumber); 
+            user.store(); 
             //}
         }
 
+        /*
         //if the mouse clicks on the next button, 
         if (Greenfoot.mouseClicked(next)){
             Greenfoot.setWorld(new MyWorld());
         }
-        
-        //if the mouse clicks on the next button, it will take me to the next pages of the settings
-        if (Greenfoot.mouseClicked(next))
-        {
-            Greenfoot.setWorld(new MyWorld());
-        }
-
+        */
     }
 
     public static String getPlayerSkinImage()
@@ -115,17 +114,17 @@ public class SettingsWorld extends World
     {
         return difficultyLevel.getChoosenImage(); 
     }
-    
+
     public static void setPlayerSkinNumber(int x)
     {
         playerSkinNumber = x; 
     }
-    
+
     public static void setDifficultyLevelNumber(int x)
     {
         difficultyLevelNumber = x; 
     }
-    
+
     public static void getUserInfo()
     {
 

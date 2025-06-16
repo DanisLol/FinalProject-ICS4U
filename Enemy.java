@@ -33,7 +33,7 @@ public abstract class Enemy extends HurtableEntity {
         health = 10;
             }
     protected SuperStatBar healthStat;
-/*
+    /*
     public Enemy(String sheetName, int largeSize) {
         super(sheetName, largeSize);
         healthStat = new SuperStatBar(50, health, this, 200, 15, Color.RED, Color.BLACK, false, Color.BLACK, 3);
@@ -43,6 +43,7 @@ public abstract class Enemy extends HurtableEntity {
         setImage(img);
     }
     */
+
 
     // private int direction; //for animation
 
