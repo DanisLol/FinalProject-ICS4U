@@ -46,6 +46,7 @@ public class SettingsWorld extends World
     {   
         playerSkin.choose("benjamin_pose.png", "Melissa_pose.png", "Kevin_pose.png","Gojo_pose.png"); 
         difficultyLevel.choose("easy.png", "medium.png", "hard.png"); 
+
         backWorld();
         nextWorld();
     }
@@ -75,6 +76,20 @@ public class SettingsWorld extends World
         if (Greenfoot.mouseClicked(next)){
             Greenfoot.setWorld(new MyWorld());
         }
+        /*
+        if(UserInfo.isStorageAvailable())
+        {
+            user.setString(0, getPlayerSkinImage()); 
+            user.setString(1, getDifficultiyLevelImage()); 
+            user.store(); 
+        }
+        */
+        //if the mouse clicks on the next button, it will take me to the next pages of the settings
+        if (Greenfoot.mouseClicked(next))
+        {
+            Greenfoot.setWorld(new MyWorld());
+        }
+
     }
 
     public static String getPlayerSkinImage()
