@@ -17,21 +17,18 @@ public abstract class Enemy extends HurtableEntity
     protected double speed; //magnitude of movement
     protected double dx, dy; // directions
     protected int distanceFromPlayer; // the range at which the enemy will stop moving toward
-
     private boolean horizontallyBlocked, verticallyBlocked;
     private boolean horizontalSideSteppingCommenced, verticalSideSteppingCommenced;
     private boolean attemptingSideStepHorizontally, attemptingSideStepVertically;
     
+    private int direction; //for animation
+    
     public Enemy (String sheetName, int largeSize) {
         super(sheetName, largeSize);
-        GreenfootImage img = new GreenfootImage(16, 16);
-        img.setColor(Color.RED);
-        img.fillRect(0, 0, 16, 16);
-        setImage(img);
         speed = 0.9;
-        health = 10;
         distanceFromPlayer = 20;
-    }
+        health = 10;
+            }
 
     public void act()
     {
@@ -40,13 +37,11 @@ public abstract class Enemy extends HurtableEntity
             attacking();
             pathFindTowardPlayer();
             pushEntities();
-            updateLocation();
-            //updateLocation(collider, dx, dy);
+            getDirection();
             super.animate(); 
         }
-
     }
-
+    
     public void addedToWorld(World w){
         super.addedToWorld(w);
         w.addObject(collider, getX(), getY() + 16);
@@ -58,11 +53,39 @@ public abstract class Enemy extends HurtableEntity
             isOld = true;
         }
     }
+    
+    private void getDirection(){
+    }
+    
+    private void pushEntities(){
+        List<HurtableEntity> enemies = getWorld().getObjects(HurtableEntity.class);
+        for(HurtableEntity e:enemies){
+            if(e!=this){
+                double dist = Math.hypot(getX()-e.getX(), getY()-e.getY());
+                if(dist<30){ //adjust if necesary
+                    double dx = getX()-e.getX();
+                    double dy= getY()-e.getY();
+                    double mag = Math.hypot(dx, dy);
+                    if(mag!=0){
+                        dx/=mag;
+                        dy/=mag;
+                        realX+=dx*5;
+                        realY+=dy*5;
+                    }
+                }
+            }
 
+        }
+    }
+    
     protected void attacking(){
         cd++;
-        if(cd%cooldown==0){
-            attack();
+        if(cd%cooldown==0 && inRange && health > 0){
+            //attack(); --> move this to be called in HurtableEntity
+            curAction = ActionState.ATTACKING;
+            curAnimation = attackAnimation;
+            frame = 0;
+            if (this instanceof Melee) highestIndex = 5; else highestIndex = 6;
         }
     }
 
@@ -216,7 +239,6 @@ public abstract class Enemy extends HurtableEntity
             attemptingSideStepHorizontally = false;
             horizontalSideSteppingCommenced = false;
         }
-
         dx = dy = 0; // dont move there's not a good route..
     }
     
@@ -239,7 +261,7 @@ public abstract class Enemy extends HurtableEntity
         realX += dx;
         realY += dy;
     }
-
+    
     private boolean simpleSideStep(boolean sameCol, boolean sameRow, boolean[] s, double speed) {
         if (sameCol) {                    // blocked north/south, so go E/W
             int[] picks = { 3, 7 };       // east, west
@@ -262,27 +284,7 @@ public abstract class Enemy extends HurtableEntity
         }
         return false;                     // couldn’t move
     }
-    
-    private void pushEntities(){
-        List<HurtableEntity> enemies = getWorld().getObjects(HurtableEntity.class);
-        for(HurtableEntity e:enemies){
-            if(e!=this){
-                double dist = Math.hypot(getX()-e.getX(), getY()-e.getY());
-                if(dist<30){ //adjust if necesary
-                    double dx = getX()-e.getX();
-                    double dy= getY()-e.getY();
-                    double mag = Math.hypot(dx, dy);
-                    if(mag!=0){
-                        dx/=mag;
-                        dy/=mag;
-                        realX+=dx*5;
-                        realY+=dy*5;
-                    }
-                }
-            }
-            
-        }
-    }
+
     
     /** returns a boolean array of the surrounding tiles. 
      *  true means that the tile is passible,
@@ -320,7 +322,6 @@ public abstract class Enemy extends HurtableEntity
                 surroundingTiles[i] = false;
             }
         }
-
         if(surroundingTiles[0] == false) {
             //moveOffUnPassableTile();
         }
@@ -336,9 +337,15 @@ public abstract class Enemy extends HurtableEntity
         }
     }
     
-    protected abstract void attack();
-
     protected int getHealth(){
         return this.health;
+    }
+    
+    public boolean isDead(){
+        return dead;
+    }
+    
+    public double getSpeed(){
+        return speed;
     }
 }
