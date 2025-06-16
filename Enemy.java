@@ -3,7 +3,7 @@ import java.util.*;
 /**
  * description goes here
  * 
- * @author Zachary Zhao
+ * @author Zachary Zhao, Daniel Wang
  * @version 0.0.2
  */
 
@@ -21,9 +21,12 @@ public abstract class Enemy extends HurtableEntity
     private boolean horizontallyBlocked, verticallyBlocked;
     private boolean horizontalSideSteppingCommenced, verticalSideSteppingCommenced;
     private boolean attemptingSideStepHorizontally, attemptingSideStepVertically;
+    protected SuperStatBar healthStat;
+  
     
     public Enemy (String sheetName, int largeSize) {
         super(sheetName, largeSize);
+        healthStat = new SuperStatBar(50, health, this, 200, 15, Color.RED, Color.BLACK, false, Color.BLACK, 3);
         GreenfootImage img = new GreenfootImage(16, 16);
         img.setColor(Color.RED);
         img.fillRect(0, 0, 16, 16);
@@ -341,4 +344,6 @@ public abstract class Enemy extends HurtableEntity
     protected int getHealth(){
         return this.health;
     }
+    
+    
 }

@@ -6,7 +6,7 @@ import java.util.List;
  * - benjamin animation looks weirdly cropped??
  * - what if mouse is clicked several times before attack finishes
  * 
- * @author (your name)
+ * @Daniel Wang
  * @version (a version number or a date)
  */
 public class Player extends HurtableEntity
@@ -17,6 +17,7 @@ public class Player extends HurtableEntity
     private int coins;
     //the number of enemies killed
     private int killed;
+    private int weaponDmg;
 
     public Player (){
         super("benjamin", 192);
@@ -131,6 +132,7 @@ public class Player extends HurtableEntity
 
         if (Greenfoot.mousePressed(null)){
             curAction = ActionState.ATTACKING;
+            attack();
         }
 
         //only nothing or walking if not attacking
@@ -146,7 +148,7 @@ public class Player extends HurtableEntity
     public void attack(){
         Actor p = getOneIntersectingObject(Enemy.class);
         if(p != null){
-
+            takeDamage(weaponDmg);
         }
         killed++;
     }
@@ -167,8 +169,25 @@ public class Player extends HurtableEntity
     }
 
     public int getKilled(){
-        return killed;
+        return this.killed;
     }
+    
+    public int getWeaponDmg(){
+        return this.weaponDmg;
+    }
+    
+    public int getHealth(){
+        return this.health;
+    }
+    
+    public void setHealth(int h){
+        this.health += h;
+    }
+    
+    public void setWeaponDmg(int dmg){
+        this.weaponDmg += dmg;
+    }
+    
 
     // public void setImageSize(int length, int width)
     // {
