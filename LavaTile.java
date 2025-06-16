@@ -6,12 +6,13 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class LavaTile extends Tile
+public class LavaTile extends Damager
 {
-    //deals damage
-
     public LavaTile(){
         super("tile_lava.png", 'l');
+        sound = new GreenfootSound("lava.wav");
+        sound.setVolume(30);
+        cooldown = 30;
     }
 
     /**
@@ -21,13 +22,20 @@ public class LavaTile extends Tile
     public void act()
     {
         super.act();
+        checkHurtablesAfterCooldowns();
+    }
+
+    public void checkHurtables(){
         java.util.List<HurtableEntity> hurtables = getWorld().getObjects(HurtableEntity.class);
         if (hurtables.size() != 0){
             for (HurtableEntity h : hurtables){
                 if (h.getCollider().getIntersectingTiles().contains(this)){
+                    sound.play();
                     h.takeDamage(1);
                 }
             }
         }
+        
+        countdown = cooldown;
     }
 }

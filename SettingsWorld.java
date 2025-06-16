@@ -10,6 +10,7 @@ import java.util.StringTokenizer;
 public class SettingsWorld extends World
 {
     private GreenfootImage background; 
+    private GreenfootSound music;
     private Cursor cursor; 
     private Button next;
     private Button back; 
@@ -36,6 +37,18 @@ public class SettingsWorld extends World
 
         difficultyLevelNumber = 0;
         difficultyLevel = new StatChooseImage(512,270,754,650, difficultyLevelNumber); 
+        
+        music = new GreenfootSound("settings_music.mp3");
+        music.setVolume(70);
+        music.playLoop();
+    }
+    
+    public void started(){
+        music.playLoop();
+    }
+    
+    public void stopped(){
+        music.pause();
     }
 
     public void act()
@@ -71,6 +84,7 @@ public class SettingsWorld extends World
         //idk what anything above this is
         
         if (Greenfoot.mouseClicked(next)){
+            music.stop();
             Greenfoot.setWorld(new MyWorld());
         }
     }

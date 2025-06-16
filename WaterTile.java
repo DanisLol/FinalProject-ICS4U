@@ -11,10 +11,10 @@ public class WaterTile extends Tile
     public WaterTile(){
         super("tile_water.png", 'w');
         sound = new GreenfootSound("water.wav");
-        sound.setVolume(30);
+        sound.setVolume(10);
     }
 
-    //slow player down
+    //change to slow player and enemy down
     /**
      * Act - do whatever the WaterTile wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.

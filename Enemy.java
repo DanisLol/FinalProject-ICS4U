@@ -20,15 +20,17 @@ public abstract class Enemy extends HurtableEntity
     private boolean horizontallyBlocked, verticallyBlocked;
     private boolean horizontalSideSteppingCommenced, verticalSideSteppingCommenced;
     private boolean attemptingSideStepHorizontally, attemptingSideStepVertically;
-    
+
     private int direction; //for animation
-    
+
     public Enemy (String sheetName, int largeSize) {
         super(sheetName, largeSize);
         speed = 0.9;
         distanceFromPlayer = 20;
         health = 10;
-            }
+
+        collider = new CollisionBox(32, 50, 16, this, false);
+    }
 
     public void act()
     {
@@ -41,7 +43,7 @@ public abstract class Enemy extends HurtableEntity
             super.animate(); 
         }
     }
-    
+
     public void addedToWorld(World w){
         super.addedToWorld(w);
         w.addObject(collider, getX(), getY() + 16);
@@ -53,10 +55,10 @@ public abstract class Enemy extends HurtableEntity
             isOld = true;
         }
     }
-    
+
     private void getDirection(){
     }
-    
+
     private void pushEntities(){
         List<HurtableEntity> enemies = getWorld().getObjects(HurtableEntity.class);
         for(HurtableEntity e:enemies){
@@ -77,7 +79,7 @@ public abstract class Enemy extends HurtableEntity
 
         }
     }
-    
+
     protected void attacking(){
         cd++;
         if(cd%cooldown==0 && inRange && health > 0){
@@ -127,7 +129,7 @@ public abstract class Enemy extends HurtableEntity
                 realX += dx; 
                 return; 
             }
-        
+
             // if diagonal is blocked, then try moving horizontally or vertically
             if (absX >= absY) {      // favour horizontal first
                 if (xDiff < 0 && s[7]) { 
@@ -183,24 +185,24 @@ public abstract class Enemy extends HurtableEntity
                 }
             }
         }
-        
+
         // if the enemy and player are on the same axis, then it will side step 
         // until moved past the obstruction
-    
+
         if(xDiff > -32 && xDiff < 32) attemptingSideStepHorizontally = true; // if the player is within the magnitude of speed to the enemy on the x axis
         if(yDiff > -32 && yDiff < 32) attemptingSideStepVertically = true;
-        
+
         // checks if the player can move horizontally/ vertically
         if(xDiff < 0) 
             horizontallyBlocked = !s[7]; // W
         else 
             horizontallyBlocked = !s[3]; // E
-        
+
         if(yDiff > 0) 
             verticallyBlocked = !s[5]; // S
         else 
             verticallyBlocked = !s[1]; // N
-            
+
         if(attemptingSideStepVertically && horizontallyBlocked) {
             if(!verticalSideSteppingCommenced) {
                 if(Greenfoot.getRandomNumber(2) == 0) // randomly decides which direction to go
@@ -220,7 +222,7 @@ public abstract class Enemy extends HurtableEntity
             attemptingSideStepVertically = false;
             verticalSideSteppingCommenced = false;
         }
-        
+
         if(attemptingSideStepHorizontally && verticallyBlocked) {
             if(!horizontalSideSteppingCommenced) {
                 if(Greenfoot.getRandomNumber(2) == 0) // randomly decides which direction to go
@@ -241,8 +243,7 @@ public abstract class Enemy extends HurtableEntity
         }
         dx = dy = 0; // dont move there's not a good route..
     }
-    
-    
+
     private void moveDirectlyTowardPlayer() {
         double xDiff = play.getX() - getX();
         double yDiff = play.getY() - getY();
@@ -253,7 +254,7 @@ public abstract class Enemy extends HurtableEntity
             return;
         }
         inRange=false;
-        
+
         dx = (xDiff / distance) * speed; //unit vector times magnitude
 
         dy = (yDiff / distance) * speed;
@@ -261,7 +262,7 @@ public abstract class Enemy extends HurtableEntity
         realX += dx;
         realY += dy;
     }
-    
+
     private boolean simpleSideStep(boolean sameCol, boolean sameRow, boolean[] s, double speed) {
         if (sameCol) {                    // blocked north/south, so go E/W
             int[] picks = { 3, 7 };       // east, west
@@ -285,7 +286,6 @@ public abstract class Enemy extends HurtableEntity
         return false;                     // couldn’t move
     }
 
-    
     /** returns a boolean array of the surrounding tiles. 
      *  true means that the tile is passible,
      *  false means that the tile is not.
@@ -325,10 +325,10 @@ public abstract class Enemy extends HurtableEntity
         if(surroundingTiles[0] == false) {
             //moveOffUnPassableTile();
         }
-        
+
         return surroundingTiles;
     }
-    
+
     public void moveOffUnPassableTile() {
         while(((Tile)getOneObjectAtOffset(0, 0, Tile.class)).getIsPassable()) {
             setLocation(getX()-dx, getY()-dy);
@@ -336,15 +336,15 @@ public abstract class Enemy extends HurtableEntity
             realY = getY();
         }
     }
-    
+
     protected int getHealth(){
         return this.health;
     }
-    
+
     public boolean isDead(){
         return dead;
     }
-    
+
     public double getSpeed(){
         return speed;
     }

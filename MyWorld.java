@@ -79,7 +79,7 @@ public class MyWorld extends World
     Counter counter2 = new Counter();
     public final int GAME_LENGTH = 90; // the length of the game, in seconds.
     
-    private GreenfootSound music;
+    public static final GreenfootSound GAME_MUSIC = new GreenfootSound("game_music.mp3");
 
     public MyWorld()
     {    
@@ -116,9 +116,8 @@ public class MyWorld extends World
 
         actNum = 0;
 
-        music = new GreenfootSound("game_music.mp3");
-        music.setVolume(50);
-        music.playLoop();
+        GAME_MUSIC.setVolume(50);
+        GAME_MUSIC.playLoop();
         
         setPaintOrder(Fader.class, SuperStatBar.class,Counter.class, CollisionBox.class, Projectile.class, HurtableEntity.class, Coin.class, Tile.class);
         prepare();
@@ -157,11 +156,11 @@ public class MyWorld extends World
     }
 
     public void started(){
-        music.playLoop();
+        GAME_MUSIC.playLoop();
     }
 
     public void stopped(){
-        music.pause();
+        GAME_MUSIC.pause();
     }
     
     /*public void spawnEnemies(int numberOfEnemies) {

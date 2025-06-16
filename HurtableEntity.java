@@ -46,8 +46,6 @@ public abstract class HurtableEntity extends Scroller
 
         curAnimation = walkAnimation;
         setImage(curAnimation.getOneImage(Direction.fromInteger(direction), frame));
-
-        collider = new CollisionBox(32, 32, 16, this, false);
     }
 
     public void addedToWorld(World w){
@@ -79,18 +77,6 @@ public abstract class HurtableEntity extends Scroller
                     //on last frame of attack animation, deal damage 
                     if (curAnimation == attackAnimation){
                         attack();
-                        // if (this instanceof Enemy){
-                        // java.util.List<Player> p = getWorld().getObjects(Player.class);
-                        // if (p != null){
-                        // p.get(0).takeDamage(damage);
-                        // }
-                        // } else {
-
-                        // java.util.List<Enemy> enemies = getIntersectingObjects(Enemy.class);
-                        // if (enemies.size() != 0){
-                        // enemies.get(0).takeDamage(damage);
-                        // }
-                        // }
                     }
 
                     frame = 0; 

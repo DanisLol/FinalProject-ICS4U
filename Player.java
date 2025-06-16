@@ -41,7 +41,9 @@ public class Player extends HurtableEntity
         attackSound.setVolume(70);
 
         damage = 10; //test
-        health = 100;        
+        health = 100;   
+        
+        collider = new CollisionBox(32, 32, 16, this, false);
     }
 
     /**
@@ -132,7 +134,7 @@ public class Player extends HurtableEntity
                 ySpeed = 10;
             } 
         }
-        
+
         //account for water tile?!?
         xSpeed = xSpeed * percentXSpeed;
         ySpeed = ySpeed * percentYSpeed;
@@ -155,34 +157,37 @@ public class Player extends HurtableEntity
         //add a collision box based on the player's current direction
         int xOffset, yOffset, x, y;
         if (direction < 2){
-            x = 32; 
-            y = 50; 
+            x = 40; 
+            y = 40; 
             yOffset = 0;
-            xOffset = direction == 0? 32: -32;
+            xOffset = direction == 0? 25: -25;
         } else {
-            x = 50;
+            x = 40;
             y = 32;
             xOffset = 0;
-            yOffset = direction == 3? 32 : -32;
+            yOffset = direction == 3? 25 : -25;
         }
         CollisionBox attackCollider = new CollisionBox(x, y, 0, null, true);
         getWorld().addObject(attackCollider, getX() + xOffset, getY() + yOffset);
-        
+
         //get intersecting enemies with attack collider instead of player img
         //might need to put a cap on this?????
-        List<Enemy> enemies = attackCollider.getIntersectingEnemies();
-        for (Enemy e : enemies){
-            e.takeDamage(damage);
-            killed++;
+        List<CollisionBox> enemies = attackCollider.getIntersectingColliders();
+        for (CollisionBox c : enemies){
+            if (c.getOwner() instanceof Enemy){
+                Enemy e = (Enemy) c.getOwner();
+                if (e != null) e.takeDamage(damage);
+                killed++;
+            }
             //but enemy doesn't necessarily die after one attack??? 
         }
-        
+
         List<BarrelTile> barrels = attackCollider.getIntersectingBarrels();
         if (barrels.size() != 0){
             barrels.get(0).takeDamage(damage);
         }
-        
-        getWorld().removeObject(attackCollider);
+
+        //getWorld().removeObject(attackCollider);
         //killed++; 
     }
 
@@ -251,7 +256,7 @@ public class Player extends HurtableEntity
             }
         }
     }
-    
+
     public void setSpeedPercents(double newXPercent, double newYPercent){
         percentXSpeed = newXPercent;
         percentYSpeed = newYPercent;
