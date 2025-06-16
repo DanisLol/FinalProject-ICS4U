@@ -72,12 +72,15 @@ public class Board extends Actor
     public void display() {
         int displayStartRow = 5;
         int displayStartCol = 7;
-
+    
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
                 int x = (j - displayStartCol) * Tile.SIZE + offset;
                 int y = (i - displayStartRow) * Tile.SIZE + offset;
-                getWorld().addObject(tiles[i][j], x, y);
+    
+                getWorld().addObject(tiles[i][j], 0, 0); // Placeholder location
+                tiles[i][j].setRealLocation(x, y);       // Set world coordinates
+                tiles[i][j].updateLocation();            // Sync visual position
             }
         }
     }
@@ -99,5 +102,20 @@ public class Board extends Actor
     
     public int getTileRowCount(){
         return tiles.length;
+    }
+    
+    public Tile[][] getTiles(){
+        return tiles;
+    }
+    
+    public int getTileRow(Tile tile) {
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[i].length; j++) {
+                if (tiles[i][j] == tile) {
+                    return i;
+                }
+            }
+        }
+        return -1; // not found
     }
 }

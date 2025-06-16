@@ -39,7 +39,7 @@ public class SettingsWorld extends World
 
     public void act()
     {   
-        playerSkin.choose("Benjamin_pose.png", "Melissa_pose.png", "Kevin_pose.png","Gojo_pose.png"); 
+        playerSkin.choose("benjamin_pose.png", "Melissa_pose.png", "Kevin_pose.png","Gojo_pose.png"); 
         difficultyLevel.choose("easy.png", "medium.png", "hard.png"); 
 
     }

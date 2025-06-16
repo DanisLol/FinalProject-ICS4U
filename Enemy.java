@@ -21,6 +21,7 @@ public abstract class Enemy extends HurtableEntity
     private boolean horizontallyBlocked, verticallyBlocked;
     private boolean horizontalSideSteppingCommenced, verticalSideSteppingCommenced;
     private boolean attemptingSideStepHorizontally, attemptingSideStepVertically;
+    private boolean counted = false;
     
     public Enemy (String sheetName, int largeSize) {
         super(sheetName, largeSize);
@@ -43,6 +44,13 @@ public abstract class Enemy extends HurtableEntity
             updateLocation();
             //updateLocation(collider, dx, dy);
             super.animate(); 
+        }
+        
+        if (dead){
+            if (!counted){
+                play.addKill();
+                counted = true;
+            }
         }
 
     }

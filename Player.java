@@ -148,7 +148,6 @@ public class Player extends HurtableEntity
         if(p != null){
 
         }
-        killed++;
     }
 
     // public void takeDamage(int dmg) {
@@ -168,6 +167,10 @@ public class Player extends HurtableEntity
 
     public int getKilled(){
         return killed;
+    }
+    
+    public void addKill(){
+        killed ++;
     }
 
     // public void setImageSize(int length, int width)
