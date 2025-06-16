@@ -16,7 +16,9 @@ public abstract class HurtableEntity extends Scroller
     protected CollisionBox collider;
     protected GreenfootSound attackSound;
     protected int damage;
-    protected boolean dead = false;
+    protected double speed;
+    protected double maxSpeed;
+    protected boolean dead;
 
     protected int health;
     
@@ -49,8 +51,8 @@ public abstract class HurtableEntity extends Scroller
 
         curAnimation = walkAnimation;
         setImage(curAnimation.getOneImage(Direction.fromInteger(direction), frame));
-
         collider = new CollisionBox(32, 32, 16, this, false);
+
     }
 
     public void addedToWorld(World w){
@@ -60,6 +62,7 @@ public abstract class HurtableEntity extends Scroller
 
     public void act(){
         super.act();
+
     }
 
     //Animation:
@@ -76,10 +79,21 @@ public abstract class HurtableEntity extends Scroller
 
             frame++;
 
+            if (this instanceof Player) System.out.println(frame);
+
             if (frame > highestIndex){
                 if (curAction == ActionState.WALKING) {
                     frame = 1;
                 } else if (curAction == ActionState.ATTACKING){
+
+    public void alterSpeed(double multiplier) {
+        speed = maxSpeed*multiplier;
+    }
+    
+    public void resetSpeed() {
+        speed = maxSpeed;
+    }
+    
                     //on last frame of attack animation, deal damage 
                     if (curAnimation == attackAnimation){
                         attack();
@@ -134,7 +148,7 @@ public abstract class HurtableEntity extends Scroller
     public CollisionBox getCollider(){
         return collider;
     }
-    
+
     protected int getDmg(){
         return damage;
     }
@@ -142,6 +156,4 @@ public abstract class HurtableEntity extends Scroller
     protected void changeDmg(){
         damage -= 5;
     }
-    
- 
 }
