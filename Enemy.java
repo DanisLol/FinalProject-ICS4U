@@ -20,15 +20,16 @@ public abstract class Enemy extends HurtableEntity
     private boolean horizontallyBlocked, verticallyBlocked;
     private boolean horizontalSideSteppingCommenced, verticalSideSteppingCommenced;
     private boolean attemptingSideStepHorizontally, attemptingSideStepVertically;
-    protected SuperStatBar healthStat;
+    //protected SuperStatBar healthStat;
 
     private int direction; //for animation
 
     public Enemy (String sheetName, int largeSize) {
         super(sheetName, largeSize);
-        speed = 0.9;
+        maxSpeed = 0.9;
+        speed = maxSpeed;
         distanceFromPlayer = 20;
-        health = 10;
+        health = 100;
         healthStat = new SuperStatBar(50, health, this, 200, 15, Color.RED, Color.BLACK, true, Color.BLACK, 3);
 
         collider = new CollisionBox(32, 50, 16, this, false);
@@ -43,14 +44,17 @@ public abstract class Enemy extends HurtableEntity
             pushEntities();
             getDirection();
             super.animate(); 
+        } else {
+            getWorld().removeObject(this);
+            return;
         }
     }
 
     public void addedToWorld(World w){
         super.addedToWorld(w);
         //w.addObject(collider, getX(), getY() + 16);
-        
-        w.addObject(healthStat, getX(), getY());
+        //moved to hurtableentity
+        //w.addObject(healthStat, getX(), getY());
         if(!isOld) {
             List<Player> players = w.getObjects(Player.class);
             if (!players.isEmpty()) {
@@ -265,6 +269,8 @@ public abstract class Enemy extends HurtableEntity
 
         realX += dx;
         realY += dy;
+        
+        //healthStat.moveMe();
     }
 
     private boolean simpleSideStep(boolean sameCol, boolean sameRow, boolean[] s, double speed) {

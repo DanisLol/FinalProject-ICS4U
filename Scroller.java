@@ -24,7 +24,7 @@ public class Scroller extends SuperSmoothMover
     @Override
     protected void addedToWorld(World w) {
         if(isNew) {
-            w = (MyWorld)getWorld();
+            w = getWorld();
             player = w.getObjects(Player.class).get(0);
             realX = getX();
             realY = getY();

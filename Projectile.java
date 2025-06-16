@@ -30,7 +30,7 @@ public class Projectile extends SuperSmoothMover
     {
         moving();
         Tile tile = (Tile)getOneIntersectingObject(Tile.class);
-        if (!tile.getIsPassable()){
+        if (tile != null && !tile.getIsPassable()){
             if(getWorld() != null){
                 if(this!=null){
                     destroy();

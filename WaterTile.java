@@ -26,10 +26,10 @@ public class WaterTile extends Tile
         List<Player> p = getWorld().getObjects(Player.class);
         
         if (this.intersects(p.get(0).getCollider())){
-            p.get(0).setSpeedPercents(0.2, 0.2);
+            //p.get(0).setSpeedPercents(0.2, 0.2);
             sound.play();
         } else {
-            p.get(0).setSpeedPercents(1, 1);
+            //p.get(0).setSpeedPercents(1, 1);
         }
     }
 }

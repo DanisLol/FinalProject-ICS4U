@@ -44,9 +44,9 @@ import java.util.Arrays;
  * @author Jordan Cohen
  * @version 2.2.0 - Jan 2023
  */
-public class SuperStatBar extends Actor
+public class SuperStatBar extends Scroller
 {
-    
+
     /**
      * Mr. Cohen borrowed code start
      */
@@ -54,7 +54,7 @@ public class SuperStatBar extends Actor
     // When using the simplest constructor, this allows control of whether bars
     // should hide by default when at 100%
     private static final boolean HIDE_AT_MAX_DEFAULT = false;
-    
+
     // Declare Instance Variables
     private int[] maxVals;
     private int[] currVals;
@@ -81,8 +81,6 @@ public class SuperStatBar extends Actor
     // Declare Instance Objects
     private Actor target;
 
-    
-    
     
     // Declare some Color objects
     private Color[] filledColor;
@@ -207,7 +205,7 @@ public class SuperStatBar extends Actor
         this.hideAtMax = hideAtMax;
 
         this.maxVals = maxVals;
-        
+
         this.filledColor = filledColor;
         this.missingColor = missingColor;
 
@@ -226,23 +224,23 @@ public class SuperStatBar extends Actor
         update(currVals);
 
     }
-    
+
     //New SuperStatBar constructor for this game
-     public SuperStatBar (int maxVal,  int currVal, Actor owner, int width, int height, Color filledColor, Color missingColor, boolean hideAtMax, Color borderColor, int borderThickness){
+    public SuperStatBar (int maxVal,  int currVal, Actor owner, int width, int height, Color filledColor, Color missingColor, boolean hideAtMax, Color borderColor, int borderThickness){
         this (new int[]{maxVal}, new int[]{currVal}, owner, width, height, new Color[] {filledColor}, new Color[] {missingColor}, hideAtMax, borderColor, borderThickness);
 
     }
+
     public SuperStatBar (int maxVals[],  int currVals[], Actor owner, int width, int height, Color filledColor[], Color missingColor[], boolean hideAtMax, Color borderColor, int borderThickness){
         this.barCount = maxVals.length;
         this.barHeight = (height - (2* borderThickness))/barCount;
-
 
         this.width = width;
         this.height = height;
         this.hideAtMax = hideAtMax;
 
         this.maxVals = maxVals;
-        
+
         this.filledColor = filledColor;
         this.missingColor = missingColor;
 
@@ -265,14 +263,11 @@ public class SuperStatBar extends Actor
     public void addedToWorld (World w){
         moveMe();
     }
-    
+
     /**
      * The only purpose of the act method is to follow the target Actor. If you'd rather control this yourself,
      * delete this act() method and call moveMe() directly whenever your Actor moves. 
      */
-    public void act () {
-        moveMe();
-    }
 
     /**
      * For projects where efficiency is more important, DELETE THE ACT METHOD and call this directly instead.
@@ -286,6 +281,7 @@ public class SuperStatBar extends Actor
             if (target.getWorld() != null)
             {
                 setLocation (target.getX(), target.getY() + offset);
+                super.updateLocation();
             }
             else
             {
@@ -313,7 +309,7 @@ public class SuperStatBar extends Actor
     public void show (){
         hideAtMax = false;
     }
-    
+
     /**
      * Change the hideAtMax property - make it hide the bar even when the primary (0th)
      * stat is at full. 
@@ -321,7 +317,7 @@ public class SuperStatBar extends Actor
     public void hideAtMax() {
         hideAtMax = true;
     }
-    
+
     /**
      * The update method.
      * 

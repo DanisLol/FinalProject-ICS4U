@@ -11,7 +11,8 @@ import java.util.List;
  */
 public class Player extends HurtableEntity
 {
-    private double xSpeed, ySpeed, percentXSpeed = 1, percentYSpeed = 1;
+    //private double xSpeed, ySpeed, percentXSpeed = 1, percentYSpeed = 1;
+    private double dy, dx;
     private boolean isNew;
     private String player;
     private int coins;
@@ -30,19 +31,23 @@ public class Player extends HurtableEntity
         //image = walkAnimation.getOneImage(Direction.fromInteger(direction), 0); 
         //setImage(image);
         //frame = 0;
-        xSpeed = 0;
-        ySpeed = 0;
+        dy = 0;
+        dx = 0;
         realX = 0;
         realY = 0;
         isNew = true;
         countdown = 6;
         coins = 0;
+        
+        maxSpeed = 8;
+        speed = maxSpeed;
 
         attackSound = new GreenfootSound("player_attack.wav");
         attackSound.setVolume(70);
 
         damage = 10; //test
         health = 100;   
+        healthStat = new SuperStatBar(50, health, this, 200, 15, Color.GREEN, Color.BLACK, true, Color.BLACK, 3);
 
         collider = new CollisionBox(32, 32, 16, this, false);
     }
@@ -89,11 +94,11 @@ public class Player extends HurtableEntity
                 //move player
                 //realX += xSpeed; 
                 //realY += ySpeed;
-                tryMove(xSpeed, ySpeed);
+                tryMove(dx, dy);
             }
         }
         //} 
-
+        
         centreOn(this);
         updateLocation();
     }
@@ -103,42 +108,45 @@ public class Player extends HurtableEntity
     }
 
     private void checkActionState(){
+        System.out.println(dx);
+        System.out.println(dy);
         lastAction = curAction;
 
-        xSpeed = 0;
-        ySpeed = 0;
+        dx = 0;
+        dy = 0;
 
-        //is this if statement not redundant 
-        if(getWorld() instanceof ShopWorld)
-        {
+        if (Greenfoot.isKeyDown("a")) {
+            direction = 1;
+            dx = -1;
+        } 
+
+        if (Greenfoot.isKeyDown("d")) {
+            direction = 0;
+            dx = 1;
         }
-        else
-        {
 
-            if (Greenfoot.isKeyDown("a")){
-                direction = 1;
-                xSpeed = -10;
-            } 
-
-            if (Greenfoot.isKeyDown("d")){
-                direction = 0;
-                xSpeed = 10;
-            }
-
-            if (Greenfoot.isKeyDown("w")){
-                direction = 2;
-                ySpeed = -10;
-            }
-
-            if (Greenfoot.isKeyDown("s")){
-                direction = 3;
-                ySpeed = 10;
-            } 
+        if (Greenfoot.isKeyDown("w")) {
+            direction = 2;
+            dy = -1;
         }
+
+        if (Greenfoot.isKeyDown("s")) {
+            direction = 3;
+            dy = 1;
+        } 
+
+        // if both are pressed, then decrease magnitude of each one
+        if(Math.abs(dx) + Math.abs(dy) == 2) {
+            dy *= Math.sqrt(2)/2;
+            dx *= Math.sqrt(2)/2;
+        }
+
+        dx = dx*speed;
+        dy = dy*speed;
 
         //account for water tile?!?
-        xSpeed = xSpeed * percentXSpeed;
-        ySpeed = ySpeed * percentYSpeed;
+        //xSpeed = xSpeed * percentXSpeed;
+        //ySpeed = ySpeed * percentYSpeed;
 
         if (Greenfoot.mousePressed(null)){
             curAction = ActionState.ATTACKING;
@@ -146,11 +154,17 @@ public class Player extends HurtableEntity
 
         //only nothing or walking if not attacking
         if (curAction != ActionState.ATTACKING){
-            if (xSpeed == 0 && ySpeed == 0) {
+            if (dx == 0 && dy == 0) {
                 curAction = ActionState.NOTHING; 
             } else {
                 curAction = ActionState.WALKING;
             }
+        }
+
+        //check portal tile. cheap way but 
+        if (this.isTouching(PortalTile.class)){
+            MyWorld w = (MyWorld) getWorld();
+            w.increaseLevel();
         }
     }
 
@@ -236,8 +250,8 @@ public class Player extends HurtableEntity
     // }
 
     public void tryMove(double dx, double dy) {
-        int oldX = getX();
-        int oldY = getY();
+        double oldX = getX();
+        double oldY = getY();
         double oldRealX = realX;
         double oldRealY = realY;
 
@@ -277,8 +291,13 @@ public class Player extends HurtableEntity
         }
     }
 
-    public void setSpeedPercents(double newXPercent, double newYPercent){
-        percentXSpeed = newXPercent;
-        percentYSpeed = newYPercent;
+    // public void setSpeedPercents(double newXPercent, double newYPercent){
+        // percentXSpeed = newXPercent;
+        // percentYSpeed = newYPercent;
+    // }
+
+    public void setRealXY(double newX, double newY){
+        realX = newX;
+        realY = newY;
     }
 }

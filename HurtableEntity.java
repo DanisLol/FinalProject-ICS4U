@@ -17,8 +17,12 @@ public abstract class HurtableEntity extends Scroller
     protected GreenfootSound attackSound;
     protected int damage;
     protected boolean dead = false;
+    
+    protected double speed;
+    protected double maxSpeed;
 
     protected int health;
+    protected SuperStatBar healthStat;
 
     public HurtableEntity(String sheetName, int largeSize){
         String sheet1 = sheetName + ".png"; 
@@ -51,6 +55,7 @@ public abstract class HurtableEntity extends Scroller
     public void addedToWorld(World w){
         super.addedToWorld(w);
         w.addObject(collider, getX(), getY() + 16);
+        //w.addObject(healthStat, getX(), getY());
     }
 
     public void act(){
@@ -97,6 +102,8 @@ public abstract class HurtableEntity extends Scroller
 
     public void takeDamage(int dmg){
         health -= dmg;
+        healthStat.update(health);
+
         if (health <= 0){
             if (lastAction != ActionState.DYING){
                 curAction = ActionState.DYING;
@@ -115,12 +122,20 @@ public abstract class HurtableEntity extends Scroller
     public CollisionBox getCollider(){
         return collider;
     }
-    
+
     protected int getDmg(){
         return damage;
     }
 
     protected void changeDmg(){
         damage -= 5;
+    }
+    
+    public void alterSpeed(double multiplier) {
+        speed = maxSpeed*multiplier;
+    }
+    
+    public void resetSpeed() {
+        speed = maxSpeed;
     }
 }
