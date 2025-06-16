@@ -102,6 +102,18 @@ public class SettingsWorld extends World
         }
         */
     }
+    
+    public static void setUserInfoInt(int index, int varible)
+    {
+        user.setInt(index, varible);
+        user.store(); 
+    }
+    
+    public static int getUserInfoInt(int index)
+    {
+        return user.getInt(index); 
+    }
+
 
     public static String getPlayerSkinImage()
     {
@@ -109,10 +121,22 @@ public class SettingsWorld extends World
         String imageBase = imageName.nextToken().toLowerCase();
         return imageBase; 
     }
-
-    public static String getDifficultiyLevelImage()
+    
+    public static int getDifficultiyLevelImage()
     {
-        return difficultyLevel.getChoosenImage(); 
+        if(difficultyLevel.getChoosenImage().equals("easy.png"))
+        {
+            return 0;
+        }
+        else if (difficultyLevel.getChoosenImage().equals("medium.png"))
+        {
+            return 1;
+        }
+        else if (difficultyLevel.getChoosenImage().equals("medium.png")) 
+        {
+            return 2; 
+        }
+        return -1; 
     }
 
     public static void setPlayerSkinNumber(int x)

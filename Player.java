@@ -13,7 +13,7 @@ public class Player extends HurtableEntity {
     private double xSpeed, ySpeed, percentXSpeed = 1, percentYSpeed = 1;
     private boolean isNew;
     private String player;
-    private int coins;
+    private static int coins;
     // the number of enemies killed
     private int killed;
     private int weaponDmg;
@@ -36,13 +36,26 @@ public class Player extends HurtableEntity {
         realY = 0;
         isNew = true;
         countdown = 6;
-        coins = 0;
+        coins = SettingsWorld.getUserInfoInt(3);
 
         attackSound = new GreenfootSound("player_attack.wav");
         attackSound.setVolume(70);
 
-        damage = 10; // test
-        health = 100;
+        if(SettingsWorld.getDifficultiyLevelImage() == 0)
+        {
+            damage = 5; 
+            health = 200;
+        }
+        else if (SettingsWorld.getDifficultiyLevelImage() == 1)
+        {
+            damage = 10; 
+            health = 150;
+        }
+        else 
+        {
+            damage = 20; 
+            health = 100; 
+        }
     }
 
     /**
@@ -58,7 +71,7 @@ public class Player extends HurtableEntity {
         } else if (curAnimation == deathAnimation && frame == highestIndex) {
             // finished animating death
             getWorld().addObject(new Fader("in", new DeathWorld()), getWorld().getWidth() / 2,
-                    getWorld().getHeight() / 2);
+                getWorld().getHeight() / 2);
         }
 
         // if action state changed, update what current animation needs to be
@@ -208,6 +221,11 @@ public class Player extends HurtableEntity {
         }
     }
 
+    public void updateCoin()
+    {
+        SettingsWorld.setUserInfoInt(3, coins); 
+    }
+
     public int getKilled() {
         return this.killed;
     }
@@ -231,11 +249,6 @@ public class Player extends HurtableEntity {
     public void addKill() {
         killed++;
     }
-
-    // public void setImageSize(int length, int width)
-    // {
-    // image.scale(length, width);
-    // }
 
     public void tryMove(double dx, double dy) {
         int oldX = getX();

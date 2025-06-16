@@ -21,32 +21,41 @@ public abstract class Enemy extends HurtableEntity {
     private boolean horizontalSideSteppingCommenced, verticalSideSteppingCommenced;
     private boolean attemptingSideStepHorizontally, attemptingSideStepVertically;
     private boolean counted = false;
-    
+
     private int direction; //for animation
-    
-    
+
     
     public Enemy (String sheetName, int largeSize) {
         super(sheetName, largeSize);
         speed = 0.9;
         distanceFromPlayer = 20;
-        health = 10;
-            }
+
+        if(SettingsWorld.getDifficultiyLevelImage() == 0)
+        {
+            health = 10;
+        }
+        else if (SettingsWorld.getDifficultiyLevelImage() == 1)
+        {
+            health = 25;
+        }
+        else 
+        {
+            health = 40; 
+        }
+    }
     protected SuperStatBar healthStat;
     /*
     public Enemy(String sheetName, int largeSize) {
-        super(sheetName, largeSize);
-        healthStat = new SuperStatBar(50, health, this, 200, 15, Color.RED, Color.BLACK, false, Color.BLACK, 3);
-        GreenfootImage img = new GreenfootImage(16, 16);
-        img.setColor(Color.RED);
-        img.fillRect(0, 0, 16, 16);
-        setImage(img);
+    super(sheetName, largeSize);
+    healthStat = new SuperStatBar(50, health, this, 200, 15, Color.RED, Color.BLACK, false, Color.BLACK, 3);
+    GreenfootImage img = new GreenfootImage(16, 16);
+    img.setColor(Color.RED);
+    img.fillRect(0, 0, 16, 16);
+    setImage(img);
     }
-    */
-
+     */
 
     // private int direction; //for animation
-
     public void act() {
         super.act();
         if (!dead) {
@@ -216,7 +225,7 @@ public abstract class Enemy extends HurtableEntity {
 
         if (xDiff > -32 && xDiff < 32)
             attemptingSideStepHorizontally = true; // if the player is within the magnitude of speed to the enemy on the
-                                                   // x axis
+        // x axis
         if (yDiff > -32 && yDiff < 32)
             attemptingSideStepVertically = true;
 
@@ -340,7 +349,7 @@ public abstract class Enemy extends HurtableEntity {
                 { -32, 32 },
                 { -32, 0 },
                 { -32, -32 }
-        };
+            };
 
         for (int i = 0; i < offsets.length; i++) {
             Tile tile = (Tile) getOneObjectAtOffset(offsets[i][0], offsets[i][1], Tile.class);

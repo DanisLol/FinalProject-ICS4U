@@ -35,9 +35,7 @@ public class ShopWorld extends World
 
         cursor = new Cursor(false);
         addObject(cursor, 0, 0); 
-
-       
-
+        
         upgradeCostDamageToEnemy = 20;
         upgradeCostDamageIntake = 20;
         upgradeCostHealth = 20; 
@@ -54,10 +52,6 @@ public class ShopWorld extends World
         damageToEnemyDisplay = new ImageDisplay(upgradeCostDamageToEnemy, 30); 
         damageIntakeDisplay = new ImageDisplay(upgradeCostDamageIntake, 30);
         healthDisplay = new ImageDisplay (upgradeCostHealth, 30);
-
-        //addObject(damageToEnemyDisplay, 320, 465); 
-        //addObject(damageIntakeDisplay, 617, 465);
-        //addObject(healthDisplay, 900, 405); 
 
         upgradeArmor = new Button (cursor, true, 20); 
         addObject(upgradeArmor, 245, 470); 
@@ -89,7 +83,7 @@ public class ShopWorld extends World
         addObject(healthImage, 830, 337); 
         addObject(chestboxImage, 190, 645);
 
-        coins = 1000;
+        coins = player.getCoin();
         coinsDisplay = new ImageDisplay ("$" + coins, 40);
         addObject(coinsDisplay, 925, 150);
 
