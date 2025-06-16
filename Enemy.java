@@ -14,7 +14,6 @@ public abstract class Enemy extends HurtableEntity
     protected int cd = 0;
     protected int cooldown;
     private boolean isOld;
-    protected double speed; //magnitude of movement
     protected double dx, dy; // directions
     protected int distanceFromPlayer; // the range at which the enemy will stop moving toward
     private boolean horizontallyBlocked, verticallyBlocked;
@@ -26,7 +25,13 @@ public abstract class Enemy extends HurtableEntity
         img.setColor(Color.RED);
         img.fillRect(0, 0, 16, 16);
         setImage(img);
+<<<<<<< Updated upstream
         speed = 0.9;
+=======
+        maxSpeed = 0.9;
+        speed = maxSpeed;
+        health = 10;
+>>>>>>> Stashed changes
         distanceFromPlayer = 20;
     }
     
@@ -216,6 +221,7 @@ public abstract class Enemy extends HurtableEntity
         realX += dx;
         realY += dy;
     }
+<<<<<<< Updated upstream
     
     private boolean simpleSideStep(boolean sameCol, boolean sameRow, boolean[] s, double speed) {
         if (sameCol) {                    // blocked north/south, so go E/W
@@ -240,6 +246,30 @@ public abstract class Enemy extends HurtableEntity
         return false;                     // couldn’t move
     }
     
+=======
+    
+    private void pushEntities(){
+        List<HurtableEntity> enemies = getWorld().getObjects(HurtableEntity.class);
+        for(HurtableEntity e:enemies){
+            if(e!=this && !e.isDead()){
+                double dist = Math.hypot(getX()-e.getX(), getY()-e.getY());
+                if(dist<30){ //adjust if necesary
+                    double dx = getX()-e.getX();
+                    double dy= getY()-e.getY();
+                    double mag = Math.hypot(dx, dy);
+                    if(mag!=0){
+                        dx/=mag;
+                        dy/=mag;
+                        realX+=dx*5;
+                        realY+=dy*5;
+                    }
+                }
+            }
+            
+        }
+    }
+    
+>>>>>>> Stashed changes
     /** returns a boolean array of the surrounding tiles. 
      *  true means that the tile is passible,
      *  false means that the tile is not.
