@@ -18,6 +18,9 @@ public class SettingsWorld extends World
     private static SettingsWorld.StatChooseImage playerSkin, difficultyLevel; 
 
     private static int playerSkinNumber, difficultyLevelNumber;  
+
+    private static UserInfo user; 
+
     public SettingsWorld()
     {    
         super(1024, 768, 1); 
@@ -36,40 +39,39 @@ public class SettingsWorld extends World
 
         difficultyLevelNumber = 0;
         difficultyLevel = new StatChooseImage(512,270,754,650, difficultyLevelNumber); 
+
     }
 
     public void act()
     {   
         playerSkin.choose("benjamin_pose.png", "Melissa_pose.png", "Kevin_pose.png","Gojo_pose.png"); 
         difficultyLevel.choose("easy.png", "medium.png", "hard.png"); 
+        backWorld();
         nextWorld();
     }
 
     public void backWorld()
-    {
+    {   
+        if (Greenfoot.mouseClicked(back))
+        {
+            Greenfoot.setWorld(new InformationWorld());
+        }
     }
 
-    /**
-     * Go to the next Setting screen when next button is clicked
-     * @return void
-     */
     public void nextWorld()
     {
-        /*
-        //if the mouse clicks on the next button, it will take me to the next pages of the settings
-        if (Greenfoot.mouseClicked(next))
+
+        if(UserInfo.isStorageAvailable())
         {
-        //if the world has never been created before, create a new world
-        if (world1 == null) {
-        world1 = new SettingsWorldS1Stats(this);
+            user = UserInfo.getMyInfo();
+            if (user != null){
+                user.setString(0, getPlayerSkinImage()); 
+                user.setString(1, getDifficultiyLevelImage()); 
+                user.store(); 
+            }
         }
-        //if it has been created before, go to the one that was created
-        Greenfoot.setWorld(world1);
-        }
-         */ 
-        
-        //idk what anything above this is
-        
+
+        //if the mouse clicks on the next button, 
         if (Greenfoot.mouseClicked(next)){
             Greenfoot.setWorld(new MyWorld());
         }
@@ -81,10 +83,15 @@ public class SettingsWorld extends World
         String imageBase = imageName.nextToken().toLowerCase();
         return imageBase; 
     }
-    
-    public static String getDifficultyLevelImage()
+
+    public static String getDifficultiyLevelImage()
     {
         return difficultyLevel.getChoosenImage(); 
+    }
+
+    public static void getUserInfo()
+    {
+
     }
 
     protected class StatChooseImage

@@ -81,6 +81,7 @@ public class MyWorld extends World
     
     private GreenfootSound music;
 
+    private UserInfo user; 
     public MyWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.

@@ -24,6 +24,7 @@ public abstract class Enemy extends HurtableEntity
     
     private int direction; //for animation
     
+    
     public Enemy (String sheetName, int largeSize) {
         super(sheetName, largeSize);
         speed = 0.9;
