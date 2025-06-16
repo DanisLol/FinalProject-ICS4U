@@ -4,6 +4,7 @@ import java.util.Random;
 public class SpawnerTile extends Tile {
     private boolean spawned = false;
     Random random = new Random();
+    private boolean topHalf;
 
     public SpawnerTile() {
         super("tile_floor.png", 'p');
@@ -12,12 +13,20 @@ public class SpawnerTile extends Tile {
     public void act() {
         super.act();
         if (spawned) return;
-
-        if (topHalfGateActivated()) {
-            spawnEnemies(5);
+    
+        if (isInTopHalfOfBoard() && allTopHalfGatesActivated()) {
+            spawnEnemies(4);
             spawned = true;
+        } else{
+            if (!isInTopHalfOfBoard() && allBottomHalfGatesActivated()){
+                spawnEnemies(4);
+                spawned = true;
+            }
         }
-        
+        /*if (allBottomHalfGatesActivated() && !isInTopHalfOfBoard()) {
+                spawnEnemies(4);
+                spawned = true;
+        }*/
     }
 
     private boolean topHalfGateActivated() {
@@ -27,19 +36,54 @@ public class SpawnerTile extends Tile {
 
         for (GateTileEnter gate : world.getObjects(GateTileEnter.class)) {
             int gateRow = (gate.getY() + Tile.SIZE / 2) / Tile.SIZE;
-            if (gateRow < midRow && gate.isActivated()) {
-                return true;
+            if (gateRow < midRow && !gate.isActivated()) {
+                return false;
             }
         }
 
         for (GateTileExit gate : world.getObjects(GateTileExit.class)) {
             int gateRow = (gate.getY() + Tile.SIZE / 2) / Tile.SIZE;
-            if (gateRow < midRow && gate.isActivated()) {
-                return true;
+            if (gateRow < midRow && !gate.isActivated()) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private boolean allTopHalfGatesActivated() {
+        MyWorld world = (MyWorld) getWorld();
+        Board board = world.getObjects(Board.class).get(0);
+        int midRow = board.getTileRowCount() / 2;
+
+        for (GateTileEnter gate : world.getObjects(GateTileEnter.class)) {
+            if (board.getTileRow(gate) < midRow && !gate.isActivated()) {
+                return false;
             }
         }
 
-        return false;
+        for (GateTileExit gate : world.getObjects(GateTileExit.class)) {
+            if (board.getTileRow(gate) < midRow && !gate.isActivated()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean allBottomHalfGatesActivated() {
+        MyWorld world = (MyWorld) getWorld();
+        Board board = world.getObjects(Board.class).get(0);
+        int midRow = board.getTileRowCount() / 2;
+
+        for (GateTileEnter gate : world.getObjects(GateTileEnter.class)) {
+            if (board.getTileRow(gate) >= midRow && !gate.isActivated()) return false;
+        }
+
+        for (GateTileExit gate : world.getObjects(GateTileExit.class)) {
+            if (board.getTileRow(gate) >= midRow && !gate.isActivated()) return false;
+        }
+
+        return true;
     }
 
     private void spawnEnemies(int count) {

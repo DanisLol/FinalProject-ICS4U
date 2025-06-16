@@ -46,6 +46,8 @@ public abstract class HurtableEntity extends Scroller
 
         curAnimation = walkAnimation;
         setImage(curAnimation.getOneImage(Direction.fromInteger(direction), frame));
+        
+        collider = new CollisionBox(32, 32, 16, this, false);
     }
 
     public void addedToWorld(World w){
@@ -109,6 +111,7 @@ public abstract class HurtableEntity extends Scroller
     }
 
     public void die(){
+        player.addKill();
         getWorld().removeObject(this);
     }
 

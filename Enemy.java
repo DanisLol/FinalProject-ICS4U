@@ -22,6 +22,7 @@ public abstract class Enemy extends HurtableEntity
     private boolean attemptingSideStepHorizontally, attemptingSideStepVertically;
 
     private int direction; //for animation
+    protected boolean counted = false;
 
     public Enemy (String sheetName, int largeSize) {
         super(sheetName, largeSize);
@@ -41,6 +42,12 @@ public abstract class Enemy extends HurtableEntity
             pushEntities();
             getDirection();
             super.animate(); 
+        } 
+        if (dead){
+            if (!counted){
+                play.addKill();
+                counted = true;
+            }
         }
     }
 

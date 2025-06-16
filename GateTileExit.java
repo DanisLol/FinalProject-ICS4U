@@ -1,16 +1,26 @@
 import greenfoot.*;
 
-public class GateTileExit extends Tile
-{
+public class GateTileExit extends Tile {
     private boolean activated = false;
 
     public GateTileExit() {
-        super("tile_gate0.png", 'q'); // initially open
+        super("tile_gate0.png", 'q');
         setIsPassable(true);
     }
 
     public void act() {
-        super.act();
+        super.act(); 
+        if (activated){
+            if (isInTopHalfOfBoard()){
+                if (player.getKilled() == 8){
+                    deactivate();
+                }
+            } else{
+                if (player.getKilled() == 24){
+                    deactivate();
+                }
+            }
+        }
     }
 
     public void activate() {
@@ -25,8 +35,8 @@ public class GateTileExit extends Tile
         setIsPassable(true);
         setImage(new GreenfootImage("tile_gate0.png"));
     }
-    
-    public boolean isActivated(){
+
+    public boolean isActivated() {
         return activated;
     }
 }

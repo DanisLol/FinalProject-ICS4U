@@ -10,8 +10,8 @@ public class WaterTile extends Tile
 {
     public WaterTile(){
         super("tile_water.png", 'w');
-        sound = new GreenfootSound("water.wav");
-        sound.setVolume(10);
+        //sound = new GreenfootSound("water.wav");
+        //sound.setVolume(10);
     }
 
     //change to slow player and enemy down
@@ -27,7 +27,7 @@ public class WaterTile extends Tile
         
         if (this.intersects(p.get(0).getCollider())){
             p.get(0).setSpeedPercents(0.2, 0.2);
-            sound.play();
+            //sound.play();
         } else {
             p.get(0).setSpeedPercents(1, 1);
         }

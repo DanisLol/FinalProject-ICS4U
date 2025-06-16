@@ -41,7 +41,4 @@ public class Ranged extends Enemy
     // public void takeDamage(int dmg) {
     // // place holder add stuff pls
     // }
-    public void die() {
-
-    }
 }
