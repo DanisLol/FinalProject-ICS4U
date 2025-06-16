@@ -10,10 +10,14 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Player extends HurtableEntity
 {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     private GreenfootImage image;
     private Animation walkAnimation, deathAnimation, attackAnimation, curAnimation;
     private int countdown, direction, frame;
     private int xSpeed, ySpeed;
+=======
+    private double dy, dx;
+>>>>>>> Stashed changes
 =======
     private double dy, dx;
 >>>>>>> Stashed changes
@@ -56,6 +60,9 @@ public class Player extends HurtableEntity
         speed = maxSpeed;
         dy = 0;
         dx = 0;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         realX = 0;
         realY = 0;
@@ -136,10 +143,15 @@ public class Player extends HurtableEntity
         dx = 0;
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         if(getWorld() instanceof ShopWorld)
         {
         }
         else
+=======
+        //is this if statement not redundant 
+        if(!(getWorld() instanceof ShopWorld))
+>>>>>>> Stashed changes
 =======
         //is this if statement not redundant 
         if(!(getWorld() instanceof ShopWorld))
@@ -149,7 +161,11 @@ public class Player extends HurtableEntity
             if (Greenfoot.isKeyDown("a")){
                 direction = 1;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 xSpeed = -2;
+=======
+                dx = -1;
+>>>>>>> Stashed changes
 =======
                 dx = -1;
 >>>>>>> Stashed changes
@@ -158,7 +174,11 @@ public class Player extends HurtableEntity
             if (Greenfoot.isKeyDown("d")){
                 direction = 0;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 xSpeed = 2;
+=======
+                dx = 1;
+>>>>>>> Stashed changes
 =======
                 dx = 1;
 >>>>>>> Stashed changes
@@ -167,7 +187,11 @@ public class Player extends HurtableEntity
             if (Greenfoot.isKeyDown("w")){
                 direction = 2;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 ySpeed = -2;
+=======
+                dy = -1;
+>>>>>>> Stashed changes
 =======
                 dy = -1;
 >>>>>>> Stashed changes
@@ -176,7 +200,11 @@ public class Player extends HurtableEntity
             if (Greenfoot.isKeyDown("s")){
                 direction = 3;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 ySpeed = 2;
+=======
+                dy = 1;
+>>>>>>> Stashed changes
 =======
                 dy = 1;
 >>>>>>> Stashed changes
@@ -285,6 +313,9 @@ public class Player extends HurtableEntity
     public void tryMove(double dx, double dy) {
         double oldX = getX();
         double oldY = getY();
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         double oldRealX = realX;
         double oldRealY = realY;

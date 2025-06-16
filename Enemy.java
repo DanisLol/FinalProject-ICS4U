@@ -26,8 +26,11 @@ public abstract class Enemy extends HurtableEntity
         img.fillRect(0, 0, 16, 16);
         setImage(img);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         speed = 0.9;
 =======
+=======
+>>>>>>> Stashed changes
         maxSpeed = 0.9;
         speed = maxSpeed;
         health = 10;
@@ -222,6 +225,7 @@ public abstract class Enemy extends HurtableEntity
         realY += dy;
     }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     
     private boolean simpleSideStep(boolean sameCol, boolean sameRow, boolean[] s, double speed) {
         if (sameCol) {                    // blocked north/south, so go E/W
@@ -245,6 +249,8 @@ public abstract class Enemy extends HurtableEntity
         }
         return false;                     // couldn’t move
     }
+=======
+>>>>>>> Stashed changes
     
 =======
     
