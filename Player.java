@@ -176,6 +176,7 @@ public class Player extends HurtableEntity
             killed++;
             //but enemy doesn't necessarily die after one attack??? 
         }
+
         
         List<BarrelTile> barrels = attackCollider.getIntersectingBarrels();
         if (barrels.size() != 0){
@@ -203,6 +204,10 @@ public class Player extends HurtableEntity
 
     public int getKilled(){
         return killed;
+    }
+    
+    public void addKill(){
+        killed ++;
     }
 
     // public void setImageSize(int length, int width)

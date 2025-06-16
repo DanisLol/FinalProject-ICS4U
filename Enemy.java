@@ -20,6 +20,7 @@ public abstract class Enemy extends HurtableEntity
     private boolean horizontallyBlocked, verticallyBlocked;
     private boolean horizontalSideSteppingCommenced, verticalSideSteppingCommenced;
     private boolean attemptingSideStepHorizontally, attemptingSideStepVertically;
+    private boolean counted = false;
     
     private int direction; //for animation
     
@@ -40,6 +41,15 @@ public abstract class Enemy extends HurtableEntity
             getDirection();
             super.animate(); 
         }
+        
+        if (dead){
+            if (!counted){
+                play.addKill();
+                counted = true;
+            }
+        }
+
+
     }
     
     public void addedToWorld(World w){

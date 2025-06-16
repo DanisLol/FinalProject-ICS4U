@@ -123,6 +123,7 @@ public abstract class HurtableEntity extends Scroller
     }
 
     public void die(){
+        player.addKill();
         getWorld().removeObject(this);
     }
 
