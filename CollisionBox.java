@@ -45,4 +45,8 @@ public class CollisionBox extends Scroller
     public List<Enemy> getIntersectingEnemies(){
         return getIntersectingObjects(Enemy.class);
     }
+    
+    public List<BarrelTile> getIntersectingBarrels(){
+        return getIntersectingObjects(BarrelTile.class);
+    }
 }

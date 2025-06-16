@@ -22,6 +22,9 @@ public class Melee extends Enemy
         // realY = 100;
 
         cooldown = 120;
+        
+        attackSound = new GreenfootSound("melee.mp3");
+        attackSound.setVolume(50);
     }
 
     public void act()
@@ -33,11 +36,12 @@ public class Melee extends Enemy
         //player.damage() or something
 
         //if(!inRange)return;
-
         Player p = (Player) getOneIntersectingObject(Player.class);
-        if (p != null){
+        if (p != null && p.getCollider() != null){
             p.takeDamage(damage);
         }
+        
+        attackSound.play();
 
     }
 

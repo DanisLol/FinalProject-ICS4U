@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Player extends HurtableEntity
 {
-    private int xSpeed, ySpeed;
+    private double xSpeed, ySpeed, percentXSpeed = 1, percentYSpeed = 1;
     private boolean isNew;
     private String player;
     private int coins;
@@ -132,6 +132,10 @@ public class Player extends HurtableEntity
                 ySpeed = 10;
             } 
         }
+        
+        //account for water tile?!?
+        xSpeed = xSpeed * percentXSpeed;
+        ySpeed = ySpeed * percentYSpeed;
 
         if (Greenfoot.mousePressed(null)){
             curAction = ActionState.ATTACKING;
@@ -161,15 +165,21 @@ public class Player extends HurtableEntity
             xOffset = 0;
             yOffset = direction == 3? 32 : -32;
         }
-        CollisionBox attackCollider = new CollisionBox(x, y, 0, null, false);
+        CollisionBox attackCollider = new CollisionBox(x, y, 0, null, true);
         getWorld().addObject(attackCollider, getX() + xOffset, getY() + yOffset);
         
         //get intersecting enemies with attack collider instead of player img
+        //might need to put a cap on this?????
         List<Enemy> enemies = attackCollider.getIntersectingEnemies();
         for (Enemy e : enemies){
             e.takeDamage(damage);
             killed++;
             //but enemy doesn't necessarily die after one attack??? 
+        }
+        
+        List<BarrelTile> barrels = attackCollider.getIntersectingBarrels();
+        if (barrels.size() != 0){
+            barrels.get(0).takeDamage(damage);
         }
         
         getWorld().removeObject(attackCollider);
@@ -200,7 +210,7 @@ public class Player extends HurtableEntity
     // image.scale(length, width);
     // }
 
-    public void tryMove(int dx, int dy) {
+    public void tryMove(double dx, double dy) {
         int oldX = getX();
         int oldY = getY();
         double oldRealX = realX;
@@ -240,5 +250,10 @@ public class Player extends HurtableEntity
                 break;
             }
         }
+    }
+    
+    public void setSpeedPercents(double newXPercent, double newYPercent){
+        percentXSpeed = newXPercent;
+        percentYSpeed = newYPercent;
     }
 }
