@@ -11,6 +11,7 @@ public class Board extends Actor
 {
     private Tile[][] tiles;
     private int offset = Tile.SIZE / 2; //since images are center anchored
+
     private HashMap<String, Class> test = new HashMap<String, Class>(){{
         put("w", WaterTile.class);
         put("u", WallTile.class);
@@ -26,7 +27,6 @@ public class Board extends Actor
 
     /**
      * Default Board constructor - creates room of blank tiles
-     * Currently 12 by 16 but may change depending on world/tile size
      */
     public Board(){
         tiles = new Tile[38][74];
@@ -77,7 +77,10 @@ public class Board extends Actor
             for (int j = 0; j < tiles[i].length; j++) {
                 int x = (j - displayStartCol) * Tile.SIZE + offset;
                 int y = (i - displayStartRow) * Tile.SIZE + offset;
-                getWorld().addObject(tiles[i][j], x, y);
+    
+                getWorld().addObject(tiles[i][j], 0, 0); // Placeholder location
+                tiles[i][j].setRealLocation(x, y);       // Set world coordinates
+                tiles[i][j].updateLocation();            // Sync visual position
             }
         }
     }
@@ -99,5 +102,20 @@ public class Board extends Actor
     
     public int getTileRowCount(){
         return tiles.length;
+    }
+    
+    public Tile[][] getTiles(){
+        return tiles;
+    }
+    
+    public int getTileRow(Tile tile) {
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[i].length; j++) {
+                if (tiles[i][j] == tile) {
+                    return i;
+                }
+            }
+        }
+        return -1; // not found
     }
 }

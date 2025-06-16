@@ -12,9 +12,19 @@ public class GateTileEnter extends Tile {
 
     public void act() {
         super.act();
-
-        if (activated) return;
-
+    
+        if (activated){
+            if (isInTopHalfOfBoard()){
+                if (player.getKilled() == 8){
+                    deactivate();
+                }
+            } else{
+                if (player.getKilled() == 24){
+                    deactivate();
+                }
+            }
+        }
+    
         Player player = (Player) getOneIntersectingObject(Player.class);
         if (player != null) {
             if (!wasPlayerOnTileLastFrame) {
@@ -23,43 +33,30 @@ public class GateTileEnter extends Tile {
         } else {
             if (wasPlayerOnTileLastFrame) {
                 wasPlayerOnTileLastFrame = false;
-
-                if (isInTopHalfOfBoard()) {
-                    activateTopHalfGates();
-                }
+    
+                boolean topHalf = isInTopHalfOfBoard();
+                activateGatesInHalf(topHalf);
             }
         }
+        
+        
     }
 
-    private boolean isInTopHalfOfBoard() {
-        Board board = getBoard();
-        if (board == null) return false;
-
-        // Calculate tile row based on vertical position
-        int tileRow = (getY() + Tile.SIZE / 2) / Tile.SIZE;
-
-        return tileRow < board.getTileRowCount() / 2;
-    }
-
-    private void activateTopHalfGates() {
+    private void activateGatesInHalf(boolean topHalf) {
         MyWorld world = (MyWorld) getWorld();
         Board board = getBoard();
-        if (board == null) return;
-    
         int midRow = board.getTileRowCount() / 2;
     
-        // Activate all GateTileEnter in top half
         for (GateTileEnter gate : world.getObjects(GateTileEnter.class)) {
-            int gateRow = (gate.getY() + Tile.SIZE / 2) / Tile.SIZE;
-            if (gateRow < midRow) {
+            int row = board.getTileRow(gate);
+            if ((topHalf && row < midRow) || (!topHalf && row >= midRow)) {
                 gate.activate();
             }
         }
     
-        // Activate all GateTileExit in top half
         for (GateTileExit gate : world.getObjects(GateTileExit.class)) {
-            int gateRow = (gate.getY() + Tile.SIZE / 2) / Tile.SIZE;
-            if (gateRow < midRow) {
+            int row = board.getTileRow(gate);
+            if ((topHalf && row < midRow) || (!topHalf && row >= midRow)) {
                 gate.activate();
             }
         }

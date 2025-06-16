@@ -10,7 +10,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Scroller extends SuperSmoothMover
 {
     private boolean inRange;
-    private Player player;
+    protected Player player;
     private MyWorld w;
     private boolean isNew;
 
@@ -24,8 +24,8 @@ public class Scroller extends SuperSmoothMover
     @Override
     protected void addedToWorld(World w) {
         if(isNew) {
-            //w = (MyWorld)getWorld();
-            //player = w.getPlayer();
+            w = (MyWorld)getWorld();
+            player = getWorld().getObjects(Player.class).get(0);
             realX = getX();
             realY = getY();
 
@@ -35,7 +35,7 @@ public class Scroller extends SuperSmoothMover
 
     public void act()
     {
-           updateLocation();
+        updateLocation();
     }
 
     public void centreOn(SuperSmoothMover target) { // this is essentially static, only being called ONCE per act (not instance) on the player.
@@ -45,7 +45,7 @@ public class Scroller extends SuperSmoothMover
         }
     }
 
-    public void updateLocation() {
+    public void updateLocation(){
         setLocation(realX - camX, realY - camY);
     }
     
@@ -58,8 +58,8 @@ public class Scroller extends SuperSmoothMover
     }
     
     public void setRealLocation(double x, double y) {
-        this.realX = x;
-        this.realY = y;
+        realX = x;
+        realY = y;
     }
 }
 

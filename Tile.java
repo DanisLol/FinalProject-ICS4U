@@ -9,15 +9,19 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Tile extends Scroller
 {
     protected GreenfootImage image;
+    protected GreenfootSound sound;
     public static final int SIZE = 64;
     private char type;
-    protected boolean isPassable;
+    protected boolean isPassable = true;
     private boolean isMouseHeld;
 
     public Tile(String imageName, char type){
         image = new GreenfootImage(imageName);
         setImage(image);
         this.type = type;
+        if (type == 'u' || type == 'b'){
+            isPassable = false;
+        }
     }
     
     //omds i need to change sm
@@ -65,38 +69,30 @@ public class Tile extends Scroller
         switch (newType){
             case 'f':
                 imageName = "tile_floor.png";
-                isPassable = true;
                 break;
             case 'w':
                 imageName = "tile_water.png";
-                isPassable = true;
                 break;
             case 'u':
                 imageName = "tile_wall.png";
-                isPassable = false;
                 break;
             case 'b':
                 imageName = "tile_barrel.png";
-                isPassable = false;
                 break;
             case 'l':
                 imageName = "tile_lava.png";
-                isPassable = true;
                 break;
             case 's':
                 imageName = "tile_spike0.png";
-                isPassable = true;
                 break;
             case 'e':
                 imageName = "tile_blank.png";
                 break;
             case 'g':
                 imageName = "tile_gate0.png";
-                isPassable = true;
                 break;
             case 'q':
                 imageName = "tile_gate0.png";
-                isPassable = true;
                 break;
             case 'p':
                 imageName = "tile_floor.png";
@@ -104,7 +100,6 @@ public class Tile extends Scroller
                 break;
             default:
                 imageName = "tile_floor.png";
-                isPassable = true;
         }
 
         image = new GreenfootImage(imageName);
@@ -113,5 +108,13 @@ public class Tile extends Scroller
     
     public void setIsPassable(boolean bool){
         isPassable = bool;
+    }
+
+    protected boolean isInTopHalfOfBoard() {
+        MyWorld world = (MyWorld) getWorld();
+        Board board = world.getObjects(Board.class).get(0);
+    
+        int row = board.getTileRow(this);
+        return row != -1 && row < board.getTileRowCount() / 2;
     }
 }
