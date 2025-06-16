@@ -3,7 +3,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class ShopWorld here.
  * 
- * @author (your name) 
+ * @ Daniel Wang, Stephanie Xia
  * @version (a version number or a date)
  */
 public class ShopWorld extends World
@@ -36,9 +36,7 @@ public class ShopWorld extends World
         cursor = new Cursor(false);
         addObject(cursor, 0, 0); 
 
-        damageToEnemy = 20;
-        damageIntake= 20;
-        health=10;
+       
 
         upgradeCostDamageToEnemy = 20;
         upgradeCostDamageIntake = 20;
@@ -49,6 +47,9 @@ public class ShopWorld extends World
         player = new Player();
         addObject(player, 820, 560); 
         player.getImage().scale(80,90);
+        damageToEnemy = player.getWeaponDmg();
+        damageIntake= 20;
+        health = player.getHealth();
 
         damageToEnemyDisplay = new ImageDisplay(upgradeCostDamageToEnemy, 30); 
         damageIntakeDisplay = new ImageDisplay(upgradeCostDamageIntake, 30);
@@ -112,6 +113,7 @@ public class ShopWorld extends World
         player.animate(); 
         checkPurchase();
         removePopUp(); 
+        purchase();
     }
 
     public void removePopUp()
@@ -162,4 +164,50 @@ public class ShopWorld extends World
 
         }
     }
+    
+    public void purchase(){
+        if (Greenfoot.mouseClicked(upgradeArmor)) {
+            if (coins >= upgradeCostDamageIntake) {
+                coins -= upgradeCostDamageIntake;
+                //change the damage value that enemy gives to the player
+                for (Object obj : getObjects(Enemy.class)) {
+                    Enemy enemy = (Enemy) obj;
+                    enemy.changeDmg();
+                }
+                updateStats();
+            }
+        }
+        else if (Greenfoot.mouseClicked(upgradeWeapon)) {
+            if (coins >= upgradeCostDamageToEnemy) {
+                coins -= upgradeCostDamageToEnemy;
+                player.setWeaponDmg(5); // Add method to Player class
+                updateStats();
+            }
+        }
+        else if (Greenfoot.mouseClicked(upgradeHealth)) {
+            if (coins >= upgradeCostHealth) {
+                coins -= upgradeCostHealth;
+                player.setHealth(10); // Add method to Player class
+                updateStats();
+            }
+        }
+        else if (Greenfoot.mouseClicked(buyChestbox)) {
+            int cost = 50;
+            if (coins >= cost) {
+                coins -= cost;
+                int i = Greenfoot.getRandomNumber(2);
+                String fileName = (i == 0) ? "speedPopup.png" : "invisibilityPopup.png";
+                chestboxPopUp = new ImageDisplay(fileName, 500, 340); 
+                addObject (chestboxPopUp , 500, 455);
+                addObject(deletePopUp, 740, 295); 
+            }
+        }
+    }
+    
+    public void updateStats() {
+        damageToEnemyStats = new ImageDisplay("Damage to Enemy: " + player.getWeaponDmg(), 22);
+        healthStats = new ImageDisplay("Health Stats: " + health, 22); 
+        coinsDisplay = new ImageDisplay("$" + coins, 40);
+    }
+
 }

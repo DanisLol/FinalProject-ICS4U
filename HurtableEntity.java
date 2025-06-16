@@ -3,7 +3,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * A abstract class comprised of all of the entities that can be hurt
  * 
- * @author Zachary Zhao
+ * @author Zachary Zhao, Daniel Wang
  * @version 0.0.1
  */
 public abstract class HurtableEntity extends Scroller
@@ -19,8 +19,11 @@ public abstract class HurtableEntity extends Scroller
     protected boolean dead = false;
 
     protected int health;
+    
+    
 
     public HurtableEntity(String sheetName, int largeSize){
+        
         String sheet1 = sheetName + ".png"; 
         String sheet2 = sheetName + "_attack.png";
         spritesheet = new GreenfootImage(sheet1);
@@ -59,6 +62,7 @@ public abstract class HurtableEntity extends Scroller
         super.act();
     }
 
+    //Animation:
     public void animate(){
         if (countdown > 0){
             countdown--;
@@ -130,4 +134,14 @@ public abstract class HurtableEntity extends Scroller
     public CollisionBox getCollider(){
         return collider;
     }
+    
+    protected int getDmg(){
+        return damage;
+    }
+    
+    protected void changeDmg(){
+        damage -= 5;
+    }
+    
+ 
 }
