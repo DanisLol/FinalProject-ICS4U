@@ -48,15 +48,15 @@ public class Scroller extends SuperSmoothMover
     public void updateLocation(){
         setLocation(realX - camX, realY - camY);
     }
-    
+
     public double getRealX(){
         return realX;
     }
-    
+
     public double getRealY(){
         return realY;
     }
-    
+
     public void setRealLocation(double x, double y) {
         realX = x;
         realY = y;

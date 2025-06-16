@@ -1,4 +1,5 @@
 import greenfoot.*;
+import java.util.List;
 
 public class GateTileExit extends Tile {
     private boolean activated = false;

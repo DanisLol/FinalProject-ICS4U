@@ -177,6 +177,8 @@ public class Player extends HurtableEntity
             if (c.getOwner() instanceof Enemy){
                 Enemy e = (Enemy) c.getOwner();
                 if (e != null) e.takeDamage(damage);
+                System.out.println("Reached");
+                //System.out.println(killed);
             }
             //but enemy doesn't necessarily die after one attack??? 
         }
@@ -188,7 +190,7 @@ public class Player extends HurtableEntity
         
         getWorld().removeObject(attackCollider);
 
-        //getWorld().removeObject(attackCollider);
+        getWorld().removeObject(attackCollider);
         //killed++; 
     }
 
@@ -200,12 +202,13 @@ public class Player extends HurtableEntity
         return coins; 
     }
 
-    public void earnCoin(){
-        Actor p = getOneIntersectingObject(Coin.class);
-        if(p != null){
-            coins++;
-        }
-    }
+    //replaced by pickUpCoin()
+    // public void earnCoin(){
+        // // Actor p = getOneIntersectingObject(Coin.class);
+        // // if(p != null){
+            // coins++;
+        // //}
+    // }
 
     public int getKilled(){
         return killed;

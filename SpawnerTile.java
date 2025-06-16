@@ -32,7 +32,7 @@ public class SpawnerTile extends Tile {
     private boolean topHalfGateActivated() {
         MyWorld world = (MyWorld) getWorld();
         Board board = world.getObjects(Board.class).get(0);
-        int midRow = board.getTileRowCount() / 2;
+         int midRow = board.getTileRowCount() / 2;
 
         for (GateTileEnter gate : world.getObjects(GateTileEnter.class)) {
             int gateRow = (gate.getY() + Tile.SIZE / 2) / Tile.SIZE;
@@ -54,19 +54,19 @@ public class SpawnerTile extends Tile {
         MyWorld world = (MyWorld) getWorld();
         Board board = world.getObjects(Board.class).get(0);
         int midRow = board.getTileRowCount() / 2;
-
+    
         for (GateTileEnter gate : world.getObjects(GateTileEnter.class)) {
             if (board.getTileRow(gate) < midRow && !gate.isActivated()) {
                 return false;
             }
         }
-
+    
         for (GateTileExit gate : world.getObjects(GateTileExit.class)) {
             if (board.getTileRow(gate) < midRow && !gate.isActivated()) {
                 return false;
             }
         }
-
+    
         return true;
     }
 
@@ -82,7 +82,6 @@ public class SpawnerTile extends Tile {
         for (GateTileExit gate : world.getObjects(GateTileExit.class)) {
             if (board.getTileRow(gate) >= midRow && !gate.isActivated()) return false;
         }
-
         return true;
     }
 
@@ -90,7 +89,7 @@ public class SpawnerTile extends Tile {
         World world = getWorld();
         double centerX = getRealX(); // realX of the spawner
         double centerY = getRealY();
-        System.out.println("Spawning enemies at: (" + centerX + ", " + centerY + ")");
+        //System.out.println("Spawning enemies at: (" + centerX + ", " + centerY + ")");
 
         for (int i = 0; i < count; i++) {
             int dx = Greenfoot.getRandomNumber(257) - 128; // -128 to +128

@@ -113,7 +113,6 @@ public class Tile extends Scroller
     protected boolean isInTopHalfOfBoard() {
         MyWorld world = (MyWorld) getWorld();
         Board board = world.getObjects(Board.class).get(0);
-
         int row = board.getTileRow(this);
         return row != -1 && row < board.getTileRowCount() / 2;
     }
