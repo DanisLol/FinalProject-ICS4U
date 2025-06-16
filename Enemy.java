@@ -25,13 +25,6 @@ public abstract class Enemy extends HurtableEntity {
 
     public Enemy(String sheetName, int largeSize) {
         super(sheetName, largeSize);
-        speed = 0.9;
-        maxSpeed = 0.9;
-        speed = maxSpeed;
-        health = 10;
-        distanceFromPlayer = 20;
-        health = 10;
-            
         healthStat = new SuperStatBar(50, health, this, 200, 15, Color.RED, Color.BLACK, false, Color.BLACK, 3);
         GreenfootImage img = new GreenfootImage(16, 16);
         img.setColor(Color.RED);
@@ -285,25 +278,27 @@ public abstract class Enemy extends HurtableEntity {
         realY += dy;
     }
 
-    private void pushEntities(){
-        List<HurtableEntity> enemies = getWorld().getObjects(HurtableEntity.class);
-        for(HurtableEntity e:enemies){
-            if(e!=this && !e.isDead()){
-                double dist = Math.hypot(getX()-e.getX(), getY()-e.getY());
-                if(dist<30){ //adjust if necesary
-                    double dx = getX()-e.getX();
-                    double dy= getY()-e.getY();
-                    double mag = Math.hypot(dx, dy);
-                    if(mag!=0){
-                        dx/=mag;
-                        dy/=mag;
-                        realX+=dx*5;
-                        realY+=dy*5;
-                    }
-                }
+    private boolean simpleSideStep(boolean sameCol, boolean sameRow, boolean[] s, double speed) {
+        if (sameCol) { // blocked north/south, so go E/W
+            int[] picks = { 3, 7 }; // east, west
+            int idx = picks[Greenfoot.getRandomNumber(2)];
+            if (s[idx]) { // only move if that tile is passable
+                dx = (idx == 3 ? speed : -speed);
+                dy = 0;
+                realX += dx;
+                return true;
             }
-            
+        } else if (sameRow) { // blocked east/west, so go N/S
+            int[] picks = { 1, 5 }; // north, south
+            int idx = picks[Greenfoot.getRandomNumber(2)];
+            if (s[idx]) {
+                dy = (idx == 5 ? speed : -speed);
+                dx = 0;
+                realY += dy;
+                return true;
+            }
         }
+        return false; // couldn’t move
     }
 
     /**

@@ -9,12 +9,8 @@ import java.util.List;
  * @Daniel Wang
  * @version (a version number or a date)
  */
-public class Player extends HurtableEntity
-{
-    private GreenfootImage image;
-    private Animation walkAnimation, deathAnimation, attackAnimation, curAnimation;
-    private int countdown, direction, frame;
-    private double dy, dx;
+public class Player extends HurtableEntity {
+    private double xSpeed, ySpeed, percentXSpeed = 1, percentYSpeed = 1;
     private boolean isNew;
     private String player;
     private int coins;
@@ -30,24 +26,12 @@ public class Player extends HurtableEntity
         lastAction = ActionState.NOTHING;
         // curAnimation = walkAnimation;
 
-    public Player (){
-        //need to make variable based on settingworld
-        GreenfootImage spritesheet = new GreenfootImage("Benjamin.png");
-        walkAnimation = AnimationManager.createAnimation(spritesheet, 9, 4, 9, 64, 64);
-        deathAnimation = AnimationManager.createAnimation(spritesheet, 20, 1, 6, 64, 64);
-        attackAnimation = AnimationManager.createAnimation(new GreenfootImage("BenjaminAttacked copy.png"), 1, 4, 6, 192, 192);
-        curAnimation = walkAnimation;
-
-        curAction = ActionState.NOTHING; lastAction = ActionState.NOTHING;
-        // curAnimation = walkAnimation;
-        //direction = 3;        
-        //image = walkAnimation.getOneImage(Direction.fromInteger(direction), 0); 
-        //setImage(image);
-        //frame = 0;
-        maxSpeed = 3;
-        speed = maxSpeed;
-        dy = 0;
-        dx = 0;
+        // direction = 3;
+        // image = walkAnimation.getOneImage(Direction.fromInteger(direction), 0);
+        // setImage(image);
+        // frame = 0;
+        xSpeed = 0;
+        ySpeed = 0;
         realX = 0;
         realY = 0;
         isNew = true;
@@ -102,11 +86,11 @@ public class Player extends HurtableEntity
         // if not unmoving, animate
         if (curAction != ActionState.NOTHING && !dead) {
             super.animate();
-            if (curAction == ActionState.WALKING){
-                //move player
-                //realX += xSpeed; 
-                //realY += ySpeed;
-                tryMove(dx, dy);
+            if (curAction == ActionState.WALKING) {
+                // move player
+                // realX += xSpeed;
+                // realY += ySpeed;
+                tryMove(xSpeed, ySpeed);
             }
         }
         // }
@@ -122,44 +106,32 @@ public class Player extends HurtableEntity
     private void checkActionState() {
         lastAction = curAction;
 
-        dy = 0;
+        xSpeed = 0;
+        ySpeed = 0;
 
-        //is this if statement not redundant 
+        // is this if statement not redundant
+        if (getWorld() instanceof ShopWorld) {
+        } else {
 
-        if(!(getWorld() instanceof ShopWorld))
-        {
             if (Greenfoot.isKeyDown("a")) {
                 direction = 1;
-                dx = -1;
-
-            } 
+                xSpeed = -10;
+            }
 
             if (Greenfoot.isKeyDown("d")) {
                 direction = 0;
-                dx = 1;
-
+                xSpeed = 10;
             }
 
             if (Greenfoot.isKeyDown("w")) {
                 direction = 2;
-                dy = -1;
-
+                ySpeed = -10;
             }
 
             if (Greenfoot.isKeyDown("s")) {
                 direction = 3;
-                dy = 1;
-            } 
-            
-            // if both are pressed, then decrease magnitude of each one
-            if(Math.abs(dx) + Math.abs(dy) == 2) {
-                dy *= Math.sqrt(2)/2;
-                dx *= Math.sqrt(2)/2;
+                ySpeed = 10;
             }
-            
-            dx = dx*speed;
-            dy = dy*speed;
-
         }
 
         // account for water tile?!?
@@ -171,10 +143,10 @@ public class Player extends HurtableEntity
             attack();
         }
 
-        //only nothing or walking if not attacking
-        if (curAction != ActionState.ATTACKING){
-            if (dx == 0 && dy == 0) {
-                curAction = ActionState.NOTHING; 
+        // only nothing or walking if not attacking
+        if (curAction != ActionState.ATTACKING) {
+            if (xSpeed == 0 && ySpeed == 0) {
+                curAction = ActionState.NOTHING;
             } else {
                 curAction = ActionState.WALKING;
             }
@@ -266,8 +238,8 @@ public class Player extends HurtableEntity
     // }
 
     public void tryMove(double dx, double dy) {
-        double oldX = getX();
-        double oldY = getY();
+        int oldX = getX();
+        int oldY = getY();
         double oldRealX = realX;
         double oldRealY = realY;
 
