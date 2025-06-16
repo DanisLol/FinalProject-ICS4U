@@ -14,7 +14,7 @@ public class StartWorld extends World
     private boolean fadingIn;
     private Button startButton;
     private Cursor cursor;
-    private GreenfootSound music;
+    public static final GreenfootSound START_MUSIC = new GreenfootSound("start_music.mp3");
     private Fader fader;
 
     /**
@@ -42,16 +42,14 @@ public class StartWorld extends World
         
         fader = new Fader("out", null);
         addObject(fader, getWidth() / 2, getHeight() / 2);
-        
-        music = new GreenfootSound("start_music.mp3");
     }
 
     public void started(){
-        music.playLoop();
+        START_MUSIC.playLoop();
     }
     
     public void stopped(){
-        music.pause();
+        START_MUSIC.pause();
     }
     
     public void act(){
@@ -63,7 +61,7 @@ public class StartWorld extends World
         
         //um so this is not registered if fader has not finished
         if (Greenfoot.mousePressed(startButton)){
-            music.stop();
+            START_MUSIC.stop();
             GreenfootSound sound = new GreenfootSound("click.wav");
             sound.play();
             Greenfoot.setWorld(new InformationWorld());

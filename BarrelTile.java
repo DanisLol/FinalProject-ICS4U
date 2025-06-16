@@ -25,25 +25,26 @@ public class BarrelTile extends Tile
     public void act()
     {
         super.act();
-        
-        //just to test
-        if (Greenfoot.mouseClicked(this)){
-            health -= 50;
-        }
-
-        if (health == 0){
-            health = -99999999;
-            rupture();
-        }
     }
 
     private void rupture(){
-        setType('f'); // this updates image + isPassable
-        isPassable = true; // redundant but safe        
-        Coin coin = new Coin();        
+        FloorTile floor = new FloorTile();
+        Coin coin = new Coin();
+                        
+        getWorld().addObject(floor, ((int) (this.realX + 0.5)), ((int) (this.realY + 0.5)));
+        floor.updateLocation();
+        
         //drop coin
         getWorld().addObject(coin, ((int) (this.realX + 0.5)), ((int) (this.realY + 0.5)));
+        coin.updateLocation();
         
-        this.updateLocation();
+        getWorld().removeObject(this);
+    }
+    
+    public void takeDamage(int damage){
+        health -= damage;
+        if (health <= 0){
+            rupture();
+        }
     }
 }

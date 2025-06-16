@@ -13,6 +13,7 @@ public class InformationWorld extends World
     private GreenfootImage bg;
     private String[] lines;
     private FadingText[] texts;
+    private SuperTextBox skip;
     private int curIndex;
     private StringTokenizer line;
     private GreenfootSound music;
@@ -49,6 +50,9 @@ public class InformationWorld extends World
         
         curIndex = 0;
         addObject(texts[curIndex], getWidth() / 2, getHeight() / 2);
+        
+        skip = new SuperTextBox(">>>SKIP", new Color(0, 0, 0, 0), Color.WHITE, new Font("Times New Roman", 30), true, 800, 0, new Color(0, 0, 0, 0));
+        addObject(skip, 945, 48);
     }
     
     public void started(){
@@ -69,6 +73,11 @@ public class InformationWorld extends World
                 return;
             }
             addObject(texts[curIndex], getWidth() / 2, getHeight() / 2);
+        }
+        
+        if (Greenfoot.mouseClicked(skip)){
+            music.stop();
+            Greenfoot.setWorld(new SettingsWorld());
         }
     }
 }
