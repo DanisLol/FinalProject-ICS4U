@@ -34,16 +34,36 @@ public class SettingsWorld extends World
         back = new Button(cursor, true);
         addObject(back, 140, 650); 
 
-        playerSkinNumber = 0;
-        playerSkin = new StatChooseImage(512,270,754,400, playerSkinNumber); 
+        user = UserInfo.getMyInfo();
 
-        difficultyLevelNumber = 0;
-        difficultyLevel = new StatChooseImage(512,270,754,650, difficultyLevelNumber); 
+        if(user.getInt(0)==0)
+        {
+            playerSkinNumber = 0;
+        }
+        else
+        {
+            playerSkinNumber = user.getInt(0); 
+        }
+
+        if(user.getInt(1) == 0)
+        {
+            difficultyLevelNumber = 0;
+        }
+        else
+        {
+            difficultyLevelNumber = user.getInt(1); 
+        }
+
+        playerSkin = new StatChooseImage(512,270,754,400, playerSkinNumber); 
+        difficultyLevel = new StatChooseImage(512,270,754,650, difficultyLevelNumber);
 
     }
 
     public void act()
     {   
+        playerSkinNumber = playerSkin.getNumber(); 
+        difficultyLevelNumber = difficultyLevel.getNumber(); 
+        
         playerSkin.choose("benjamin_pose.png", "Melissa_pose.png", "Kevin_pose.png","Gojo_pose.png"); 
         difficultyLevel.choose("easy.png", "medium.png", "hard.png"); 
 
@@ -61,29 +81,21 @@ public class SettingsWorld extends World
 
     public void nextWorld()
     {
-
         if(UserInfo.isStorageAvailable())
         {
             user = UserInfo.getMyInfo();
-            if (user != null){
-                user.setString(0, getPlayerSkinImage()); 
-                user.setString(1, getDifficultiyLevelImage()); 
+            //if (user != null){
+                user.setInt(0, playerSkinNumber); 
+                user.setInt(1, difficultyLevelNumber); 
                 user.store(); 
-            }
+            //}
         }
 
         //if the mouse clicks on the next button, 
         if (Greenfoot.mouseClicked(next)){
             Greenfoot.setWorld(new MyWorld());
         }
-        /*
-        if(UserInfo.isStorageAvailable())
-        {
-            user.setString(0, getPlayerSkinImage()); 
-            user.setString(1, getDifficultiyLevelImage()); 
-            user.store(); 
-        }
-        */
+        
         //if the mouse clicks on the next button, it will take me to the next pages of the settings
         if (Greenfoot.mouseClicked(next))
         {
@@ -103,7 +115,17 @@ public class SettingsWorld extends World
     {
         return difficultyLevel.getChoosenImage(); 
     }
-
+    
+    public static void setPlayerSkinNumber(int x)
+    {
+        playerSkinNumber = x; 
+    }
+    
+    public static void setDifficultyLevelNumber(int x)
+    {
+        difficultyLevelNumber = x; 
+    }
+    
     public static void getUserInfo()
     {
 
