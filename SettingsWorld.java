@@ -37,16 +37,16 @@ public class SettingsWorld extends World
 
         difficultyLevelNumber = 0;
         difficultyLevel = new StatChooseImage(512,270,754,650, difficultyLevelNumber); 
-        
+
         music = new GreenfootSound("settings_music.mp3");
         music.setVolume(70);
         music.playLoop();
     }
-    
+
     public void started(){
         music.playLoop();
     }
-    
+
     public void stopped(){
         music.pause();
     }
@@ -80,9 +80,9 @@ public class SettingsWorld extends World
         Greenfoot.setWorld(world1);
         }
          */ 
-        
+
         //idk what anything above this is
-        
+
         if (Greenfoot.mouseClicked(next)){
             music.stop();
             Greenfoot.setWorld(new MyWorld());
@@ -91,11 +91,17 @@ public class SettingsWorld extends World
 
     public static String getPlayerSkinImage()
     {
-        StringTokenizer imageName = new StringTokenizer(playerSkin.getChoosenImage(), "_");
-        String imageBase = imageName.nextToken().toLowerCase();
+        StringTokenizer imageName;
+        String imageBase;
+        try {
+            imageName = new StringTokenizer(playerSkin.getChoosenImage(), "_");
+            imageBase = imageName.nextToken().toLowerCase();
+        } catch (NullPointerException e) {
+            imageBase = "benjamin";
+        }
         return imageBase; 
     }
-    
+
     public static String getDifficultyLevelImage()
     {
         return difficultyLevel.getChoosenImage(); 

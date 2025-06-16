@@ -66,9 +66,7 @@ public class SpikeTile extends Damager
                 }
             }
         }
-        
-        System.out.println("Hurt enemy");
-        
+                
         countdown = cooldown;
     }
 }

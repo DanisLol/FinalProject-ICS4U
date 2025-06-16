@@ -11,7 +11,7 @@ public class WaterTile extends Tile
     public WaterTile(){
         super("tile_water.png", 'w');
         sound = new GreenfootSound("water.wav");
-        sound.setVolume(10);
+        sound.setVolume(95);
     }
 
     //change to slow player and enemy down

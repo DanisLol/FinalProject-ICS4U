@@ -17,6 +17,7 @@ public class Player extends HurtableEntity
     private int coins;
     //the number of enemies killed
     private int killed;
+    private int weaponDmg;
 
     public Player (){
         super(SettingsWorld.getPlayerSkinImage(), 192);
@@ -42,7 +43,7 @@ public class Player extends HurtableEntity
 
         damage = 10; //test
         health = 100;   
-        
+
         collider = new CollisionBox(32, 32, 16, this, false);
     }
 
@@ -203,14 +204,30 @@ public class Player extends HurtableEntity
 
     //replaced by pickUpCoin()
     // public void earnCoin(){
-        // // Actor p = getOneIntersectingObject(Coin.class);
-        // // if(p != null){
-            // coins++;
-        // //}
+    // // Actor p = getOneIntersectingObject(Coin.class);
+    // // if(p != null){
+    // coins++;
+    // //}
     // }
 
     public int getKilled(){
-        return killed;
+        return this.killed;
+    }
+
+    public int getWeaponDmg(){
+        return this.weaponDmg;
+    }
+
+    public int getHealth(){
+        return this.health;
+    }
+
+    public void setHealth(int h){
+        this.health += h;
+    }
+
+    public void setWeaponDmg(int dmg){
+        this.weaponDmg += dmg;
     }
 
     // public void setImageSize(int length, int width)

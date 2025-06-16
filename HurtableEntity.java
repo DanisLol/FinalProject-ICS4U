@@ -115,4 +115,12 @@ public abstract class HurtableEntity extends Scroller
     public CollisionBox getCollider(){
         return collider;
     }
+    
+    protected int getDmg(){
+        return damage;
+    }
+
+    protected void changeDmg(){
+        damage -= 5;
+    }
 }
