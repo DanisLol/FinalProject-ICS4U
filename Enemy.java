@@ -25,16 +25,10 @@ public abstract class Enemy extends HurtableEntity
         img.setColor(Color.RED);
         img.fillRect(0, 0, 16, 16);
         setImage(img);
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
         speed = 0.9;
-=======
-=======
->>>>>>> Stashed changes
         maxSpeed = 0.9;
         speed = maxSpeed;
         health = 10;
->>>>>>> Stashed changes
         distanceFromPlayer = 20;
     }
     
@@ -224,35 +218,6 @@ public abstract class Enemy extends HurtableEntity
         realX += dx;
         realY += dy;
     }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    
-    private boolean simpleSideStep(boolean sameCol, boolean sameRow, boolean[] s, double speed) {
-        if (sameCol) {                    // blocked north/south, so go E/W
-            int[] picks = { 3, 7 };       // east, west
-            int idx = picks[Greenfoot.getRandomNumber(2)];
-            if (s[idx]) {                 // only move if that tile is passable
-                dx = (idx == 3 ?  speed : -speed);
-                dy = 0;
-                realX += dx;
-                return true;
-            }
-        } else if (sameRow) {             // blocked east/west, so go N/S
-            int[] picks = { 1, 5 };       // north, south
-            int idx = picks[Greenfoot.getRandomNumber(2)];
-            if (s[idx]) {
-                dy = (idx == 5 ?  speed : -speed);
-                dx = 0;
-                realY += dy;
-                return true;
-            }
-        }
-        return false;                     // couldn’t move
-    }
-=======
->>>>>>> Stashed changes
-    
-=======
     
     private void pushEntities(){
         List<HurtableEntity> enemies = getWorld().getObjects(HurtableEntity.class);
@@ -275,7 +240,6 @@ public abstract class Enemy extends HurtableEntity
         }
     }
     
->>>>>>> Stashed changes
     /** returns a boolean array of the surrounding tiles. 
      *  true means that the tile is passible,
      *  false means that the tile is not.

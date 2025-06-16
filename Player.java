@@ -9,18 +9,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Player extends HurtableEntity
 {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
     private GreenfootImage image;
     private Animation walkAnimation, deathAnimation, attackAnimation, curAnimation;
     private int countdown, direction, frame;
-    private int xSpeed, ySpeed;
-=======
     private double dy, dx;
->>>>>>> Stashed changes
-=======
-    private double dy, dx;
->>>>>>> Stashed changes
     private boolean isNew;
 
     private int coins;
@@ -41,14 +33,6 @@ public class Player extends HurtableEntity
         attackAnimation = AnimationManager.createAnimation(new GreenfootImage("BenjaminAttacked copy.png"), 1, 4, 6, 192, 192);
         curAnimation = walkAnimation;
 
-<<<<<<< Updated upstream
-        direction = 3;        
-        image = walkAnimation.getOneImage(Direction.fromInteger(direction), 0); 
-        setImage(image);
-        frame = 0;
-        xSpeed = 0;
-        ySpeed = 0;
-=======
         curAction = ActionState.NOTHING; lastAction = ActionState.NOTHING;
         // curAnimation = walkAnimation;
 
@@ -60,10 +44,6 @@ public class Player extends HurtableEntity
         speed = maxSpeed;
         dy = 0;
         dx = 0;
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
         realX = 0;
         realY = 0;
         isNew = true;
@@ -140,74 +120,29 @@ public class Player extends HurtableEntity
         lastAction = curAction;
 
         dy = 0;
-        dx = 0;
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        if(getWorld() instanceof ShopWorld)
-        {
-        }
-        else
-=======
         //is this if statement not redundant 
         if(!(getWorld() instanceof ShopWorld))
->>>>>>> Stashed changes
-=======
-        //is this if statement not redundant 
-        if(!(getWorld() instanceof ShopWorld))
->>>>>>> Stashed changes
         {
 
             if (Greenfoot.isKeyDown("a")){
                 direction = 1;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                xSpeed = -2;
-=======
                 dx = -1;
->>>>>>> Stashed changes
-=======
-                dx = -1;
->>>>>>> Stashed changes
             } 
 
             if (Greenfoot.isKeyDown("d")){
                 direction = 0;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                xSpeed = 2;
-=======
                 dx = 1;
->>>>>>> Stashed changes
-=======
-                dx = 1;
->>>>>>> Stashed changes
             }
 
             if (Greenfoot.isKeyDown("w")){
                 direction = 2;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                ySpeed = -2;
-=======
                 dy = -1;
->>>>>>> Stashed changes
-=======
-                dy = -1;
->>>>>>> Stashed changes
             }
 
             if (Greenfoot.isKeyDown("s")){
                 direction = 3;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                ySpeed = 2;
-=======
                 dy = 1;
->>>>>>> Stashed changes
-=======
-                dy = 1;
->>>>>>> Stashed changes
             } 
             
             // if both are pressed, then decrease magnitude of each one
@@ -295,28 +230,14 @@ public class Player extends HurtableEntity
         return killed;
     }
 
-<<<<<<< Updated upstream
     public void setImageSize(int length, int width)
     {
         image.scale(length, width);
     }
-    
-    public void tryMove(int dx, int dy) {
-        int oldX = getX();
-        int oldY = getY();
-=======
-    // public void setImageSize(int length, int width)
-    // {
-    // image.scale(length, width);
-    // }
 
     public void tryMove(double dx, double dy) {
         double oldX = getX();
         double oldY = getY();
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
         double oldRealX = realX;
         double oldRealY = realY;
     

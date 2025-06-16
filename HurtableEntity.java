@@ -8,9 +8,6 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public abstract class HurtableEntity extends Scroller
 {
-<<<<<<< Updated upstream
-    protected int health;
-=======
     protected GreenfootImage spritesheet, spritesheetLarge;
     protected Animation walkAnimation, deathAnimation, attackAnimation, curAnimation = walkAnimation;
     protected int countdown, direction, frame = 0;
@@ -134,7 +131,6 @@ public abstract class HurtableEntity extends Scroller
     public void die(){
         getWorld().removeObject(this);
     }
->>>>>>> Stashed changes
     
     public abstract void takeDamage(int dmg);
     
