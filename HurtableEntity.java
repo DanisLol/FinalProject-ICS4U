@@ -28,7 +28,11 @@ public abstract class HurtableEntity extends Scroller
         deathAnimation = AnimationManager.createAnimation(spritesheet, 20, 1, 6, 64, 64);
         if (this instanceof Ranged) {
             attackAnimation = AnimationManager.createAnimation(spritesheet, 4, 4, 7, 64, 64);
-        } else { 
+        } else if (this instanceof Player && sheetName.equals("melissa")){
+            spritesheetLarge = new GreenfootImage(sheet2);
+            attackAnimation = AnimationManager.createAnimation(spritesheetLarge, 1, 4, 8, largeSize, largeSize);
+        }
+        else { 
             spritesheetLarge = new GreenfootImage(sheet2);
             attackAnimation = AnimationManager.createAnimation(spritesheetLarge, 1, 4, 6, largeSize, largeSize); //don't know why but this is different for some sheets
         }
@@ -43,7 +47,7 @@ public abstract class HurtableEntity extends Scroller
         curAnimation = walkAnimation;
         setImage(curAnimation.getOneImage(Direction.fromInteger(direction), frame));
 
-        collider = new CollisionBox(32, 32, 16, this);
+        collider = new CollisionBox(32, 32, 16, this, false);
     }
 
     public void addedToWorld(World w){
@@ -53,7 +57,6 @@ public abstract class HurtableEntity extends Scroller
 
     public void act(){
         super.act();
-        //if (this instanceof Player) animate();
     }
 
     public void animate(){
@@ -68,49 +71,54 @@ public abstract class HurtableEntity extends Scroller
             }
 
             frame++;
-            if (this instanceof Player) System.out.println(frame);
+
             if (frame > highestIndex){
                 if (curAction == ActionState.WALKING) {
                     frame = 1;
                 } else if (curAction == ActionState.ATTACKING){
+                    //on last frame of attack animation, deal damage 
                     if (curAnimation == attackAnimation){
-                        if (this instanceof Enemy){
-                            java.util.List<Player> p = getWorld().getObjects(Player.class);
-                            if (p != null){
-                                p.get(0).takeDamage(damage);
-                            }
-                        } else {
-                            java.util.List<Enemy> enemies = getIntersectingObjects(Enemy.class);
-                            if (enemies.size() != 0){
-                                enemies.get(0).takeDamage(damage);
-                            }
-                        }
+                        attack();
+                        // if (this instanceof Enemy){
+                        // java.util.List<Player> p = getWorld().getObjects(Player.class);
+                        // if (p != null){
+                        // p.get(0).takeDamage(damage);
+                        // }
+                        // } else {
+
+                        // java.util.List<Enemy> enemies = getIntersectingObjects(Enemy.class);
+                        // if (enemies.size() != 0){
+                        // enemies.get(0).takeDamage(damage);
+                        // }
+                        // }
                     }
 
                     frame = 0; 
-                    curAction = ActionState.NOTHING; //change????? 
+
+                    //need to change this probably
+                    if (this instanceof Player )curAction = ActionState.NOTHING;  else curAction = ActionState.WALKING;
                     lastAction = ActionState.ATTACKING; 
                     curAnimation = walkAnimation;
                     setImage(walkAnimation.getOneImage(Direction.fromInteger(direction), frame));
-
                 } else if (curAction == ActionState.DYING){
-                    //die(); I DON'T KNOW WHY BUT THIS CAUSES ACTORREMOVEDFROMWORLD ERROR tried return everywhere too fried for this
                     dead = true;
-                    //System.out.println("Reached");
-                    //return;
                 }
             }
         }
     }
 
+    public abstract void attack(); 
+
     public void takeDamage(int dmg){
         health -= dmg;
         if (health <= 0){
-            curAction = ActionState.DYING;
-            lastAction = ActionState.DYING;
-            curAnimation = deathAnimation;
-            frame = 0;
-            highestIndex = 5;
+            if (lastAction != ActionState.DYING){
+                curAction = ActionState.DYING;
+                lastAction = ActionState.DYING;
+                curAnimation = deathAnimation;
+                frame = 0;
+                highestIndex = 5;
+            }
         }
     }
 
@@ -118,7 +126,7 @@ public abstract class HurtableEntity extends Scroller
         player.addKill();
         getWorld().removeObject(this);
     }
-    
+
     public CollisionBox getCollider(){
         return collider;
     }

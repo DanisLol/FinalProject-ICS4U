@@ -14,11 +14,11 @@ public class CollisionBox extends Scroller
     private GreenfootImage image;
     private int yOffset;
 
-    public CollisionBox(int width, int height, int yOffset, Actor owner){
+    public CollisionBox(int width, int height, int yOffset, Actor owner, boolean show){
         this.owner = owner;
         this.yOffset = yOffset;
         image = new GreenfootImage(width, height);
-        if (VISIBLE) image.setColor(Color.RED); else image.setColor(new Color(0, 0, 0, 0));
+        if (VISIBLE || show) image.setColor(Color.RED); else image.setColor(new Color(0, 0, 0, 0));
         image.fill();
         setImage(image);
     }
@@ -29,18 +29,10 @@ public class CollisionBox extends Scroller
      */
     public void act()
     {
-        setLocation(owner.getX(), owner.getY() + yOffset);
+        if (owner != null){
+            setLocation(owner.getX(), owner.getY() + yOffset);
+        } 
     }
-
-    // public boolean isClear(){
-        // Tile t = (Tile) getOneIntersectingObject(Tile.class);
-        // if (t != null){
-            // if (!t.getIsPassable()){
-                // return false;
-            // }
-        // }
-        // return true;
-    // }
     
     public List<Tile> getIntersectingTiles(){
         return getIntersectingObjects(Tile.class);        
@@ -48,5 +40,13 @@ public class CollisionBox extends Scroller
     
     public List<CollisionBox> getIntersectingCollisionBoxes(){
         return getIntersectingObjects(CollisionBox.class);
+    }
+    
+    public List<Enemy> getIntersectingEnemies(){
+        return getIntersectingObjects(Enemy.class);
+    }
+    
+    public List<BarrelTile> getIntersectingBarrels(){
+        return getIntersectingObjects(BarrelTile.class);
     }
 }

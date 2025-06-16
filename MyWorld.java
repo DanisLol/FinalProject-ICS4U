@@ -78,6 +78,8 @@ public class MyWorld extends World
     SimpleTimer st = new SimpleTimer();
     Counter counter2 = new Counter();
     public final int GAME_LENGTH = 90; // the length of the game, in seconds.
+    
+    private GreenfootSound music;
 
     public MyWorld()
     {    
@@ -114,10 +116,14 @@ public class MyWorld extends World
 
         actNum = 0;
 
-        setPaintOrder(SuperStatBar.class,Counter.class, CollisionBox.class, HurtableEntity.class, Coin.class, Tile.class);
+        music = new GreenfootSound("game_music.mp3");
+        music.setVolume(50);
+        music.playLoop();
+        
+        setPaintOrder(Fader.class, SuperStatBar.class,Counter.class, CollisionBox.class, Projectile.class, HurtableEntity.class, Coin.class, Tile.class);
         prepare();
     }
-
+    
     public void act(){
         actNum++;
         if (actNum % 60 == 0) counter2.add(-1); // Decrement the counter by 1
@@ -130,22 +136,32 @@ public class MyWorld extends World
     //Checking if all enemies are eliminated
     //if all enemies are eleiminated, we can let the user go on to the next room in the dungeon
     public boolean allEnemiesGone(){
-        boolean result = false;
+        boolean result = true;
         //if the number of enemies killed by player is equal to that wave of enemies number
         //set true that all enemies are killed
         //the number one here is just a placeholder. There will be a method that gets the number
         //of enemies that are in each wave 
-        if(player.getKilled() == 1){
-            result = true;
+        // if(player.getKilled() == 1){
+            // result = true;
+        // }
+        // return result;
+        
+        ArrayList<Enemy> enemies = (ArrayList<Enemy>)getObjects(Enemy.class);
+        for (Enemy e : enemies){
+            if (!e.isDead()){
+                result = false;
+                break;
+            }
         }
         return result;
     }
 
     public void started(){
+        music.playLoop();
     }
 
     public void stopped(){
-
+        music.pause();
     }
     
     /*public void spawnEnemies(int numberOfEnemies) {
@@ -193,7 +209,7 @@ public class MyWorld extends World
      * Prepare the world for the start of the program.
      * That is: create the initial objects and add them to the world.
      */
-    private void prepare()
+    public void prepare()
     {
     }
 }

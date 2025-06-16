@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.StringTokenizer; 
 
 /**
  * Write a description of class SettingsWorld here.
@@ -41,7 +42,7 @@ public class SettingsWorld extends World
     {   
         playerSkin.choose("benjamin_pose.png", "Melissa_pose.png", "Kevin_pose.png","Gojo_pose.png"); 
         difficultyLevel.choose("easy.png", "medium.png", "hard.png"); 
-
+        nextWorld();
     }
 
     public void backWorld()
@@ -66,16 +67,24 @@ public class SettingsWorld extends World
         Greenfoot.setWorld(world1);
         }
          */ 
+        
+        //idk what anything above this is
+        
+        if (Greenfoot.mouseClicked(next)){
+            Greenfoot.setWorld(new MyWorld());
+        }
     }
 
     public static String getPlayerSkinImage()
     {
-        return difficultyLevel.getChoosenImage(); 
+        StringTokenizer imageName = new StringTokenizer(playerSkin.getChoosenImage(), "_");
+        String imageBase = imageName.nextToken().toLowerCase();
+        return imageBase; 
     }
     
-    public static String getDifficultiyLevelImage()
+    public static String getDifficultyLevelImage()
     {
-        return playerSkin.getChoosenImage(); 
+        return difficultyLevel.getChoosenImage(); 
     }
 
     protected class StatChooseImage
