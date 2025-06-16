@@ -10,7 +10,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Scroller extends SuperSmoothMover
 {
     private boolean inRange;
-    private Player player;
+    protected Player player;
     private MyWorld w;
     private boolean isNew;
 
@@ -24,8 +24,8 @@ public class Scroller extends SuperSmoothMover
     @Override
     protected void addedToWorld(World w) {
         if(isNew) {
-            //w = (MyWorld)getWorld();
-            //player = w.getPlayer();
+            w = (MyWorld)getWorld();
+            player = w.getObjects(Player.class).get(0);
             realX = getX();
             realY = getY();
 

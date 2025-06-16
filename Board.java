@@ -100,4 +100,15 @@ public class Board extends Actor
     public int getTileRowCount(){
         return tiles.length;
     }
+    
+    public int getTileRow(Tile tile) {
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[i].length; j++) {
+                if (tiles[i][j] == tile) {
+                    return i;
+                }
+            }
+        }
+        return -1; // not found
+    }
 }

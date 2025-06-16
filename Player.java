@@ -167,7 +167,7 @@ public class Player extends HurtableEntity
             xOffset = 0;
             yOffset = direction == 3? 25 : -25;
         }
-        CollisionBox attackCollider = new CollisionBox(x, y, 0, null, true);
+        CollisionBox attackCollider = new CollisionBox(x, y, 0, null, false);
         getWorld().addObject(attackCollider, getX() + xOffset, getY() + yOffset);
 
         //get intersecting enemies with attack collider instead of player img
@@ -178,6 +178,8 @@ public class Player extends HurtableEntity
                 Enemy e = (Enemy) c.getOwner();
                 if (e != null) e.takeDamage(damage);
                 killed++;
+                System.out.println("Reached");
+                //System.out.println(killed);
             }
             //but enemy doesn't necessarily die after one attack??? 
         }
@@ -187,7 +189,7 @@ public class Player extends HurtableEntity
             barrels.get(0).takeDamage(damage);
         }
 
-        //getWorld().removeObject(attackCollider);
+        getWorld().removeObject(attackCollider);
         //killed++; 
     }
 
@@ -199,12 +201,13 @@ public class Player extends HurtableEntity
         return coins; 
     }
 
-    public void earnCoin(){
-        Actor p = getOneIntersectingObject(Coin.class);
-        if(p != null){
-            coins++;
-        }
-    }
+    //replaced by pickUpCoin()
+    // public void earnCoin(){
+        // // Actor p = getOneIntersectingObject(Coin.class);
+        // // if(p != null){
+            // coins++;
+        // //}
+    // }
 
     public int getKilled(){
         return killed;
