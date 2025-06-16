@@ -24,7 +24,7 @@ public class Scroller extends SuperSmoothMover
     @Override
     protected void addedToWorld(World w) {
         if(isNew) {
-            w = (MyWorld)getWorld();
+            w = getWorld();
             player = w.getObjects(Player.class).get(0);
             realX = getX();
             realY = getY();
@@ -48,15 +48,15 @@ public class Scroller extends SuperSmoothMover
     public void updateLocation(){
         setLocation(realX - camX, realY - camY);
     }
-    
+
     public double getRealX(){
         return realX;
     }
-    
+
     public double getRealY(){
         return realY;
     }
-    
+
     public void setRealLocation(double x, double y) {
         this.realX = x;
         this.realY = y;

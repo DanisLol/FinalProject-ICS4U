@@ -47,8 +47,8 @@ public class ShopWorld extends World
 
         setBackground(background);
         player = new Player();
-        addObject(player, 820, 560); 
-        player.getImage().scale(80,90);
+        addObject(player, 830, 560); 
+        player.getImage().scale(80,80);
 
         damageToEnemyDisplay = new ImageDisplay(upgradeCostDamageToEnemy, 30); 
         damageIntakeDisplay = new ImageDisplay(upgradeCostDamageIntake, 30);
@@ -108,8 +108,7 @@ public class ShopWorld extends World
 
     public void act()
     {
-        addObject(player, 820, 560); 
-        player.animate(); 
+        //player.animate(); 
         checkPurchase();
         removePopUp(); 
     }
