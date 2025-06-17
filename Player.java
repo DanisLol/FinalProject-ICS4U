@@ -51,18 +51,16 @@ public class Player extends HurtableEntity
         if(SettingsWorld.getDifficultiyLevelImage() == 0)
         {
             damage = 5; 
-            health = 200;
         }
         else if (SettingsWorld.getDifficultiyLevelImage() == 1)
         {
             damage = 10; 
-            health = 150;
         }
         else 
         {
             damage = 20; 
-            health = 100; 
         }
+        health = 100; 
         healthStat = new SuperStatBar(50, health, this, 200, 15, Color.GREEN, Color.BLACK, true, Color.BLACK, 3);
 
         collider = new CollisionBox(32, 32, 16, this, false);
@@ -268,7 +266,7 @@ public class Player extends HurtableEntity
     }
 
     public void setHealth(int h) {
-        this.health += h;
+        this.health = h;
     }
 
     public void setWeaponDmg(int dmg) {
