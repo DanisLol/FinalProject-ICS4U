@@ -1,10 +1,16 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.*;
 /**
- * Write a description of class Projectile here.
- * 
- * @author Zachary Zhao & unknown
- * @version 0.0.2
+ * The Projectile class is a projectile object that is fired from a source entity.
+ * It moves in a straight line at a given angle and speed, dealing damage to entities it collides with.
+ * This class extends `Scroller` to account for world scrolling and implements projectile behavior,
+ * including collision detection with non-passable tiles and other hurtable entities.
+ * When a projectile hits a tile or entity, it will either destroy itself or deal damage to the entity.
+ * <p>
+ * The projectile plays a sound on creation and displays an image.
+ * </p>
+ * @author Zachary Zhao & Ricky Zhu
+ * @version June 2025
  */
 public class Projectile extends Scroller
 {
@@ -13,6 +19,15 @@ public class Projectile extends Scroller
     private HurtableEntity e;
     private double moveX,moveY;
     private double angle;
+    
+     /**
+     * Constructs a new Projectile object.
+     * 
+     * @param e The entity that the projectile is fired from. Used to avoid self harm.
+     * @param d The damage dealt by the projectile.
+     * @param s The speed at which the projectile moves.
+     * @param a The angle at which the projectile moves.
+     */
     public Projectile(HurtableEntity e, int d, int s, double a){
         damage=d;
         speed=s;
@@ -26,12 +41,22 @@ public class Projectile extends Scroller
         moveY = speed*Math.sin(Math.toRadians(angle));
 
     }
+    /**
+     * Called when the projectile is added to the world. This method updates its real world coordinates.
+     * 
+     * @param w The world the projectile is added to.
+     */
     public void addedToWorld(World w) {
         super.addedToWorld(w);
         realX = getX()+Scroller.camX;
         realY = getY()+Scroller.camY;
     }
-
+    
+    /**
+     * The act method
+     * It moves the projectile according to its speed and angle, checks for collisions with nonpassable tiles and
+     * hurtable entities, and handles destruction of the projectile upon collision.
+     */
     public void act()
     {
         realX += moveX;
@@ -61,7 +86,9 @@ public class Projectile extends Scroller
         }
     }
     
-    
+    /**
+     * kaboom
+     */
     private void destroy() {
         // play an animation before destroying
         getWorld().removeObject(this);
