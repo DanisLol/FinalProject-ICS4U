@@ -38,14 +38,14 @@ public class BossWorld extends World
         "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
         "eeeeeeeuuuuuuuuuuuuuuuueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
         "eeeeeeeuffffffffffffffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
-        "eeeeeeeuffffffffffffffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
-        "eeeeeeeuffffffffffffffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
-        "eeeeeeeuffffffffffffffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
-        "eeeeeeeuffffffffffffffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
-        "eeeeeeeuffffffffffffffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
-        "eeeeeeeuffffffffffffffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
-        "eeeeeeeuffffffffffffffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
-        "eeeeeeeuffffffffffffffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+        "eeeeeeeuffuuffffffuuffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+        "eeeeeeeuffuuffffffuuffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+        "eeeeeeeufflfffffffflffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+        "eeeeeeeufflfffffffflffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+        "eeeeeeeufflfffffffflffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+        "eeeeeeeufflfffffffflffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+        "eeeeeeeuffuuffffffuuffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+        "eeeeeeeuffuuffffffuuffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
         "eeeeeeeuffffffffffffffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
         "eeeeeeeuuuuuuuuuuuuuuuueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
         "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
@@ -114,7 +114,7 @@ public class BossWorld extends World
             System.out.println(line.countTokens());
             texts[i] = new FadingText(lines[i], true, ((int) (line.countTokens() * 60 / 2.5 )));
         }        
-        addObject(texts[curIndex], getWidth() / 2, ((int) (getHeight() * 0.75)));
+        addObject(texts[curIndex], getWidth() / 2, ((int) (getHeight() * 0.85)));
 
         setPaintOrder(SuperStatBar.class, Actor.class, Player.class, HurtableEntity.class, Tile.class, Board.class);
     }
@@ -132,7 +132,7 @@ public class BossWorld extends World
             ArrayList<FadingText> currentTexts = (ArrayList<FadingText>)getObjects(FadingText.class);
             if (currentTexts.size() == 0){
                 curIndex++;
-                if (curIndex < lines.length) addObject(texts[curIndex], getWidth() / 2, ((int) (getHeight() * 0.75)));
+                if (curIndex < lines.length) addObject(texts[curIndex], getWidth() / 2, ((int) (getHeight() * 0.85)));
             }
         }
 

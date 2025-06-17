@@ -1,10 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Cohen here.
+ * Hi Mr. Cohen. "Boss" that appears in BossWorld.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Angela Wang
+ * @version June 2025
  */
 public class Cohen extends Enemy
 {
@@ -12,9 +12,11 @@ public class Cohen extends Enemy
         super("cohen", 192);
         attackSound = new GreenfootSound("melee.mp3");
         
-        cooldown = 90;
+        cooldown = 60;
         
         health = BossWorld.MAX_BOSS_HEALTH;
+        
+        damage = 20;
     }
     
     /**
@@ -26,6 +28,9 @@ public class Cohen extends Enemy
         super.act();
     }
     
+    /**
+     * Receive damage and update health bar in BossWorld. If health <=0, start dying animation
+     */
     public void takeDamage(int dmg){
         health -= dmg;
         
@@ -42,6 +47,9 @@ public class Cohen extends Enemy
         }
     }
     
+    /**
+     * Attack intersecting player
+     */
     public void attack(){
         Player p = (Player) getOneIntersectingObject(Player.class);
         if (p != null && p.getCollider() != null) {

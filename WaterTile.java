@@ -6,7 +6,7 @@ import java.util.List;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class WaterTile extends Tile
+public class WaterTile extends Damager
 {
     public WaterTile(){
         super("tile_water.png", 'w');
@@ -22,14 +22,18 @@ public class WaterTile extends Tile
     public void act()
     {
         super.act();
+        //checkHurtablesAfterCooldowns();
+    }
 
-        List<Player> p = getWorld().getObjects(Player.class);
-        
-        if (this.intersects(p.get(0).getCollider())){
-            //p.get(0).setSpeedPercents(0.2, 0.2);
-            sound.play();
-        } else {
-            //p.get(0).setSpeedPercents(1, 1);
+    public void checkHurtables(){
+        List<HurtableEntity> entities = getWorld().getObjects(HurtableEntity.class);
+        for (HurtableEntity e: entities){
+            if (this.intersects(e.getCollider())){
+                e.alterSpeed(0.4);
+                sound.play();
+            } else {
+                e.resetSpeed();
+            }
         }
     }
 }

@@ -3,10 +3,10 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 /**
- * Write a description of class InformationWorld here.
+ * Sets up story for the game. Unfortunately >>>SKIP skips the entire intro and does not fast-forward a single line.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Angela Wang 
+ * @version June 2025
  */
 public class InformationWorld extends World
 {
@@ -41,8 +41,10 @@ public class InformationWorld extends World
             "Your questions will have to be answered later. Your first priority is to survive."
         };
 
+        //make a new fading text box for every line of dialogue
         texts = new FadingText[lines.length];
         for (int i = 0; i < texts.length; i++){
+            //change display time based on number of words (going off approx 2.5 words per second??
             line = new StringTokenizer(lines[i]);
             System.out.println(line.countTokens());
             texts[i] = new FadingText(lines[i], true, ((int) (line.countTokens() * 60 / 2.5 )));
@@ -55,14 +57,23 @@ public class InformationWorld extends World
         addObject(skip, 945, 48);
     }
 
+    /**
+     * Play music on start
+     */
     public void started(){
         music.playLoop();
     }
 
+    /**
+     * Stop music when execution is paused
+     */
     public void stopped(){
         music.pause();
     }
 
+    /**
+     * Check for FadingText. If there is no FadingText, move on to the next one. If there are no more FadingTexts, move on to next world.
+     */
     public void act(){
         ArrayList<FadingText> currentTexts = (ArrayList<FadingText>)getObjects(FadingText.class);
         if (currentTexts.size() == 0){

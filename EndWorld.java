@@ -1,10 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class EndWorld here.
+ * Win screen, with the option to return to starting screen when enter is pressed.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Angela Wang
+ * @version June 2025
  */
 public class EndWorld extends World
 {
@@ -32,7 +32,7 @@ public class EndWorld extends World
         text = new SuperTextBox("You escape the dungeon (ICS4U). Nature looks so beautiful.", new Color(0, 0, 0, 0), Color.GREEN, new Font("Times New Roman", 20), true, 800, 0, new Color(0, 0, 0, 0));
         addObject(text, getWidth() / 2, getHeight() / 2 + 80);
 
-        restartText = new SuperTextBox("Press enter to return to start", new Color(0, 0, 0, 0), Color.WHITE, new Font("Times New Roman", 20), true, 800, 0, new Color(0, 0, 0, 0));
+        restartText = new SuperTextBox("Press enter to return to start", new Color(0, 0, 0, 0), Color.BLACK, new Font("Times New Roman", 20), true, 800, 0, new Color(0, 0, 0, 0));
         restartText.getImage().setTransparency(0);
         fadingIn = true;
         addObject(restartText, getWidth() / 2,((int) (getHeight() * 0.75)));
@@ -41,14 +41,23 @@ public class EndWorld extends World
         music.playLoop();
     }
 
+    /**
+     * Play music when started
+     */
     public void started(){
         music.playLoop();
     }
     
+    /**
+     * Pause music when stopped
+     */
     public void stopped(){
         music.pause();
     }
     
+    /**
+     * Fade in texts and check for enter pressed
+     */
     public void act(){
         if (fadingIn){
             fadeIn(restartText);

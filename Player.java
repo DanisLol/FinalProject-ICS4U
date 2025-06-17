@@ -232,6 +232,8 @@ public class Player extends HurtableEntity
     public void takeDamage(int dmg) {
         health -= dmg;
         
+        System.out.println(health);
+        
         if (getWorld() instanceof MyWorld){
             MyWorld w = (MyWorld) getWorld();
             w.getHealthStat().update(health);

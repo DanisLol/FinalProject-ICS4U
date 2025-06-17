@@ -20,7 +20,7 @@ public class Tile extends Scroller
         image = new GreenfootImage(imageName);
         setImage(image);
         this.type = type;
-        if (/*type == 'u' || */type == 'b'){
+        if (type == 'u' || type == 'b'){
             isPassable = false;
         }
     }
