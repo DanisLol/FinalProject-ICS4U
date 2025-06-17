@@ -29,8 +29,8 @@ public abstract class Enemy extends HurtableEntity
         maxSpeed = 0.9;
         speed = maxSpeed;
         distanceFromPlayer = 20;
-        health = 100;
-        healthStat = new SuperStatBar(50, health, this, 200, 15, Color.RED, Color.BLACK, true, Color.BLACK, 3);
+        health = 20;
+        //healthStat = new SuperStatBar(50, health, this, 200, 15, Color.RED, Color.BLACK, true, Color.BLACK, 3);
 
         collider = new CollisionBox(32, 50, 16, this, false);
     }
@@ -65,6 +65,20 @@ public abstract class Enemy extends HurtableEntity
     }
 
     private void getDirection(){
+    }
+    
+    public void takeDamage(int dmg){
+        health -= dmg;
+
+        if (health <= 0){
+            if (lastAction != ActionState.DYING){
+                curAction = ActionState.DYING;
+                lastAction = ActionState.DYING;
+                curAnimation = deathAnimation;
+                frame = 0;
+                highestIndex = 5;
+            }
+        }
     }
 
     private void pushEntities(){

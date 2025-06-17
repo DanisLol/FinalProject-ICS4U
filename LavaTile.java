@@ -22,6 +22,7 @@ public class LavaTile extends Damager
     public void act()
     {
         super.act();
+        //if (isActive) 
         checkHurtablesAfterCooldowns();
     }
 

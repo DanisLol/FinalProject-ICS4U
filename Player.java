@@ -47,7 +47,7 @@ public class Player extends HurtableEntity
 
         damage = 10; //test
         health = 100;   
-        healthStat = new SuperStatBar(50, health, this, 200, 15, Color.GREEN, Color.BLACK, true, Color.BLACK, 3);
+        //healthStat = new SuperStatBar(50, health, this, 200, 15, Color.GREEN, Color.BLACK, true, Color.BLACK, 3);
 
         collider = new CollisionBox(32, 32, 16, this, false);
     }
@@ -105,6 +105,8 @@ public class Player extends HurtableEntity
 
     public void pickUpCoin(){
         coins++;
+        MyWorld w = (MyWorld) getWorld();
+        w.getCoinCounter().setValue(coins);
     }
 
     private void checkActionState(){
@@ -242,6 +244,22 @@ public class Player extends HurtableEntity
 
     public void setWeaponDmg(int dmg){
         this.weaponDmg += dmg;
+    }
+    
+    public void takeDamage(int dmg){
+        health -= dmg;
+        MyWorld w = (MyWorld) getWorld();
+        w.getHealthStat().update(health);
+
+        if (health <= 0){
+            if (lastAction != ActionState.DYING){
+                curAction = ActionState.DYING;
+                lastAction = ActionState.DYING;
+                curAnimation = deathAnimation;
+                frame = 0;
+                highestIndex = 5;
+            }
+        }
     }
 
     // public void setImageSize(int length, int width)
