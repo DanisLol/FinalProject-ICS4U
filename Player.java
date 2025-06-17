@@ -20,6 +20,7 @@ public class Player extends HurtableEntity
     private int killed;
     private int weaponDmg;
     private int tempSpeed;
+    private SuperStatBar healthStat;
 
     public Player() {
         super(SettingsWorld.getPlayerSkinImage(), 192);
@@ -48,10 +49,23 @@ public class Player extends HurtableEntity
         
         tempSpeed = 3; 
 
-        damage = 10; //test
-        health = 100;   
-        //healthStat = new SuperStatBar(50, health, this, 200, 15, Color.GREEN, Color.BLACK, true, Color.BLACK, 3);
-
+        if(SettingsWorld.getDifficultiyLevelImage() == 0)
+        {
+            damage = 20; 
+            health = 400;
+        }
+        else if (SettingsWorld.getDifficultiyLevelImage() == 1)
+        {
+            damage = 15; 
+            health = 300;
+        }
+        else 
+        {
+            damage = 21; 
+            health = 200; 
+        }
+        //health = 100; 
+        healthStat = new SuperStatBar(50, health, this, 200, 15, Color.GREEN, Color.BLACK, true, Color.BLACK, 3);
         collider = new CollisionBox(32, 32, 16, this, false);
     }
 
