@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.List;
 
 /**
  * A class that contains all of the objects that have to move according to the player
@@ -16,6 +17,8 @@ public class Scroller extends SuperSmoothMover
 
     protected static double camX = 0; // the "camera's" position
     protected static double camY = 0;
+    
+    private List<Tile> activeGameObjects;
 
     public Scroller() {
         isNew = true;
@@ -32,7 +35,7 @@ public class Scroller extends SuperSmoothMover
             isNew = false;
         }
     }
-
+    
     public void act()
     {
         updateLocation();

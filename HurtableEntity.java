@@ -22,9 +22,7 @@ public abstract class HurtableEntity extends Scroller
     protected double maxSpeed;
 
     protected int health;
-    
-    
-    protected SuperStatBar healthStat;
+    //protected SuperStatBar healthStat;
 
     public HurtableEntity(String sheetName, int largeSize){
         
@@ -104,12 +102,26 @@ public abstract class HurtableEntity extends Scroller
 
     public abstract void attack(); 
 
+    /*public void takeDamage(int dmg){
+        health -= dmg;
+        //healthStat.update(health);
+
+        if (health <= 0){
+            if (lastAction != ActionState.DYING){
+                curAction = ActionState.DYING;
+                lastAction = ActionState.DYING;
+                curAnimation = deathAnimation;
+                frame = 0;
+                highestIndex = 5;
+            }
+        }
+    }*/
+    
     public abstract void takeDamage(int dmg);
 
-    //public void die(){
-        //player.addKill();
-        //getWorld().removeObject(this);
-    //}
+    public void die(){
+        getWorld().removeObject(this);
+    }
 
     public CollisionBox getCollider(){
         return collider;

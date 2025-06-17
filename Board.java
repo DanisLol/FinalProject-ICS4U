@@ -24,8 +24,6 @@ public class Board extends Actor
         put("g", GateTileEnter.class);
         put("q", GateTileExit.class);
         put("p", SpawnerTile.class);
-        put("t", PortalTile.class);
-        put("z", PlayerSpawnTile.class);
     }};
 
     /**

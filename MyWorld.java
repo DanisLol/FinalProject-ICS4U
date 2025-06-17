@@ -49,8 +49,8 @@ public class MyWorld extends World
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufwwwwffffllllfueeeeeeuffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufwfpffffffpflfuuuuuuuuffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuffffffbbffffffqfffffffffffffffffffffueeeeeee" +
-    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufbbffbuubffbbfqfffffffffffffttffffffueeeeeee" +
-    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufbbffbuubffbbfqfffffffffffffttffffffueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufbbffbuubffbbfqfffffffffffffffffffffueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufbbffbuubffbbfqfffffffffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuffffffbbffffffqfffffffffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuflfpffffffpfwfuuuuuuuuffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufllllffffwwwwfueeeeeeuffffffffffffffueeeeeee" +
@@ -67,6 +67,7 @@ public class MyWorld extends World
 
     //Stat bar:
     private SuperStatBar healthStat; 
+    //coin counter
     private Counter coinStat;
     private int health;
     private GreenfootImage healthImage;
@@ -85,6 +86,7 @@ public class MyWorld extends World
     public static final GreenfootSound GAME_MUSIC = new GreenfootSound("game_music.mp3");
 
     private UserInfo user; 
+    
     public MyWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
@@ -104,9 +106,9 @@ public class MyWorld extends World
         imgActor1.setImage("heart.png"); // set the image (must be in the images folder)
         addObject(imgActor1, 40, 23);
 
-        //Coin SuperStatBar:
+        //Coin counter:
         coinStat =  new Counter();       
-        addObject(coinStat, 100, 45);
+        addObject(coinStat, 120, 45);
 
         Actor imgActor2 = new Actor() {};  // create a basic Actor
         imgActor2.setImage("coin.png"); // set the image (must be in the images folder)
@@ -132,7 +134,6 @@ public class MyWorld extends World
     public void act(){
         actNum++;
         if (actNum % 60 == 0) counter2.add(1); // Increment the counter by 1
-        
     }
 
     public Player getPlayer() {
@@ -169,6 +170,7 @@ public class MyWorld extends World
     public void stopped(){
         GAME_MUSIC.pause();
     }
+        
     
     /*public void spawnEnemies(int numberOfEnemies) {
         for(int i = 0; i < numberOfEnemies; i++ ) {
@@ -218,23 +220,7 @@ public class MyWorld extends World
     public void prepare()
     {
     }
-    
-    public void increaseLevel(){
-        //was originally going to have multiple levels but ran out of time.
-        //level++; 
-        //System.out.println("NEXT LEVEL");
-        board.delete();
-        //board = new Board(testLayout2);
-        //addObject(board, 0, 0);
-        //board.display();
-        GAME_MUSIC.stop();
-        Greenfoot.setWorld(new BossWorld());
-        
-        //PlayerSpawnTile startTile = getObjects(PlayerSpawnTile.class).get(0);
-        //player.setRealXY(startTile.getX(), startTile.getY());
-        //player.setRealXY(getWidth() / 2, getHeight() / 2);
-    }
-    
+
     public SuperStatBar getHealthStat(){
         return healthStat;
     }
