@@ -9,8 +9,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Cohen extends Enemy
 {
     public Cohen(){
-        super("guard", 128);
+        super("cohen", 192);
         attackSound = new GreenfootSound("melee.mp3");
+        
+        cooldown = 180;
     }
     
     /**
@@ -19,7 +21,7 @@ public class Cohen extends Enemy
      */
     public void act()
     {
-        // Add your action code here.
+        super.act();
     }
     
     public void takeDamage(int dmg){
@@ -39,7 +41,11 @@ public class Cohen extends Enemy
     }
     
     public void attack(){
-        player.takeDamage(10);
+        Player p = (Player) getOneIntersectingObject(Player.class);
+        if (p != null && p.getCollider() != null) {
+            p.takeDamage(damage);
+        }
+
         attackSound.play();
     }
 }

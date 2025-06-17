@@ -134,7 +134,7 @@ public abstract class Enemy extends HurtableEntity {
             curAction = ActionState.ATTACKING;
             curAnimation = attackAnimation;
             frame = 0;
-            if (this instanceof Melee)
+            if (this instanceof Melee || this instanceof Cohen)
                 highestIndex = 5;
             else
                 highestIndex = 6;

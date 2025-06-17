@@ -256,6 +256,10 @@ public class Player extends HurtableEntity
     public int getCoin() {
         return coins;
     }
+    
+    public void setCoin(int newCoinValue){
+        coins = newCoinValue;
+    }
 
     public void updateCoin()
     {
