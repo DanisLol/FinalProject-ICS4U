@@ -147,7 +147,15 @@ public class SettingsWorld extends World
      */
     public static int getUserInfoInt(int index)
     {
-        return user.getInt(index); 
+        if(user!= null)
+        {
+            return user.getInt(index); 
+        }
+        else
+        {
+            return 0;
+        }
+
     }
 
     /**

@@ -123,6 +123,7 @@ public class ShopWorld extends World
 
         setPaintOrder(ImageDisplay.class, Button.class); 
         addObject(player, 820, 560); 
+        prepare();
     }
 
     public void act()
@@ -171,7 +172,7 @@ public class ShopWorld extends World
             {
                 removeObject(chestboxPopUp); 
             }
-            
+
             removeObject(deletePopUp);
         }
     }
@@ -266,5 +267,12 @@ public class ShopWorld extends World
         addObject(damageIntakeStats, 824, 620);
         addObject(healthStats, 798, 679); 
         addObject(coinsDisplay, 925, 150);
+    }
+    /**
+     * Prepare the world for the start of the program.
+     * That is: create the initial objects and add them to the world.
+     */
+    private void prepare()
+    {
     }
 }
