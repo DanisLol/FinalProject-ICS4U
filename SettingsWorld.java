@@ -56,9 +56,6 @@ public class SettingsWorld extends World
         }
 
         playerSkin = new StatChooseImage(512,270,754,400, playerSkinNumber); 
-        difficultyLevel = new StatChooseImage(512,270,754,650, difficultyLevelNumber);
-
-        difficultyLevelNumber = 0;
         difficultyLevel = new StatChooseImage(512,270,754,650, difficultyLevelNumber); 
 
         music = new GreenfootSound("settings_music.mp3");
@@ -96,9 +93,6 @@ public class SettingsWorld extends World
 
     public void nextWorld()
     {
-          if (Greenfoot.mouseClicked(next)){
-            Greenfoot.setWorld(new MyWorld());
-        }
 
         if(UserInfo.isStorageAvailable())
         {
@@ -109,18 +103,9 @@ public class SettingsWorld extends World
             user.store(); 
             //}
         }
-        //if it has been created before, go to the one that was created
-        Greenfoot.setWorld(world1);
-        }
-         */ 
-
-        //idk what anything above this is
-
-        if (Greenfoot.mouseClicked(next)){
-            music.stop();
+         if (Greenfoot.mouseClicked(next)){
             Greenfoot.setWorld(new MyWorld());
         }
-        */
     }
     
     public static void setUserInfoInt(int index, int varible)

@@ -19,6 +19,7 @@ public class Player extends HurtableEntity
     // the number of enemies killed
     private int killed;
     private int weaponDmg;
+    private int tempSpeed;
 
     public Player() {
         super(SettingsWorld.getPlayerSkinImage(), 192);
@@ -45,7 +46,7 @@ public class Player extends HurtableEntity
         attackSound = new GreenfootSound("player_attack.wav");
         attackSound.setVolume(70);
         
-        tempSpeed = 10; 
+        tempSpeed = 3; 
 
         if(SettingsWorld.getDifficultiyLevelImage() == 0)
         {
@@ -137,10 +138,6 @@ public class Player extends HurtableEntity
 
         dx = 0;
         dy = 0;
-
-        // account for water tile?!?
-        xSpeed = xSpeed * percentXSpeed;
-        ySpeed = ySpeed * percentYSpeed;
         if (Greenfoot.isKeyDown("a")) {
             direction = 1;
             dx = -tempSpeed;
@@ -247,7 +244,8 @@ public class Player extends HurtableEntity
     public void updateCoin()
     {
         SettingsWorld.setUserInfoInt(3, coins); 
-        SettingsWorld.storeInfo(); 
+        SettingsWorld.storeInfo();
+    }
 
     //replaced by pickUpCoin()
     // public void earnCoin(){
@@ -256,26 +254,6 @@ public class Player extends HurtableEntity
     // coins++;
     // //}
     // }
-
-    public int getKilled(){
-        return this.killed;
-    }
-
-    public int getWeaponDmg(){
-        return this.weaponDmg;
-    }
-
-    public int getHealth(){
-        return this.health;
-    }
-
-    public void setHealth(int h){
-        this.health += h;
-    }
-
-    public void setWeaponDmg(int dmg){
-        this.weaponDmg += dmg;
-    }
 
     public int getKilled() {
         return this.killed;

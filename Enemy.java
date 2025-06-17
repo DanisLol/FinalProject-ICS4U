@@ -26,8 +26,6 @@ public abstract class Enemy extends HurtableEntity {
     
     //protected SuperStatBar healthStat;
 
-    private int direction; //for animation
-
     public Enemy (String sheetName, int largeSize) {
         super(sheetName, largeSize);
         maxSpeed = 0.9;
@@ -35,16 +33,21 @@ public abstract class Enemy extends HurtableEntity {
         distanceFromPlayer = 20;
         if(SettingsWorld.getDifficultiyLevelImage() == 0)
         {
-            health = 10;
+            health = 2;
         }
         else if (SettingsWorld.getDifficultiyLevelImage() == 1)
         {
-            health = 25;
+            health = 4;
         }
         else 
         {
-            health = 40; 
+            health = 7; 
         }
+        
+                health = 100;
+        healthStat = new SuperStatBar(50, health, this, 200, 15, Color.RED, Color.BLACK, true, Color.BLACK, 3);
+
+        collider = new CollisionBox(32, 50, 16, this, false);
     }
     protected SuperStatBar healthStat;
     /*
@@ -59,13 +62,6 @@ public abstract class Enemy extends HurtableEntity {
      */
 
     // private int direction; //for animation
-    public void act() {
-
-        health = 100;
-        healthStat = new SuperStatBar(50, health, this, 200, 15, Color.RED, Color.BLACK, true, Color.BLACK, 3);
-
-        collider = new CollisionBox(32, 50, 16, this, false);
-    }
     
     public void act()
     {
@@ -86,8 +82,6 @@ public abstract class Enemy extends HurtableEntity {
         }
 
     }
-
- {
     public void addedToWorld(World w){
         super.addedToWorld(w);
         //w.addObject(collider, getX(), getY() + 16);

@@ -106,7 +106,7 @@ public abstract class HurtableEntity extends Scroller
 
     public void takeDamage(int dmg){
         health -= dmg;
-        healthStat.update(health);
+        //healthStat.update(health);
 
         if (health <= 0){
             if (lastAction != ActionState.DYING){

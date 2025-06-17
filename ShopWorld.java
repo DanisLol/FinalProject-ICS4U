@@ -138,6 +138,7 @@ public class ShopWorld extends World
         {
             addObject(upgradePopUp, 500, 455);
             addObject(deletePopUp, 740, 300); 
+            updateStats();
         }
         else if (Greenfoot.mouseClicked(buyChestbox))
         {
@@ -156,7 +157,6 @@ public class ShopWorld extends World
             {
                 fileName = "bomb.png";
                 player.setHealth(10); 
-                updateStats();
             }
 
             chestboxPopUp = new ImageDisplay(fileName, 500, 340); 
@@ -207,8 +207,8 @@ public class ShopWorld extends World
 
     public void updateStats() {
         damageToEnemyStats = new ImageDisplay("Damage to Enemy: " + player.getWeaponDmg(), 22);
-        healthStats = new ImageDisplay("Health Stats: " + health, 22); 
         coinsDisplay = new ImageDisplay("$" + coins, 40);
+        damageIntakeStats = new ImageDisplay("Damage Intake Stats: " + player.getDmg(), 20); 
+        healthStats = new ImageDisplay("Health Stats: " + player.getHealth(), 22); 
     }
-
 }
