@@ -76,6 +76,12 @@ public abstract class Enemy extends HurtableEntity {
                 play.addKill();
                 counted = true;
             }
+            int random = Greenfoot.getRandomNumber(2);
+            if (random == 0){
+                Coin coin = new Coin();
+                getWorld().addObject(coin, ((int) (this.realX + 0.5)), ((int) (this.realY + 0.5)));
+                coin.updateLocation();
+            }
             getWorld().removeObject(this);
             return;
         }
@@ -141,7 +147,7 @@ public abstract class Enemy extends HurtableEntity {
             curAction = ActionState.ATTACKING;
             curAnimation = attackAnimation;
             frame = 0;
-            if (this instanceof Melee)
+            if (this instanceof Melee || this instanceof Cohen)
                 highestIndex = 5;
             else
                 highestIndex = 6;

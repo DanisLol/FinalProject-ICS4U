@@ -49,8 +49,8 @@ public class MyWorld extends World
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufwwwwffffllllfueeeeeeuffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufwfpffffffpflfuuuuuuuuffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuffffffbbffffffqfffffffffffffffffffffueeeeeee" +
-    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufbbffbuubffbbfqfffffffffffffffffffffueeeeeee" +
-    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufbbffbuubffbbfqfffffffffffffffffffffueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufbbffbuubffbbfqfffffffffffffttffffffueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufbbffbuubffbbfqfffffffffffffttffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuffffffbbffffffqfffffffffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuflfpffffffpfwfuuuuuuuuffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufllllffffwwwwfueeeeeeuffffffffffffffueeeeeee" +
@@ -92,6 +92,7 @@ public class MyWorld extends World
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(1024, 768, 1, false); 
         player = new Player();
+        //player.setCoin(0);
         addObject(player, getWidth()/2, getHeight()/2);
         board = new Board(testLayout);//random.nextInt(testLayouts.length)
         addObject(board,0,0);
@@ -107,7 +108,8 @@ public class MyWorld extends World
         addObject(imgActor1, 40, 23);
 
         //Coin counter:
-        coinStat =  new Counter();       
+        coinStat =  new Counter(); 
+        coinStat.setValue(player.getCoin());
         addObject(coinStat, 120, 45);
 
         Actor imgActor2 = new Actor() {};  // create a basic Actor
@@ -220,7 +222,23 @@ public class MyWorld extends World
     public void prepare()
     {
     }
-
+    
+    public void increaseLevel(){
+        //was originally going to have multiple levels but ran out of time.
+        //level++; 
+        //System.out.println("NEXT LEVEL");
+        board.delete();
+        //board = new Board(testLayout2);
+        //addObject(board, 0, 0);
+        //board.display();
+        GAME_MUSIC.stop();
+        Greenfoot.setWorld(new BossWorld());
+        
+        //PlayerSpawnTile startTile = getObjects(PlayerSpawnTile.class).get(0);
+        //player.setRealXY(startTile.getX(), startTile.getY());
+        //player.setRealXY(getWidth() / 2, getHeight() / 2);
+    }
+    
     public SuperStatBar getHealthStat(){
         return healthStat;
     }
