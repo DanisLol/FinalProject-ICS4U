@@ -17,7 +17,7 @@ public class ShopWorld extends World
     private int upgradeCostDamageToEnemy, upgradeCostDamageIntake, upgradeCostHealth;
     private ImageDisplay damageToEnemyDisplay, damageIntakeDisplay, healthDisplay;
 
-    private int potionCount;
+    private static int potionCount;
 
     private Button upgradeArmor, upgradeWeapon,upgradeHealth, buyChestbox; 
 
@@ -55,7 +55,7 @@ public class ShopWorld extends World
         damageIntake= 20;
         health = player.getHealth();
 
-        damageToEnemy = player.getWeaponDmg();
+        damageToEnemy = player.getDmg();
         damageIntake= player.getDmg();
         health = player.getHealth();
 
@@ -123,11 +123,15 @@ public class ShopWorld extends World
     public void act()
     {
         addObject(player, 820, 560); 
-        //player.animate(); 
         checkPurchase();
         removePopUp(); 
         purchase();
         nextWorld(); 
+    }
+
+    public static int getPotionCount()
+    {
+        return potionCount; 
     }
 
     public void nextWorld()
@@ -199,14 +203,14 @@ public class ShopWorld extends World
                     Enemy enemy = (Enemy) obj;
                     enemy.changeDmg();
                 }
-                damageToEnemy +=3; 
+                damageToEnemy +=5; 
                 updateStats();                                                                                                                                                              
             }
         }
         else if (Greenfoot.mouseClicked(upgradeWeapon)) {
             if (coins >= upgradeCostDamageToEnemy) {
                 coins -= upgradeCostDamageToEnemy;
-                player.setWeaponDmg(5); // Add method to Player class
+                player.increaseDmg(); // Add method to Player class
                 damageIntake += 5; 
                 updateStats();
             }
