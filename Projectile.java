@@ -6,7 +6,7 @@ import java.util.*;
  * @author Zachary Zhao & unknown
  * @version 0.0.2
  */
-public class Projectile extends SuperSmoothMover
+public class Projectile extends Scroller
 {
     private int damage, speed;
     private GreenfootSound sound;
@@ -25,9 +25,20 @@ public class Projectile extends SuperSmoothMover
         sound = new GreenfootSound("arrow.wav");
         sound.play();
     }
-    
+    public void addedToWorld(World w) {
+        super.addedToWorld(w);
+        // Since arrows are projectiles that are also affected by scrolling, need to use world coordinates over screen coordinates
+        // to get account for camera movement
+        // The problem is that Scroller's addedToWorld() will set realX and realY to screen coordinates, essentially teleporting
+        // arrows to realX/realY bounded by the 1024x768 starting room instead
+        // Using the reference to the entity that spawned this projectile it can use the correct world coordinates
+        realX = e.getRealX();
+        realY = e.getRealY();
+    }
     public void act()
     {
+        super.act();
+        
         moving();
         Tile tile = (Tile)getOneIntersectingObject(Tile.class);
         if (tile != null && !tile.getIsPassable()){
@@ -54,8 +65,10 @@ public class Projectile extends SuperSmoothMover
     }
     
     private void moving(){
-        setLocation(getX() + moveX, getY() + moveY);
-        int moveXInput = 0;
+        setRealLocation(getRealX() + moveX, getRealY() + moveY);
+        System.out.println(realX + ", " + realY);
+        //setLocation(getX() + moveX, getY() + moveY);
+        /*int moveXInput = 0;
         int moveYInput = 0;
 
         if(Greenfoot.isKeyDown("a")){
@@ -70,7 +83,7 @@ public class Projectile extends SuperSmoothMover
         if(Greenfoot.isKeyDown("s")){
             moveYInput = -10;
         }
-        setLocation(getX() + moveXInput, getY() + moveYInput);
+        setLocation(getX() + moveXInput, getY() + moveYInput);*/
     }
     
     private void destroy() {

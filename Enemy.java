@@ -76,6 +76,12 @@ public abstract class Enemy extends HurtableEntity {
                 play.addKill();
                 counted = true;
             }
+            int random = Greenfoot.getRandomNumber(2);
+            if (random == 0){
+                Coin coin = new Coin();
+                getWorld().addObject(coin, ((int) (this.realX + 0.5)), ((int) (this.realY + 0.5)));
+                coin.updateLocation();
+            }
             getWorld().removeObject(this);
             return;
         }

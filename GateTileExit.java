@@ -16,7 +16,7 @@ public class GateTileExit extends Tile {
         super.act(); 
 
         actNum++;
-        if (activated){
+        /*if (activated){
             if (isInTopHalfOfBoard()){
                 if (player.getKilled() == 8){
                     deactivate();
@@ -26,7 +26,9 @@ public class GateTileExit extends Tile {
                     deactivate();
                 }
             }
-        }
+        }*/
+        List<Enemy> enemies = getWorld().getObjects(Enemy.class);
+        if (enemies.size() == 0) deactivate();
     }
 
     public void activate() {

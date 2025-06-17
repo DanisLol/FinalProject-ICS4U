@@ -119,6 +119,11 @@ public class Player extends HurtableEntity
         }
         //} 
         
+        if (this.isTouching(PortalTile.class)){
+            MyWorld w = (MyWorld) getWorld();
+            w.increaseLevel();
+        }
+        
         centreOn(this);
         updateLocation();
     }
