@@ -20,6 +20,7 @@ public class Player extends HurtableEntity
     private int killed;
     private int weaponDmg;
     private int tempSpeed;
+    private SuperStatBar healthStat;
 
     public Player() {
         super(SettingsWorld.getPlayerSkinImage(), 192);
