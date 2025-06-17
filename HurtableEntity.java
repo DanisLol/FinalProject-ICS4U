@@ -135,6 +135,11 @@ public abstract class HurtableEntity extends Scroller
         damage -= 5;
     }
     
+    protected void increaseDmg()
+    {
+        damage+=5; 
+    }
+    
     public void alterSpeed(double multiplier) {
         speed = maxSpeed*multiplier;
     }

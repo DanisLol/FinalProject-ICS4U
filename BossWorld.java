@@ -27,6 +27,10 @@ public class BossWorld extends World
     private int curIndex;
     private String[] lines;
 
+    private boolean keyWasDown;
+
+    private int countDown, maxCountDown; 
+
     //timer
     private Counter timer;
     private SimpleTimer st = new SimpleTimer();
@@ -117,6 +121,12 @@ public class BossWorld extends World
         addObject(texts[curIndex], getWidth() / 2, ((int) (getHeight() * 0.85)));
 
         setPaintOrder(SuperStatBar.class, Actor.class, Player.class, HurtableEntity.class, Tile.class, Board.class);
+
+        showText("Click p to activate your invincibility potion", 320, 100);
+        showText("Potion left: " + Integer.toString(SettingsWorld.getUserInfoInt(4)), 160, 130);
+
+        countDown = 500;
+        maxCountDown = 500; 
     }
 
     public void started(){
@@ -128,6 +138,8 @@ public class BossWorld extends World
     }
 
     public void act(){
+
+        System.out.println(player.getHealth()); 
         if (curIndex < lines.length){
             ArrayList<FadingText> currentTexts = (ArrayList<FadingText>)getObjects(FadingText.class);
             if (currentTexts.size() == 0){
@@ -148,6 +160,26 @@ public class BossWorld extends World
                 addObject(new Fader("in", new EndWorld()), getWidth() / 2, getHeight() / 2);
             }
         }
+        usePotion();
+    }
+
+    public void usePotion()
+    {
+        if(Greenfoot.isKeyDown("q") && SettingsWorld.getUserInfoInt(4)>=1)
+        {
+            keyWasDown = true;
+        }
+        if(keyWasDown)
+        {
+            player.takeDamage(0); 
+            countDown--; 
+        }
+        if(countDown==0)
+        {
+            keyWasDown = false;
+            countDown = maxCountDown; 
+        }
+
     }
 
     public void updatePlayerHealthBar(int health){
