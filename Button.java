@@ -46,8 +46,15 @@ public class Button extends Actor
         this.cursor = cursor;
 
     }
+    /**
+     * Button constructor - pass user cursor,and adjusts the graphic depending on price. Price option limited to 10, 15, 20 as needed for the game. 
+     * When user mouse hovers over the image, graphics adjust to a second graphic called hoverImage
+     * 
+     * @param cursor User's cursor, as created by the World the Button is in
+     * @param price Amount of coins user's must pay for the product - used in shopWorld
+     */
 
-    public Button(Cursor cursor, boolean isShopWorld, int price){
+    public Button(Cursor cursor, int price){
         if (price == 10)
         {
             image = new GreenfootImage ("UpgradeButton10.png"); 
@@ -82,8 +89,15 @@ public class Button extends Actor
         }
 
         curIndex = 0;
-
     }
+    
+     /**
+     * Button constructor - pass user cursor, and imageBase (original image that indicates no mouse movement hovering it). hoverImage, which is the 
+     * graphic adjusted when a mouse is hovering on top of a image, is found based on the name of the imageBase. 
+     * 
+     * @param cursor User's cursor, as created by the World the Button is in
+     * @param imageBase Image that will be percieved by user before mouse is hovered over the image
+     */
     public Button(Cursor cursor, String imageBase){
         image = new GreenfootImage(imageBase + ".png");
         hoverImage = new GreenfootImage(imageBase + "_hover.png");
@@ -105,20 +119,6 @@ public class Button extends Actor
         //if the cursor is hovering over the button, change the image
         if (cursor.getHoveredActors().contains(this)){
             setImage(hoverImage);
-            
-            // not working?!?!?
-            // if button is clicked, play sound
-            // if (Greenfoot.mousePressed(this)){
-
-                // curIndex++;
-                // //if current index exceeds maximum possible index, reset to 0
-                // if (curIndex > clicks.length - 1){
-                    // curIndex = 0;
-                // }
-                // clicks[curIndex].play();
-                
-
-            // }
         } else {
             //if not hovered over, normal image
             setImage(image);

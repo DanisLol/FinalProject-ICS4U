@@ -21,10 +21,13 @@ public class ImageDisplay extends Actor
         image = new GreenfootImage(Integer.toString(text), size, Color.BLACK, transparent);
         setImage(image);
     }
+    
+    public ImageDisplay(String text, int size, Color color)
+    {
+        image = new GreenfootImage(text, size, color, transparent);
+        setImage(image);
+    }
 
-    /**
-     * 
-     */
     public ImageDisplay(String text, int size)
     {
         image = new GreenfootImage(text, size, Color.BLACK, transparent);

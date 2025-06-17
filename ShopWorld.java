@@ -1,10 +1,11 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class ShopWorld here.
+ * ShopWorld -appears right before final boss level- allows users to buy buffs to heal, strengthen or better protect themselves, including armor, 
+ * weapon, health, invincibility, speed.
  * 
- * @ Daniel Wang, Stephanie Xia
- * @version (a version number or a date)
+ * @Stephanie Xia
+ * @June 16, 2025
  */
 public class ShopWorld extends World
 {
@@ -16,7 +17,11 @@ public class ShopWorld extends World
     private int upgradeCostDamageToEnemy, upgradeCostDamageIntake, upgradeCostHealth;
     private ImageDisplay damageToEnemyDisplay, damageIntakeDisplay, healthDisplay;
 
+    private int potionCount;
+
     private Button upgradeArmor, upgradeWeapon,upgradeHealth, buyChestbox; 
+
+    private Button next; 
     private Cursor cursor;
 
     private ImageDisplay damageToEnemyStats, damageIntakeStats, healthStats; 
@@ -25,8 +30,9 @@ public class ShopWorld extends World
     private int coins;
 
     private ImageDisplay speedBoost,invisibility, randomBoost; 
-
     private ImageDisplay upgradePopUp, deletePopUp, chestboxPopUp;
+
+    private ImageDisplay text; 
 
     public ShopWorld()
     {    
@@ -57,16 +63,16 @@ public class ShopWorld extends World
         damageIntakeDisplay = new ImageDisplay(upgradeCostDamageIntake, 30);
         healthDisplay = new ImageDisplay (upgradeCostHealth, 30);
 
-        upgradeArmor = new Button (cursor, true, 20); 
+        upgradeArmor = new Button (cursor, 20); 
         addObject(upgradeArmor, 245, 470); 
 
-        upgradeWeapon = new Button (cursor, true, 20);
+        upgradeWeapon = new Button (cursor, 20);
         addObject(upgradeWeapon, 537, 470);
 
-        upgradeHealth = new Button (cursor, true, 20);
+        upgradeHealth = new Button (cursor, 20);
         addObject(upgradeHealth, 826, 410); 
 
-        buyChestbox = new Button (cursor, true, 15); 
+        buyChestbox = new Button (cursor, 15); 
         addObject(buyChestbox, 578, 585);
 
         damageToEnemyStats = new ImageDisplay("Damage to Enemy: " + damageToEnemy, 22); 
@@ -92,15 +98,24 @@ public class ShopWorld extends World
         addObject(coinsDisplay, 925, 150);
 
         speedBoost = new ImageDisplay("Speed Boost ", 20); 
-        invisibility = new ImageDisplay("Invisibility ", 20); 
-        randomBoost = new ImageDisplay("Random Boost", 20); 
+        invisibility = new ImageDisplay("Invincibility ", 20); 
+        randomBoost = new ImageDisplay("Bomb", 20); 
 
         addObject(speedBoost, 391, 613);
-        addObject(invisibility, 384, 648); 
-        addObject(randomBoost, 395, 682);
+        addObject(invisibility, 386, 648); 
+        addObject(randomBoost, 360, 682);
 
         deletePopUp = new ImageDisplay ("deletePopup.png", 50, 50);
         upgradePopUp = new ImageDisplay ("popup.png", 500, 340); 
+
+        cursor = new Cursor(false);
+        addObject(cursor, 0, 0);
+
+        next = new Button(cursor, false); 
+        addObject(next, 985,685);
+
+        text = new ImageDisplay ("Next...", 22, Color.WHITE); 
+        addObject(text, 979,680); 
 
         setPaintOrder(ImageDisplay.class, Button.class); 
     }
@@ -112,6 +127,18 @@ public class ShopWorld extends World
         checkPurchase();
         removePopUp(); 
         purchase();
+        nextWorld(); 
+    }
+
+    public void nextWorld()
+    {
+        if(UserInfo.isStorageAvailable())
+        {
+            SettingsWorld.setUserInfoInt(4, potionCount); 
+        }
+        if (Greenfoot.mouseClicked(next)){
+            Greenfoot.setWorld(new MyWorld());
+        }
     }
 
     public void removePopUp()
@@ -152,19 +179,18 @@ public class ShopWorld extends World
             else if (i==1)
             {
                 fileName = "invincibilityPopup.png";
+                potionCount++; 
             }
             else if(i==2)
             {
                 fileName = "bomb.png";
                 player.setHealth(10); 
             }
-
             chestboxPopUp = new ImageDisplay(fileName, 500, 340); 
         }
     }
 
     public void purchase(){
-        showText("a", 200 ,500); 
         if (Greenfoot.mouseClicked(upgradeArmor)) {
             if (coins >= upgradeCostDamageIntake) {
                 coins -= upgradeCostDamageIntake;

@@ -2,10 +2,11 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.StringTokenizer; 
 
 /**
- * Write a description of class SettingsWorld here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ *SettingsWorld allows user to set the character image and the difficulty level of the game.
+ *Saves user's preferences. 
+ *
+ * @author Stephanie Xia
+ * @version June 16, 2025
  */
 public class SettingsWorld extends World
 {
@@ -93,7 +94,6 @@ public class SettingsWorld extends World
 
     public void nextWorld()
     {
-
         if(UserInfo.isStorageAvailable())
         {
             user = UserInfo.getMyInfo();
@@ -119,7 +119,6 @@ public class SettingsWorld extends World
     {
         return user.getInt(index); 
     }
-
 
     public static String getPlayerSkinImage()
     {
