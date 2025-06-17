@@ -1,12 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Transition between worlds. Taken from CatCollectors by Angela Wang
+ * Fade transition between worlds. Taken from CatCollectors by Angela Wang
  * 
  * @author Angela Wang
  * @version January 2025
- * Fade in = 0 to opaque
- * Fade out = opaque to 0
  */
 public class Fader extends Actor
 {
@@ -35,6 +33,9 @@ public class Fader extends Actor
         }
     }
     
+    /**
+     * Set transluscent/opaque image based on in/out type
+     */
     public void addedToWorld(World w){
         drawImage();
     }

@@ -231,9 +231,15 @@ public class Player extends HurtableEntity
 
     public void takeDamage(int dmg) {
         health -= dmg;
-        MyWorld w = (MyWorld) getWorld();
-        w.getHealthStat().update(health);
-
+        
+        if (getWorld() instanceof MyWorld){
+            MyWorld w = (MyWorld) getWorld();
+            w.getHealthStat().update(health);
+        } else if (getWorld() instanceof BossWorld){
+            BossWorld w = (BossWorld) getWorld();
+            w.updatePlayerHealthBar(health);
+        }
+        
         if (health <= 0){
             if (lastAction != ActionState.DYING){
                 curAction = ActionState.DYING;
