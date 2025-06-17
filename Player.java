@@ -17,6 +17,8 @@ public class Player extends HurtableEntity {
     // the number of enemies killed
     private int killed;
     private int weaponDmg;
+    
+    private int tempSpeed;
 
     public Player() {
         super(SettingsWorld.getPlayerSkinImage(), 192);
@@ -40,6 +42,8 @@ public class Player extends HurtableEntity {
 
         attackSound = new GreenfootSound("player_attack.wav");
         attackSound.setVolume(70);
+        
+        tempSpeed = 10; 
 
         if(SettingsWorld.getDifficultiyLevelImage() == 0)
         {
@@ -111,6 +115,11 @@ public class Player extends HurtableEntity {
         centreOn(this);
         updateLocation();
     }
+    
+    public void setSpeed(int newSpeed)
+    {
+        tempSpeed = newSpeed; 
+    }
 
     public void pickUpCoin() {
         coins++;
@@ -128,22 +137,22 @@ public class Player extends HurtableEntity {
 
             if (Greenfoot.isKeyDown("a")) {
                 direction = 1;
-                xSpeed = -10;
+                xSpeed = -tempSpeed;
             }
 
             if (Greenfoot.isKeyDown("d")) {
                 direction = 0;
-                xSpeed = 10;
+                xSpeed = tempSpeed;
             }
 
             if (Greenfoot.isKeyDown("w")) {
                 direction = 2;
-                ySpeed = -10;
+                ySpeed = -tempSpeed;
             }
 
             if (Greenfoot.isKeyDown("s")) {
                 direction = 3;
-                ySpeed = 10;
+                ySpeed = tempSpeed;
             }
         }
 
@@ -213,7 +222,7 @@ public class Player extends HurtableEntity {
     public int getCoin() {
         return coins;
     }
-
+    
     public void earnCoin() {
         Actor p = getOneIntersectingObject(Coin.class);
         if (p != null) {
@@ -224,6 +233,7 @@ public class Player extends HurtableEntity {
     public void updateCoin()
     {
         SettingsWorld.setUserInfoInt(3, coins); 
+        SettingsWorld.storeInfo(); 
     }
 
     public int getKilled() {

@@ -149,9 +149,9 @@ public class SettingsWorld extends World
         difficultyLevelNumber = x; 
     }
 
-    public static void getUserInfo()
+    public static void storeInfo()
     {
-
+        user.store(); 
     }
 
     protected class StatChooseImage

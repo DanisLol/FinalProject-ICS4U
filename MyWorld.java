@@ -128,6 +128,8 @@ public class MyWorld extends World
     public void act(){
         actNum++;
         if (actNum % 60 == 0) counter2.add(-1); // Decrement the counter by 1
+        
+        showText(Integer.toString(player.getHealth()), 200, 300); 
     }
 
     public Player getPlayer() {

@@ -35,7 +35,7 @@ public class ShopWorld extends World
 
         cursor = new Cursor(false);
         addObject(cursor, 0, 0); 
-        
+
         upgradeCostDamageToEnemy = 20;
         upgradeCostDamageIntake = 20;
         upgradeCostHealth = 20; 
@@ -65,9 +65,9 @@ public class ShopWorld extends World
         buyChestbox = new Button (cursor, true, 15); 
         addObject(buyChestbox, 578, 585);
 
-        damageToEnemyStats = new ImageDisplay("Damage to Enemy: " + damageToEnemy, 22); 
-        damageIntakeStats = new ImageDisplay("Damage Intake Stats: " + damageIntake, 20); 
-        healthStats = new ImageDisplay("Health Stats: " + health, 22); 
+        damageToEnemyStats = new ImageDisplay("Damage to Enemy: " + player.getDmg(), 22); 
+        damageIntakeStats = new ImageDisplay("Damage Intake Stats: " + player.getWeaponDmg(), 20); 
+        healthStats = new ImageDisplay("Health Stats: " + player.getHealth(), 22); 
 
         addObject(damageToEnemyStats, 824, 620); 
         addObject(damageIntakeStats, 825, 650);
@@ -104,7 +104,7 @@ public class ShopWorld extends World
     public void act()
     {
         addObject(player, 820, 560); 
-        player.animate(); 
+        //player.animate(); 
         checkPurchase();
         removePopUp(); 
         purchase();
@@ -133,32 +133,35 @@ public class ShopWorld extends World
         if(Greenfoot.mouseClicked(upgradeArmor) ||Greenfoot.mouseClicked(upgradeWeapon) || Greenfoot.mouseClicked(upgradeHealth))
         {
             addObject(upgradePopUp, 500, 455);
-            addObject(deletePopUp, 740, 295); 
+            addObject(deletePopUp, 740, 300); 
         }
         else if (Greenfoot.mouseClicked(buyChestbox))
         {
-            int i = Greenfoot.getRandomNumber(2);
-            String fileName; 
+            int i = Greenfoot.getRandomNumber(3);
+            String fileName = "placeholder"; 
             if (i == 0)
             {
                 fileName = "speedPopup.png";
+                player.setSpeed(13); 
             }
             else if (i==1)
             {
-                fileName = "invisibilityPopup.png";
+                fileName = "invincibilityPopup.png";
             }
-            else 
+            else if(i==2)
             {
-                fileName = "invisibilityPopup.png";
+                fileName = "bomb.png";
+                player.setHealth(10); 
+                updateStats();
             }
 
             chestboxPopUp = new ImageDisplay(fileName, 500, 340); 
             addObject (chestboxPopUp , 500, 455);
-            addObject(deletePopUp, 740, 295); 
+            addObject(deletePopUp, 740, 310); 
 
         }
     }
-    
+
     public void purchase(){
         if (Greenfoot.mouseClicked(upgradeArmor)) {
             if (coins >= upgradeCostDamageIntake) {
@@ -190,14 +193,14 @@ public class ShopWorld extends World
             if (coins >= cost) {
                 coins -= cost;
                 int i = Greenfoot.getRandomNumber(2);
-                String fileName = (i == 0) ? "speedPopup.png" : "invisibilityPopup.png";
+                String fileName = (i == 0) ? "speedPopup.png" : (i == 1) ? "invisibilityPopup.png" : "bomb.png";                
                 chestboxPopUp = new ImageDisplay(fileName, 500, 340); 
                 addObject (chestboxPopUp , 500, 455);
-                addObject(deletePopUp, 740, 295); 
+                addObject(deletePopUp, 740, 300); 
             }
         }
     }
-    
+
     public void updateStats() {
         damageToEnemyStats = new ImageDisplay("Damage to Enemy: " + player.getWeaponDmg(), 22);
         healthStats = new ImageDisplay("Health Stats: " + health, 22); 
