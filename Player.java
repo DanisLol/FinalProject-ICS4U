@@ -108,8 +108,6 @@ public class Player extends HurtableEntity
     }
 
     private void checkActionState(){
-        System.out.println(dx);
-        System.out.println(dy);
         lastAction = curAction;
 
         dx = 0;
@@ -160,12 +158,6 @@ public class Player extends HurtableEntity
                 curAction = ActionState.WALKING;
             }
         }
-
-        //check portal tile. cheap way but 
-        if (this.isTouching(PortalTile.class)){
-            MyWorld w = (MyWorld) getWorld();
-            w.increaseLevel();
-        }
     }
 
     public void attack(){
@@ -192,7 +184,6 @@ public class Player extends HurtableEntity
             if (c.getOwner() instanceof Enemy){
                 Enemy e = (Enemy) c.getOwner();
                 if (e != null) e.takeDamage(damage);
-                killed++;
                 System.out.println("Reached");
                 //System.out.println(killed);
             }
@@ -223,6 +214,14 @@ public class Player extends HurtableEntity
     // coins++;
     // //}
     // }
+    
+    public void addKill(){
+        killed ++;
+    }
+    
+    public void clearKills(){
+        killed = 0;
+    }
 
     public int getKilled(){
         return this.killed;

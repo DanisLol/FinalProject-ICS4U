@@ -20,6 +20,7 @@ public abstract class Enemy extends HurtableEntity
     private boolean horizontallyBlocked, verticallyBlocked;
     private boolean horizontalSideSteppingCommenced, verticalSideSteppingCommenced;
     private boolean attemptingSideStepHorizontally, attemptingSideStepVertically;
+    protected boolean counted = false;
     //protected SuperStatBar healthStat;
 
     private int direction; //for animation
@@ -29,7 +30,7 @@ public abstract class Enemy extends HurtableEntity
         maxSpeed = 0.9;
         speed = maxSpeed;
         distanceFromPlayer = 20;
-        health = 100;
+        health = 10;
         healthStat = new SuperStatBar(50, health, this, 200, 15, Color.RED, Color.BLACK, true, Color.BLACK, 3);
 
         collider = new CollisionBox(32, 50, 16, this, false);
@@ -45,6 +46,10 @@ public abstract class Enemy extends HurtableEntity
             getDirection();
             super.animate(); 
         } else {
+            if (!counted){
+                play.addKill();
+                counted = true;
+            }
             getWorld().removeObject(this);
             return;
         }

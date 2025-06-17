@@ -25,6 +25,7 @@ public class Melee extends Enemy
         
         attackSound = new GreenfootSound("melee.mp3");
         attackSound.setVolume(50);
+        damage = 5;
     }
 
     public void act()
