@@ -221,7 +221,6 @@ public class Player extends HurtableEntity
             if (c.getOwner() instanceof Enemy){
                 Enemy e = (Enemy) c.getOwner();
                 if (e != null) e.takeDamage(damage);
-                killed++;
                 System.out.println("Reached");
                 //System.out.println(killed);
             }
@@ -234,7 +233,6 @@ public class Player extends HurtableEntity
         }
 
         getWorld().removeObject(attackCollider);
-        //killed++; 
     }
 
     public void takeDamage(int dmg) {
@@ -274,6 +272,10 @@ public class Player extends HurtableEntity
     public int getKilled() {
         return this.killed;
     }
+    
+    public void addKill(){
+        killed ++;
+    }
 
     public int getWeaponDmg() {
         return this.weaponDmg;
@@ -289,10 +291,6 @@ public class Player extends HurtableEntity
 
     public void setWeaponDmg(int dmg) {
         this.weaponDmg += dmg;
-    }
-
-    public void addKill() {
-        killed++;
     }
 
     public void tryMove(double dx, double dy) {

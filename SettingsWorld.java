@@ -76,7 +76,7 @@ public class SettingsWorld extends World
         playerSkinNumber = playerSkin.getNumber(); 
         difficultyLevelNumber = difficultyLevel.getNumber(); 
 
-        playerSkin.choose("Benjamin_pose.png", "Melissa_pose.png", "Kevin_pose.png","Gojo_pose.png"); 
+        playerSkin.choose("benjamin_pose.png", "melissa_pose.png", "kevin_pose.png","gojo_pose.png"); 
         difficultyLevel.choose("easy.png", "medium.png", "hard.png"); 
 
         backWorld();

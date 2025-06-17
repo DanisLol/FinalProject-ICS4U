@@ -31,18 +31,17 @@ public abstract class Enemy extends HurtableEntity {
         distanceFromPlayer = 20;
         if(SettingsWorld.getDifficultiyLevelImage() == 0)
         {
-            health = 2;
+            health = 10;
         }
         else if (SettingsWorld.getDifficultiyLevelImage() == 1)
         {
-            health = 4;
+            health = 20;
         }
         else 
         {
-            health = 7; 
+            health = 30; 
         }
 
-        health = 100;
         healthStat = new SuperStatBar(50, health, this, 200, 15, Color.RED, Color.BLACK, true, Color.BLACK, 3);
 
         collider = new CollisionBox(32, 50, 16, this, false);

@@ -13,7 +13,7 @@ public class GateTileEnter extends Tile {
     public void act() {
         super.act();
     
-        /*if (activated){
+        if (activated){
             if (isInTopHalfOfBoard()){
                 if (player.getKilled() == 8){
                     deactivate();
@@ -23,11 +23,11 @@ public class GateTileEnter extends Tile {
                     deactivate();
                 }
             }
-        }*/
-        List<Enemy> enemies = getWorld().getObjects(Enemy.class);
+        }
+        /*List<Enemy> enemies = getWorld().getObjects(Enemy.class);
         if (enemies.size() == 0){
             deactivate();
-        }
+        }*/
     
         Player player = (Player) getOneIntersectingObject(Player.class);
         if (player != null) {
