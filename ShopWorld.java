@@ -112,7 +112,6 @@ public class ShopWorld extends World
         checkPurchase();
         removePopUp(); 
         purchase();
-        updateStats(); 
     }
 
     public void removePopUp()
@@ -161,13 +160,11 @@ public class ShopWorld extends World
             }
 
             chestboxPopUp = new ImageDisplay(fileName, 500, 340); 
-            addObject (chestboxPopUp , 500, 455);
-            addObject(deletePopUp, 740, 310); 
-
         }
     }
 
     public void purchase(){
+        showText("a", 200 ,500); 
         if (Greenfoot.mouseClicked(upgradeArmor)) {
             if (coins >= upgradeCostDamageIntake) {
                 coins -= upgradeCostDamageIntake;
@@ -184,7 +181,7 @@ public class ShopWorld extends World
             if (coins >= upgradeCostDamageToEnemy) {
                 coins -= upgradeCostDamageToEnemy;
                 player.setWeaponDmg(5); // Add method to Player class
-                damageIntake +=5; 
+                damageIntake += 5; 
                 updateStats();
             }
         }
@@ -197,7 +194,7 @@ public class ShopWorld extends World
             }
         }
         else if (Greenfoot.mouseClicked(buyChestbox)) {
-            int cost = 50;
+            int cost = 15;
             if (coins >= cost) {
                 coins -= cost;
                 int i = Greenfoot.getRandomNumber(2);
