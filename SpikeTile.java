@@ -1,10 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class SpikeTile here.
+ * Tile of spikes that damages characters
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Ethan Ren, Angela Wang 
+ * @version June 16, 2025
  */
 public class SpikeTile extends Damager
 {
@@ -59,6 +59,9 @@ public class SpikeTile extends Damager
         //}
     }
 
+    /**
+     * Deals damage to HurtableEntity if it is on SpikeTile while the tile is active
+     */
     public void checkHurtables(){
         java.util.List<HurtableEntity> hurtables = getWorld().getObjects(HurtableEntity.class);
         if (hurtables.size() != 0){

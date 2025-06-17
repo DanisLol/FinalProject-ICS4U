@@ -1,10 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Damager here.
+ * Abstract superclass Damager for tiles that deal damage
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Angela Wang 
+ * @version June 16, 2025
  */
 public abstract class Damager extends Tile
 {
