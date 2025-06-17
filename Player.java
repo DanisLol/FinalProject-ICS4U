@@ -377,6 +377,11 @@ public class Player extends HurtableEntity
         }
     }
 
+    
+    public int getPlayerMaxHealth()
+    {
+        return playerMaxHealth;
+    }
     // public void setSpeedPercents(double newXPercent, double newYPercent){
     // percentXSpeed = newXPercent;
     // percentYSpeed = newYPercent;

@@ -6,8 +6,8 @@ import java.util.StringTokenizer;
 /**
  * Write a description of class BossWorld here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @Angela Wang, Stephanie Xia
+ * @June 2025
  */
 public class BossWorld extends World
 {

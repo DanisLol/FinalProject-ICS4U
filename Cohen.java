@@ -3,7 +3,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Hi Mr. Cohen. "Boss" that appears in BossWorld.
  * 
- * @author Angela Wang
+ * @author Stephnaie Xia, Angela Wang
  * @version June 2025
  */
 public class Cohen extends Enemy
