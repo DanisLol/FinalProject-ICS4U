@@ -2,11 +2,9 @@ import greenfoot.*; // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.List;
 
 /**
- * NOTES:
- * - benjamin animation looks weirdly cropped??
- * - what if mouse is clicked several times before attack finishes
+ * Player is controlled by WASD keys. Click mouse to attack. 
  * 
- * @Daniel Wang
+ * @author Daniel Wang, Angela Wang
  * @version (a version number or a date)
  */
 public class Player extends HurtableEntity
@@ -22,7 +20,11 @@ public class Player extends HurtableEntity
     private int tempSpeed;
     private SuperStatBar healthStat;
 
+    /**
+     * Player constructor
+     */
     public Player() {
+        //set player image based on chosen image in settings world
         super(SettingsWorld.getPlayerSkinImage(), 192);
         player = SettingsWorld.getPlayerSkinImage();
 
@@ -49,6 +51,7 @@ public class Player extends HurtableEntity
         
         tempSpeed = 3; 
 
+        //set damages and healths based on difficulty selection
         if(SettingsWorld.getDifficultiyLevelImage() == 0)
         {
             damage = 20; 
@@ -127,11 +130,18 @@ public class Player extends HurtableEntity
         updateLocation();
     }
     
+    /**
+     * Set speed to given new speed
+     * @param newSpeed  New speed of player
+     */
     public void setSpeed(int newSpeed)
     {
         tempSpeed = newSpeed; 
     }
 
+    /**
+     * Adds 1 to coin count
+     */
     public void pickUpCoin() {
         coins++;
         MyWorld w = (MyWorld) getWorld();
@@ -143,6 +153,8 @@ public class Player extends HurtableEntity
 
         dx = 0;
         dy = 0;
+        
+        //set speed based on wasd keys
         if (Greenfoot.isKeyDown("a")) {
             direction = 1;
             dx = -tempSpeed;
@@ -178,7 +190,7 @@ public class Player extends HurtableEntity
 
         if (Greenfoot.mousePressed(null)) {
             curAction = ActionState.ATTACKING;
-            attack();
+            //attack();
         }
 
         //only nothing or walking if not attacking
@@ -191,6 +203,9 @@ public class Player extends HurtableEntity
         }
     }
 
+    /**
+     * Deals damage to an enemy intersecting an attack collider based on direction 
+     */
     public void attack(){
         //add a collision box based on the player's current direction
         int xOffset, yOffset, x, y;
@@ -229,11 +244,16 @@ public class Player extends HurtableEntity
         getWorld().removeObject(attackCollider);
     }
 
+    /**
+     * Reduce player hp by given damage
+     * @param dmg   damage to deal to player
+     */
     public void takeDamage(int dmg) {
         health -= dmg;
         
         System.out.println(health);
         
+        //really really cheap but it's very late in the morning. 
         if (getWorld() instanceof MyWorld){
             MyWorld w = (MyWorld) getWorld();
             w.getHealthStat().update(health);
@@ -241,7 +261,8 @@ public class Player extends HurtableEntity
             BossWorld w = (BossWorld) getWorld();
             w.updatePlayerHealthBar(health);
         }
-        
+
+        //if health <= 0 start dying
         if (health <= 0){
             if (lastAction != ActionState.DYING){
                 curAction = ActionState.DYING;
@@ -253,14 +274,17 @@ public class Player extends HurtableEntity
         }
     }
 
+    /**
+     * Return number of coins player has
+     * @return coins    Player's coins
+     */
     public int getCoin() {
         return coins;
     }
-    
-    public void setCoin(int newCoinValue){
-        coins = newCoinValue;
-    }
 
+    /**
+     * Store player's coin amount?
+     */
     public void updateCoin()
     {
         SettingsWorld.setUserInfoInt(3, coins); 
@@ -275,6 +299,7 @@ public class Player extends HurtableEntity
     // //}
     // }
     
+    //not used
     public void addKill(){
         killed ++;
     }
@@ -286,7 +311,7 @@ public class Player extends HurtableEntity
     public int getKilled() {
         return this.killed;
     }
-
+    
     public int getWeaponDmg() {
         return this.weaponDmg;
     }
@@ -303,6 +328,11 @@ public class Player extends HurtableEntity
         this.weaponDmg += dmg;
     }
 
+    /**
+     * Attempt to move dx pixels in the horizontal, dy pixels in the vertical. If resulting position is invalid, do not move.
+     * @param dx    
+     * @param dy
+     */
     public void tryMove(double dx, double dy) {
         double oldX = getX();
         double oldY = getY();
@@ -349,9 +379,4 @@ public class Player extends HurtableEntity
         // percentXSpeed = newXPercent;
         // percentYSpeed = newYPercent;
     // }
-
-    public void setRealXY(double newX, double newY){
-        realX = newX;
-        realY = newY;
-    }
 }

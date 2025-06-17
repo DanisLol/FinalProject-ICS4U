@@ -1,8 +1,15 @@
 import greenfoot.*;
 import java.util.*;
 
+/**
+ * Ranged enemies attack from a distance using projectiles
+ * @author Ricky Zhu
+ */
 public class Ranged extends Enemy
 {   
+    /**
+     * Ranged constructor
+     */
     public Ranged(){
         super("skeleton", 192);
 
@@ -14,6 +21,10 @@ public class Ranged extends Enemy
         super.act();
     }
 
+    /**
+     * If Ranged is in correct distance from player and has passed a cooldown, 
+     * shoot a projectile at player
+     */
     public void attack(){
         if(!inRange)return;
 
@@ -38,6 +49,9 @@ public class Ranged extends Enemy
         p.setRotation((int)angle);
     }
 
+    /**
+     * Receive damage
+     */
     public void takeDamage(int dmg) {
         health -= dmg;
 

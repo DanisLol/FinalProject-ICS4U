@@ -18,8 +18,9 @@ public class Scroller extends SuperSmoothMover
     protected static double camX = 0; // the "camera's" position
     protected static double camY = 0;
     
-    private List<Tile> activeGameObjects;
-
+    /**
+     * Scroller consctructor
+     */
     public Scroller() {
         isNew = true;
     }
@@ -36,6 +37,9 @@ public class Scroller extends SuperSmoothMover
         }
     }
     
+    /**
+     * Synchronize position
+     */
     public void act()
     {
         updateLocation();
@@ -48,10 +52,13 @@ public class Scroller extends SuperSmoothMover
         }
     }
 
+    /**
+     * Update coordinates relative to camera position??
+     */
     public void updateLocation(){
         setLocation(realX - camX, realY - camY);
     }
-    
+
     public double getRealX(){
         return realX;
     }
@@ -60,6 +67,9 @@ public class Scroller extends SuperSmoothMover
         return realY;
     }
     
+    /**
+     * Set world coordinates to given x, y pair???????
+     */
     public void setRealLocation(double x, double y) {
         realX = x;
         realY = y;

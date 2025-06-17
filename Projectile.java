@@ -1,9 +1,9 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.*;
 /**
- * Write a description of class Projectile here.
+ * Projectiles are shot by Ranged enemies towards the player.
  * 
- * @author Zachary Zhao & unknown
+ * @author Zachary Zhao, Ricky Zhu, Angela Wang
  * @version 0.0.2
  */
 public class Projectile extends Scroller
@@ -13,6 +13,14 @@ public class Projectile extends Scroller
     private HurtableEntity e;
     private int moveX,moveY;
     private double angle;
+    
+    /**
+     * Projectile constructor
+     * @param e     HurtableEntity that shot the projectile
+     * @param d     damage projectile deals
+     * @param s     speed of projectile
+     * @param a     angle projectile needs to move at
+     */
     public Projectile(HurtableEntity e, int d, int s, double a){
         damage=d;
         speed=s;
@@ -25,6 +33,10 @@ public class Projectile extends Scroller
         sound = new GreenfootSound("arrow.wav");
         sound.play();
     }
+    
+    /**
+     * Get realX and realY of Ranged Enemy that shoots this projectile
+     */
     public void addedToWorld(World w) {
         super.addedToWorld(w);
         // Since arrows are projectiles that are also affected by scrolling, need to use world coordinates over screen coordinates
@@ -35,6 +47,7 @@ public class Projectile extends Scroller
         realX = e.getRealX();
         realY = e.getRealY();
     }
+    
     public void act()
     {
         super.act();

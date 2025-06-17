@@ -37,6 +37,7 @@ public class DeathWorld extends World
         fadingIn = true;
         addObject(restartText, getWidth() / 2,((int) (getHeight() * 0.75)));
         
+        MyWorld.GAME_MUSIC.stop(); //don't know why this isn't stopping!
         music = new GreenfootSound("death_music.mp3");
         music.playLoop();
     }

@@ -4,8 +4,8 @@ import java.util.*;
 /**
  * Write a description of class MyWorld here.
  * 
- * @Daniel Wang
- * @version (a version number or a date)
+ * @Daniel Wang, Ethan Ren, Zachary Zhao? Angela Wang
+ * @version June 2025
  */
 public class MyWorld extends World
 {    
@@ -22,6 +22,7 @@ public class MyWorld extends World
     //                                "uuuuuugggguuuuuuuwwwwwggggwwwwwuuwggggggggggggwuuwgggbbbbbbgggwugggggbbbbbbggggggggggbbuubbggggggggggbbuubbggggggggggbbbbbbggggguwgggbbbbbbgggwuuwggggggggggggwuuwwwwwggggwwwwwuuuuuuugggguuuuuu",
     //                                "uuuuuugggguuuuuuugggggggggggggguugggggggggggggguuggggbbggbbggggugggggbuggubgggggggggggguugggggggggggggguuggggggggggggbuggubggggguggggbbggbbgggguugggggggggggggguugggggggggggggguuuuuuugggguuuuuu"};
 
+    //world layout, represented as characters
     private String testLayout =
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
@@ -84,9 +85,13 @@ public class MyWorld extends World
     private Board board;
     
     public static final GreenfootSound GAME_MUSIC = new GreenfootSound("game_music.mp3");
+    //music plays through BossWorld so sorry 
 
     private UserInfo user; 
     
+    /**
+     * MyWorld constructor 
+     */
     public MyWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
@@ -133,17 +138,25 @@ public class MyWorld extends World
         prepare();
     }
     
+    /**
+     * Increase timer every act
+     */
     public void act(){
         actNum++;
         if (actNum % 60 == 0) counter2.add(1); // Increment the counter by 1
     }
 
+    /**
+     * Get the player 
+     * @return Player   player in MyWorld
+     */
     public Player getPlayer() {
         return player;
     }
 
     //Checking if all enemies are eliminated
     //if all enemies are eleiminated, we can let the user go on to the next room in the dungeon
+    //NOT USED?
     public boolean allEnemiesGone(){
         boolean result = true;
         //if the number of enemies killed by player is equal to that wave of enemies number
@@ -165,10 +178,16 @@ public class MyWorld extends World
         return result;
     }
 
+    /**
+     * Play music when execution started
+     */
     public void started(){
         GAME_MUSIC.playLoop();
     }
 
+    /**
+     * Pause music when execution stopped
+     */
     public void stopped(){
         GAME_MUSIC.pause();
     }
@@ -201,6 +220,9 @@ public class MyWorld extends World
         }
     }*/
     
+    /**
+     * Prevent user from passing through gates
+     */
     public void activateGate() {
         List<GateTileEnter> gates = getObjects(GateTileEnter.class);
         for (GateTileEnter gate : gates) {
@@ -208,6 +230,9 @@ public class MyWorld extends World
         }
     }
     
+    /**
+     * Allow player to pass through
+     */
     public void deactivateGate() {
         List<GateTileEnter> gates = getObjects(GateTileEnter.class);
         for (GateTileEnter gate : gates) {
@@ -223,6 +248,9 @@ public class MyWorld extends World
     {
     }
     
+    /**
+     * Poorly named but transitions to BossWorld
+     */
     public void increaseLevel(){
         //was originally going to have multiple levels but ran out of time.
         //level++; 
@@ -239,10 +267,18 @@ public class MyWorld extends World
         //player.setRealXY(getWidth() / 2, getHeight() / 2);
     }
     
+    /**
+     * Return player health statbar
+     * @return SuperStatBar Player healthbar
+     */
     public SuperStatBar getHealthStat(){
         return healthStat;
     }
     
+    /**
+     * Return player coin counter
+     * @return Counter      coin counter
+     */
     public Counter getCoinCounter(){
         return coinStat;
     }
