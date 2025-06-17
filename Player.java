@@ -260,10 +260,6 @@ public class Player extends HurtableEntity
     public int getKilled() {
         return this.killed;
     }
-    
-    public void addKill(){
-        killed ++;
-    }
 
     public int getWeaponDmg() {
         return this.weaponDmg;
@@ -279,22 +275,6 @@ public class Player extends HurtableEntity
 
     public void setWeaponDmg(int dmg) {
         this.weaponDmg += dmg;
-    }
-    
-    public void takeDamage(int dmg){
-        health -= dmg;
-        MyWorld w = (MyWorld) getWorld();
-        w.getHealthStat().update(health);
-
-        if (health <= 0){
-            if (lastAction != ActionState.DYING){
-                curAction = ActionState.DYING;
-                lastAction = ActionState.DYING;
-                curAnimation = deathAnimation;
-                frame = 0;
-                highestIndex = 5;
-            }
-        }
     }
 
     public void tryMove(double dx, double dy) {
