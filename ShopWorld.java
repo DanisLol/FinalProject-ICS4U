@@ -34,6 +34,8 @@ public class ShopWorld extends World
 
     private ImageDisplay text; 
 
+    private ImageDisplay notEnoughCoins; 
+
     public ShopWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
@@ -55,7 +57,7 @@ public class ShopWorld extends World
         damageIntake= 20;
         health = player.getHealth();
 
-        damageToEnemy = player.getDmg();
+        damageToEnemy = 20;
         damageIntake= player.getDmg();
         health = player.getHealth();
 
@@ -79,8 +81,8 @@ public class ShopWorld extends World
         damageIntakeStats = new ImageDisplay("Damage Intake Stats: " + damageIntake, 20); 
         healthStats = new ImageDisplay("Health Stats: " + health, 22); 
 
-        addObject(damageToEnemyStats, 824, 620); 
-        addObject(damageIntakeStats, 825, 650);
+        addObject(damageToEnemyStats, 825, 650); 
+        addObject(damageIntakeStats, 824, 620);
         addObject(healthStats, 798, 679); 
 
         armorImage = new ImageDisplay("armor.png"); 
@@ -93,7 +95,7 @@ public class ShopWorld extends World
         addObject(healthImage, 830, 337); 
         addObject(chestboxImage, 190, 645);
 
-        coins = player.getCoin();
+        coins = SettingsWorld.getUserInfoInt(3);
         coinsDisplay = new ImageDisplay ("$" + coins, 40);
         addObject(coinsDisplay, 925, 150);
 
@@ -117,15 +119,17 @@ public class ShopWorld extends World
         text = new ImageDisplay ("Next...", 22, Color.WHITE); 
         addObject(text, 979,680); 
 
+        notEnoughCoins = new ImageDisplay("Not Enough Coins...", 30); 
+
         setPaintOrder(ImageDisplay.class, Button.class); 
+        addObject(player, 820, 560); 
     }
 
     public void act()
     {
-        addObject(player, 820, 560); 
         checkPurchase();
-        removePopUp(); 
         purchase();
+        removePopUp(); 
         nextWorld(); 
     }
 
@@ -134,13 +138,23 @@ public class ShopWorld extends World
         return potionCount; 
     }
 
+    public static void setPotionCount(int x)
+    {
+        potionCount = x;    
+    }
+
     public void nextWorld()
     {
         if(UserInfo.isStorageAvailable())
         {
             SettingsWorld.setUserInfoInt(4, potionCount); 
+            SettingsWorld.setUserInfoInt(3, coins); 
         }
+
         if (Greenfoot.mouseClicked(next)){
+            Cohen.setDamage(damageToEnemy); 
+            player.setDmg(damageIntake); 
+            player.setHealth(health);
             Greenfoot.setWorld(new MyWorld());
         }
     }
@@ -157,28 +171,21 @@ public class ShopWorld extends World
             {
                 removeObject(chestboxPopUp); 
             }
-
-            removeObject(upgradePopUp); 
+            
             removeObject(deletePopUp);
         }
     }
 
     public void checkPurchase()
     {
-        if(Greenfoot.mouseClicked(upgradeArmor) ||Greenfoot.mouseClicked(upgradeWeapon) || Greenfoot.mouseClicked(upgradeHealth))
-        {
-            addObject(upgradePopUp, 500, 455);
-            addObject(deletePopUp, 740, 300); 
-            updateStats();
-        }
-        else if (Greenfoot.mouseClicked(buyChestbox))
+        if (Greenfoot.mouseClicked(buyChestbox))
         {
             int i = Greenfoot.getRandomNumber(3);
             String fileName = "placeholder"; 
             if (i == 0)
             {
                 fileName = "speedPopup.png";
-                player.setSpeed(13); 
+                player.setSpeed(7); 
             }
             else if (i==1)
             {
@@ -188,9 +195,8 @@ public class ShopWorld extends World
             else if(i==2)
             {
                 fileName = "bomb.png";
-                player.setHealth(10); 
+                health =-10; 
             }
-            chestboxPopUp = new ImageDisplay(fileName, 500, 340); 
         }
     }
 
@@ -199,27 +205,33 @@ public class ShopWorld extends World
             if (coins >= upgradeCostDamageIntake) {
                 coins -= upgradeCostDamageIntake;
                 //change the damage value that enemy gives to the player
-                for (Object obj : getObjects(Enemy.class)) {
-                    Enemy enemy = (Enemy) obj;
-                    enemy.changeDmg();
-                }
-                damageToEnemy +=5; 
+                addObject(upgradePopUp, 500, 455);
+                addObject(deletePopUp, 740, 300);                 
+
+                damageIntake -=5;
+                showText(Integer.toString(damageIntake), 200, 300); 
                 updateStats();                                                                                                                                                              
             }
         }
         else if (Greenfoot.mouseClicked(upgradeWeapon)) {
             if (coins >= upgradeCostDamageToEnemy) {
                 coins -= upgradeCostDamageToEnemy;
-                player.increaseDmg(); // Add method to Player class
-                damageIntake += 5; 
+
+                addObject(upgradePopUp, 500, 455);
+                addObject(deletePopUp, 740, 300);  
+
+                damageToEnemy += 5; 
                 updateStats();
             }
         }
         else if (Greenfoot.mouseClicked(upgradeHealth)) {
             if (coins >= upgradeCostHealth) {
                 coins -= upgradeCostHealth;
-                player.setHealth(100); // Add method to Player class
-                health= 100; 
+
+                addObject(upgradePopUp, 500, 455);
+                addObject(deletePopUp, 740, 300);  
+
+                health= player.getPlayerMaxHealth(); 
                 updateStats();
             }
         }
@@ -228,18 +240,31 @@ public class ShopWorld extends World
             if (coins >= cost) {
                 coins -= cost;
                 int i = Greenfoot.getRandomNumber(2);
-                String fileName = (i == 0) ? "speedPopup.png" : (i == 1) ? "invisibilityPopup.png" : "bomb.png";                
-                chestboxPopUp = new ImageDisplay(fileName, 500, 340); 
+                String fileName = (i == 0) ? "speedPopup.png" : (i == 1) ? "invincibilityPopup.png" : "bomb.png";                
+                chestboxPopUp = new ImageDisplay(fileName, 500, 340);
+
                 addObject (chestboxPopUp , 500, 455);
-                addObject(deletePopUp, 740, 300); 
+                addObject(deletePopUp, 740, 320); 
+                updateStats();
             }
         }
+        updateStats();                                                                                                                                                              
     }
 
     public void updateStats() {
+        removeObject(coinsDisplay); 
+        removeObject(damageToEnemyStats);
+        removeObject(damageIntakeStats);
+        removeObject(healthStats); 
+
         coinsDisplay = new ImageDisplay("$" + coins, 40);
         damageToEnemyStats = new ImageDisplay("Damage to Enemy: " + damageToEnemy, 22); 
         damageIntakeStats = new ImageDisplay("Damage Intake Stats: " + damageIntake, 20); 
         healthStats = new ImageDisplay("Health Stats: " + health, 22); 
+
+        addObject(damageToEnemyStats, 825, 650); 
+        addObject(damageIntakeStats, 824, 620);
+        addObject(healthStats, 798, 679); 
+        addObject(coinsDisplay, 925, 150);
     }
 }

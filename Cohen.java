@@ -8,6 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Cohen extends Enemy
 {
+    private static int tempDamage;
     public Cohen(){
         super("cohen", 192);
         attackSound = new GreenfootSound("melee.mp3");
@@ -17,6 +18,7 @@ public class Cohen extends Enemy
         health = BossWorld.MAX_BOSS_HEALTH;
         
         damage = 20;
+        tempDamage = damage;
     }
     
     /**
@@ -32,6 +34,7 @@ public class Cohen extends Enemy
      * Receive damage and update health bar in BossWorld. If health <=0, start dying animation
      */
     public void takeDamage(int dmg){
+        damage = tempDamage; 
         health -= dmg;
         
         BossWorld w = (BossWorld) getWorld();
@@ -57,5 +60,14 @@ public class Cohen extends Enemy
         }
 
         attackSound.play();
+    }
+    
+    public static int getDamage()
+    {
+        return tempDamage;
+    }
+    public static void setDamage(int dmg)
+    {  
+       tempDamage = dmg;  
     }
 }

@@ -19,7 +19,7 @@ public class BossWorld extends World
     private SuperStatBar playerHealthBar, bossHealthBar;
     private Enemy boss;
 
-    public static final int MAX_BOSS_HEALTH = 700;
+    public static final int MAX_BOSS_HEALTH = 1200;
     private int bossHealth = MAX_BOSS_HEALTH;
 
     //"dialogue"
@@ -30,6 +30,10 @@ public class BossWorld extends World
     private boolean keyWasDown;
 
     private int countDown, maxCountDown; 
+
+    private int tempHealth; 
+    
+    private ImageDisplay potionDisplay;
 
     //timer
     private Counter timer;
@@ -129,6 +133,8 @@ public class BossWorld extends World
 
         countDown = 500;
         maxCountDown = 500; 
+        
+        potionDisplay = new ImageDisplay("Potion in use", 22, Color.WHITE); 
     }
 
     public void started(){
@@ -140,8 +146,9 @@ public class BossWorld extends World
     }
 
     public void act(){
-
         System.out.println(player.getHealth()); 
+        showText("Potion left: " + Integer.toString(SettingsWorld.getUserInfoInt(4)), 160, 130);
+
         if (curIndex < lines.length){
             ArrayList<FadingText> currentTexts = (ArrayList<FadingText>)getObjects(FadingText.class);
             if (currentTexts.size() == 0){
@@ -167,17 +174,22 @@ public class BossWorld extends World
 
     public void usePotion()
     {
-        if(Greenfoot.isKeyDown("q") && SettingsWorld.getUserInfoInt(4)>=1)
+        if(Greenfoot.isKeyDown("p") && SettingsWorld.getUserInfoInt(4)>=1)
         {
+            addObject(potionDisplay, 900, 100); 
             keyWasDown = true;
+            int x = SettingsWorld.getUserInfoInt(4) -1; 
+            SettingsWorld.setUserInfoInt(4, x); 
+            tempHealth = player.getHealth();
         }
         if(keyWasDown)
         {
-            player.takeDamage(0); 
+            player.setHealth(tempHealth); 
             countDown--; 
         }
         if(countDown==0)
         {
+            removeObject(potionDisplay); 
             keyWasDown = false;
             countDown = maxCountDown; 
         }
