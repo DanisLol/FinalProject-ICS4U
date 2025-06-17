@@ -29,7 +29,7 @@ public class CollisionBox extends Scroller
      */
     public void act()
     {
-        if (owner != null){
+        if (owner != null && owner.getWorld() != null){
             setLocation(owner.getX(), owner.getY() + yOffset);
         } 
     }
@@ -42,8 +42,12 @@ public class CollisionBox extends Scroller
         return getIntersectingObjects(CollisionBox.class);
     }
     
-    public List<Enemy> getIntersectingEnemies(){
-        return getIntersectingObjects(Enemy.class);
+    public List<CollisionBox> getIntersectingColliders(){
+        return getIntersectingObjects(CollisionBox.class);
+    }
+    
+    public Actor getOwner(){
+        return owner;
     }
     
     public List<BarrelTile> getIntersectingBarrels(){

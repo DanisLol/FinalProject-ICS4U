@@ -17,10 +17,14 @@ public abstract class HurtableEntity extends Scroller
     protected GreenfootSound attackSound;
     protected int damage;
     protected boolean dead = false;
+    
+    protected double speed;
+    protected double maxSpeed;
 
     protected int health;
     
     
+    protected SuperStatBar healthStat;
 
     public HurtableEntity(String sheetName, int largeSize){
         
@@ -49,13 +53,12 @@ public abstract class HurtableEntity extends Scroller
 
         curAnimation = walkAnimation;
         setImage(curAnimation.getOneImage(Direction.fromInteger(direction), frame));
-
-        collider = new CollisionBox(32, 32, 16, this, false);
     }
 
     public void addedToWorld(World w){
         super.addedToWorld(w);
         w.addObject(collider, getX(), getY() + 16);
+        //w.addObject(healthStat, getX(), getY());
     }
 
     public void act(){
@@ -83,18 +86,6 @@ public abstract class HurtableEntity extends Scroller
                     //on last frame of attack animation, deal damage 
                     if (curAnimation == attackAnimation){
                         attack();
-                        // if (this instanceof Enemy){
-                        // java.util.List<Player> p = getWorld().getObjects(Player.class);
-                        // if (p != null){
-                        // p.get(0).takeDamage(damage);
-                        // }
-                        // } else {
-
-                        // java.util.List<Enemy> enemies = getIntersectingObjects(Enemy.class);
-                        // if (enemies.size() != 0){
-                        // enemies.get(0).takeDamage(damage);
-                        // }
-                        // }
                     }
 
                     frame = 0; 
@@ -115,6 +106,8 @@ public abstract class HurtableEntity extends Scroller
 
     public void takeDamage(int dmg){
         health -= dmg;
+        healthStat.update(health);
+
         if (health <= 0){
             if (lastAction != ActionState.DYING){
                 curAction = ActionState.DYING;
@@ -134,14 +127,20 @@ public abstract class HurtableEntity extends Scroller
     public CollisionBox getCollider(){
         return collider;
     }
-    
+
     protected int getDmg(){
         return damage;
     }
-    
+
     protected void changeDmg(){
         damage -= 5;
     }
     
- 
+    public void alterSpeed(double multiplier) {
+        speed = maxSpeed*multiplier;
+    }
+    
+    public void resetSpeed() {
+        speed = maxSpeed;
+    }
 }

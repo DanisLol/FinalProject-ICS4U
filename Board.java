@@ -1,5 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 2D Array of Tiles
@@ -23,6 +24,8 @@ public class Board extends Actor
         put("g", GateTileEnter.class);
         put("q", GateTileExit.class);
         put("p", SpawnerTile.class);
+        put("t", PortalTile.class);
+        put("z", PlayerSpawnTile.class);
     }};
 
     /**
@@ -108,6 +111,7 @@ public class Board extends Actor
         return tiles;
     }
     
+
     public int getTileRow(Tile tile) {
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
@@ -117,5 +121,12 @@ public class Board extends Actor
             }
         }
         return -1; // not found
+    }
+    
+    public void delete(){
+        List<Tile> tiles = getWorld().getObjects(Tile.class);
+        for (Tile t: tiles){
+            getWorld().removeObject(t);
+        }
     }
 }

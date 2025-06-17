@@ -90,7 +90,7 @@ public class SpawnerTile extends Tile {
         World world = getWorld();
         double centerX = getRealX(); // realX of the spawner
         double centerY = getRealY();
-        System.out.println("Spawning enemies at: (" + centerX + ", " + centerY + ")");
+        //System.out.println("Spawning enemies at: (" + centerX + ", " + centerY + ")");
 
         for (int i = 0; i < count; i++) {
             int dx = Greenfoot.getRandomNumber(257) - 128; // -128 to +128

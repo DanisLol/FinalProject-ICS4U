@@ -49,6 +49,10 @@ public class ShopWorld extends World
         damageIntake= 20;
         health = player.getHealth();
 
+        damageToEnemy = player.getWeaponDmg();
+        damageIntake= 20;
+        health = player.getHealth();
+
         damageToEnemyDisplay = new ImageDisplay(upgradeCostDamageToEnemy, 30); 
         damageIntakeDisplay = new ImageDisplay(upgradeCostDamageIntake, 30);
         healthDisplay = new ImageDisplay (upgradeCostHealth, 30);

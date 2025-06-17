@@ -6,10 +6,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class SpikeTile extends Tile
+public class SpikeTile extends Damager
 {
     private GreenfootImage[] images;
-    private int act, period, countdown, activationTime = 45, cooldown = 10;
+    private int act, period, activationCountdown, activationTime = 45, spikeCooldown = 10, cooldown = 10;
     private boolean trapActive;
 
     public SpikeTile(){
@@ -21,11 +21,11 @@ public class SpikeTile extends Tile
 
         act = 0;
 
-        period = 60 * cooldown;
+        period = 60 * spikeCooldown;
 
         trapActive = false;
 
-        countdown = activationTime;
+        activationCountdown = activationTime;
     }
 
     /**
@@ -45,22 +45,28 @@ public class SpikeTile extends Tile
 
         if (trapActive){
             //deal damage to intersecting hurtables
-            java.util.List<HurtableEntity> hurtables = getWorld().getObjects(HurtableEntity.class);
-            if (hurtables.size() != 0){
-                for (HurtableEntity h : hurtables){
-                    if (h.getCollider().getIntersectingTiles().contains(this)){
-                        h.takeDamage(1);
-                    }
-                }
-            }
+            checkHurtables();
 
-            countdown--;
+            activationCountdown--;
 
-            if (countdown == 0){
+            if (activationCountdown == 0){
                 setImage(images[0]);
                 countdown = activationTime;
                 trapActive = false;
             }
         }
+    }
+
+    public void checkHurtables(){
+        java.util.List<HurtableEntity> hurtables = getWorld().getObjects(HurtableEntity.class);
+        if (hurtables.size() != 0){
+            for (HurtableEntity h : hurtables){
+                if (h.getCollider().getIntersectingTiles().contains(this)){
+                    h.takeDamage(1);
+                }
+            }
+        }
+                
+        countdown = cooldown;
     }
 }

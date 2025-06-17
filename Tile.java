@@ -19,7 +19,7 @@ public class Tile extends Scroller
         image = new GreenfootImage(imageName);
         setImage(image);
         this.type = type;
-        if (type == 'u' || type == 'b'){
+        if (/*type == 'u' || */type == 'b'){
             isPassable = false;
         }
     }
@@ -96,7 +96,9 @@ public class Tile extends Scroller
                 break;
             case 'p':
                 imageName = "tile_floor.png";
-                isPassable = true;
+                break;
+            case 't':
+                imageName = "tile_portal.png";
                 break;
             default:
                 imageName = "tile_floor.png";
@@ -109,7 +111,7 @@ public class Tile extends Scroller
     public void setIsPassable(boolean bool){
         isPassable = bool;
     }
-
+    
     protected boolean isInTopHalfOfBoard() {
         MyWorld world = (MyWorld) getWorld();
         Board board = world.getObjects(Board.class).get(0);

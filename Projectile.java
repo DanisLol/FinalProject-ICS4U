@@ -9,6 +9,7 @@ import java.util.*;
 public class Projectile extends SuperSmoothMover
 {
     private int damage, speed;
+    private GreenfootSound sound;
     private HurtableEntity e;
     private int moveX,moveY;
     private double angle;
@@ -21,13 +22,15 @@ public class Projectile extends SuperSmoothMover
         setImage(img);
         moveX = (int) (speed * Math.cos(Math.toRadians(angle)));
         moveY = (int) (speed * Math.sin(Math.toRadians(angle)));
+        sound = new GreenfootSound("arrow.wav");
+        sound.play();
     }
     
     public void act()
     {
         moving();
         Tile tile = (Tile)getOneIntersectingObject(Tile.class);
-        if (!tile.getIsPassable()){
+        if (tile != null && !tile.getIsPassable()){
             if(getWorld() != null){
                 if(this!=null){
                     destroy();

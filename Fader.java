@@ -69,6 +69,10 @@ public class Fader extends Actor
             setImage(image);
         } else {
             if (newWorld != null){
+                if (getWorld() instanceof MyWorld){
+                    //cheap
+                    MyWorld.GAME_MUSIC.stop();
+                }
                 Greenfoot.setWorld(newWorld);
             }
         }

@@ -9,16 +9,16 @@ import java.util.List;
  * @Daniel Wang
  * @version (a version number or a date)
  */
-public class Player extends HurtableEntity {
-    private double xSpeed, ySpeed, percentXSpeed = 1, percentYSpeed = 1;
+public class Player extends HurtableEntity
+{
+    //private double xSpeed, ySpeed, percentXSpeed = 1, percentYSpeed = 1;
+    private double dy, dx;
     private boolean isNew;
     private String player;
     private static int coins;
     // the number of enemies killed
     private int killed;
     private int weaponDmg;
-    
-    private int tempSpeed;
 
     public Player() {
         super(SettingsWorld.getPlayerSkinImage(), 192);
@@ -28,17 +28,19 @@ public class Player extends HurtableEntity {
         lastAction = ActionState.NOTHING;
         // curAnimation = walkAnimation;
 
-        // direction = 3;
-        // image = walkAnimation.getOneImage(Direction.fromInteger(direction), 0);
-        // setImage(image);
-        // frame = 0;
-        xSpeed = 0;
-        ySpeed = 0;
+        //direction = 3;        
+        //image = walkAnimation.getOneImage(Direction.fromInteger(direction), 0); 
+        //setImage(image);
+        //frame = 0;
+        dy = 0;
+        dx = 0;
         realX = 0;
         realY = 0;
         isNew = true;
         countdown = 6;
-        coins = SettingsWorld.getUserInfoInt(3);
+        coins = SettingsWorld.getUserInfoInt(3);        
+        maxSpeed = 8;
+        speed = maxSpeed;
 
         attackSound = new GreenfootSound("player_attack.wav");
         attackSound.setVolume(70);
@@ -60,6 +62,9 @@ public class Player extends HurtableEntity {
             damage = 20; 
             health = 100; 
         }
+        healthStat = new SuperStatBar(50, health, this, 200, 15, Color.GREEN, Color.BLACK, true, Color.BLACK, 3);
+
+        collider = new CollisionBox(32, 32, 16, this, false);
     }
 
     /**
@@ -103,15 +108,15 @@ public class Player extends HurtableEntity {
         // if not unmoving, animate
         if (curAction != ActionState.NOTHING && !dead) {
             super.animate();
-            if (curAction == ActionState.WALKING) {
-                // move player
-                // realX += xSpeed;
-                // realY += ySpeed;
-                tryMove(xSpeed, ySpeed);
+            if (curAction == ActionState.WALKING){
+                //move player
+                //realX += xSpeed; 
+                //realY += ySpeed;
+                tryMove(dx, dy);
             }
         }
-        // }
-
+        //} 
+        
         centreOn(this);
         updateLocation();
     }
@@ -125,94 +130,109 @@ public class Player extends HurtableEntity {
         coins++;
     }
 
-    private void checkActionState() {
+    private void checkActionState(){
+        System.out.println(dx);
+        System.out.println(dy);
         lastAction = curAction;
 
-        xSpeed = 0;
-        ySpeed = 0;
-
-        // is this if statement not redundant
-        if (getWorld() instanceof ShopWorld) {
-        } else {
-
-            if (Greenfoot.isKeyDown("a")) {
-                direction = 1;
-                xSpeed = -tempSpeed;
-            }
-
-            if (Greenfoot.isKeyDown("d")) {
-                direction = 0;
-                xSpeed = tempSpeed;
-            }
-
-            if (Greenfoot.isKeyDown("w")) {
-                direction = 2;
-                ySpeed = -tempSpeed;
-            }
-
-            if (Greenfoot.isKeyDown("s")) {
-                direction = 3;
-                ySpeed = tempSpeed;
-            }
-        }
+        dx = 0;
+        dy = 0;
 
         // account for water tile?!?
         xSpeed = xSpeed * percentXSpeed;
         ySpeed = ySpeed * percentYSpeed;
+        if (Greenfoot.isKeyDown("a")) {
+            direction = 1;
+            dx = -tempSpeed;
+        } 
+
+        if (Greenfoot.isKeyDown("d")) {
+            direction = 0;
+            dx = tempSpeed;
+        }
+
+        if (Greenfoot.isKeyDown("w")) {
+            direction = 2;
+            dy = -tempSpeed;
+        }
+
+        if (Greenfoot.isKeyDown("s")) {
+            direction = 3;
+            dy = tempSpeed;
+        } 
+
+        // if both are pressed, then decrease magnitude of each one
+        if(Math.abs(dx) + Math.abs(dy) == 2) {
+            dy *= Math.sqrt(2)/2;
+            dx *= Math.sqrt(2)/2;
+        }
+
+        dx = dx*tempSpeed;
+        dy = dy*tempSpeed;
+
+        //account for water tile?!?
+        //xSpeed = xSpeed * percentXSpeed;
+        //ySpeed = ySpeed * percentYSpeed;
 
         if (Greenfoot.mousePressed(null)) {
             curAction = ActionState.ATTACKING;
             attack();
         }
 
-        // only nothing or walking if not attacking
-        if (curAction != ActionState.ATTACKING) {
-            if (xSpeed == 0 && ySpeed == 0) {
-                curAction = ActionState.NOTHING;
+        //only nothing or walking if not attacking
+        if (curAction != ActionState.ATTACKING){
+            if (dx == 0 && dy == 0) {
+                curAction = ActionState.NOTHING; 
             } else {
                 curAction = ActionState.WALKING;
             }
         }
+
+        //check portal tile. cheap way but 
+        if (this.isTouching(PortalTile.class)){
+            MyWorld w = (MyWorld) getWorld();
+            w.increaseLevel();
+        }
     }
 
-    public void attack() {
-        Actor p = getOneIntersectingObject(Enemy.class);
-        if (p != null) {
-            takeDamage(weaponDmg);
-            // add a collision box based on the player's current direction
-            int xOffset, yOffset, x, y;
-            if (direction < 2) {
-                x = 32;
-                y = 50;
-                yOffset = 0;
-                xOffset = direction == 0 ? 32 : -32;
-            } else {
-                x = 50;
-                y = 32;
-                xOffset = 0;
-                yOffset = direction == 3 ? 32 : -32;
-
-            }
-            CollisionBox attackCollider = new CollisionBox(x, y, 0, null, true);
-            getWorld().addObject(attackCollider, getX() + xOffset, getY() + yOffset);
-
-            // get intersecting enemies with attack collider instead of player img
-            // might need to put a cap on this?????
-            List<Enemy> enemies = attackCollider.getIntersectingEnemies();
-            for (Enemy e : enemies) {
-                e.takeDamage(damage);
-                killed++;
-                // but enemy doesn't necessarily die after one attack???
-            }
-
-            List<BarrelTile> barrels = attackCollider.getIntersectingBarrels();
-            if (barrels.size() != 0) {
-                barrels.get(0).takeDamage(damage);
-            }
-
-            getWorld().removeObject(attackCollider);
+    public void attack(){
+        //add a collision box based on the player's current direction
+        int xOffset, yOffset, x, y;
+        if (direction < 2){
+            x = 40; 
+            y = 40; 
+            yOffset = 0;
+            xOffset = direction == 0? 25: -25;
+        } else {
+            x = 40;
+            y = 32;
+            xOffset = 0;
+            yOffset = direction == 3? 25 : -25;
         }
-        // killed++;
+        CollisionBox attackCollider = new CollisionBox(x, y, 0, null, false);
+        getWorld().addObject(attackCollider, getX() + xOffset, getY() + yOffset);
+
+        //get intersecting enemies with attack collider instead of player img
+        //might need to put a cap on this?????
+        List<CollisionBox> enemies = attackCollider.getIntersectingColliders();
+        for (CollisionBox c : enemies){
+            if (c.getOwner() instanceof Enemy){
+                Enemy e = (Enemy) c.getOwner();
+                if (e != null) e.takeDamage(damage);
+                killed++;
+                System.out.println("Reached");
+                //System.out.println(killed);
+            }
+            //but enemy doesn't necessarily die after one attack??? 
+        }
+
+        List<BarrelTile> barrels = attackCollider.getIntersectingBarrels();
+        if (barrels.size() != 0){
+            barrels.get(0).takeDamage(damage);
+        }
+
+        getWorld().removeObject(attackCollider);
+        //killed++; 
     }
 
     // public void takeDamage(int dmg) {
@@ -222,18 +242,39 @@ public class Player extends HurtableEntity {
     public int getCoin() {
         return coins;
     }
-    
-    public void earnCoin() {
-        Actor p = getOneIntersectingObject(Coin.class);
-        if (p != null) {
-            coins++;
-        }
-    }
+
 
     public void updateCoin()
     {
         SettingsWorld.setUserInfoInt(3, coins); 
         SettingsWorld.storeInfo(); 
+
+    //replaced by pickUpCoin()
+    // public void earnCoin(){
+    // // Actor p = getOneIntersectingObject(Coin.class);
+    // // if(p != null){
+    // coins++;
+    // //}
+    // }
+
+    public int getKilled(){
+        return this.killed;
+    }
+
+    public int getWeaponDmg(){
+        return this.weaponDmg;
+    }
+
+    public int getHealth(){
+        return this.health;
+    }
+
+    public void setHealth(int h){
+        this.health += h;
+    }
+
+    public void setWeaponDmg(int dmg){
+        this.weaponDmg += dmg;
     }
 
     public int getKilled() {
@@ -261,8 +302,8 @@ public class Player extends HurtableEntity {
     }
 
     public void tryMove(double dx, double dy) {
-        int oldX = getX();
-        int oldY = getY();
+        double oldX = getX();
+        double oldY = getY();
         double oldRealX = realX;
         double oldRealY = realY;
 
@@ -302,8 +343,13 @@ public class Player extends HurtableEntity {
         }
     }
 
-    public void setSpeedPercents(double newXPercent, double newYPercent) {
-        percentXSpeed = newXPercent;
-        percentYSpeed = newYPercent;
+    // public void setSpeedPercents(double newXPercent, double newYPercent){
+        // percentXSpeed = newXPercent;
+        // percentYSpeed = newYPercent;
+    // }
+
+    public void setRealXY(double newX, double newY){
+        realX = newX;
+        realY = newY;
     }
 }

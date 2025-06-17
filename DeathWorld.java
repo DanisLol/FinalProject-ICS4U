@@ -9,6 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class DeathWorld extends World
 {
     private GreenfootImage bg;
+    private GreenfootSound music;
     private int newTransparency;
     private boolean fadingIn;
     private SuperTextBox text, restartText;
@@ -35,6 +36,17 @@ public class DeathWorld extends World
         restartText.getImage().setTransparency(0);
         fadingIn = true;
         addObject(restartText, getWidth() / 2,((int) (getHeight() * 0.75)));
+        
+        music = new GreenfootSound("death_music.mp3");
+        //music.playLoop();
+    }
+    
+    public void started(){
+        //music.playLoop();
+    }
+    
+    public void stopped(){
+        music.pause();
     }
 
     public void act(){
@@ -42,6 +54,7 @@ public class DeathWorld extends World
             fadeIn(restartText);
         } else {
             if (Greenfoot.isKeyDown("Enter")){
+                music.stop();
                 StartWorld.START_MUSIC.playLoop();
                 Greenfoot.setWorld(new StartWorld());
             }

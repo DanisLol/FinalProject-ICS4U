@@ -49,6 +49,47 @@ public class MyWorld extends World
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufwwwwffffllllfueeeeeeuffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufwfpffffffpflfuuuuuuuuffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuffffffbbffffffqfffffffffffffffffffffueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufbbffbuubffbbfqfffffffffffffttffffffueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufbbffbuubffbbfqfffffffffffffttffffffueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuffffffbbffffffqfffffffffffffffffffffueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuflfpffffffpfwfuuuuuuuuffffffffffffffueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufllllffffwwwwfueeeeeeuffffffffffffffueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuffffffffffffffueeeeeeuffffffffffffffueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuuuuuuuuuuuuuuuueeeeeeuuuuuuuuuuuuuuuueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+    
+    //if we can ever even use this
+    private String testLayout2 = 
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeuuuuuuuuuuuuuuuueeeeeeuuuuuuuuuuuuuuuueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeuffffffffffffffueeeeeeullllllllllllllueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeuffffffffffffffueeeeeeusffffffffffffsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeuffffffffffffffuuuuuuuusfbbssssssbbfsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeufffffffffffffffffffffgsffsffffffsffsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeuffffffzzfffffffffffffgsffsfffpffsffsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeuffffffzzfffffffffffffgsffsffpfffsffsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeufffffffffffffffffffffgsffsffffffsffsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeuffffffffffffffuuuuuuuusfbbssssssbbfsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeuffffffffffffffueeeeeeusffffffffffffsueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeuffffffffffffffueeeeeeullllllllllllllueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeuuuuuuuuuuuuuuuueeeeeeuuuuuuqqqquuuuuueeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeuffffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeuffffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeuffffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeuffffueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuuuuuugggguuuuuueeeeeeuuuuuuuuuuuuuuuueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuffffffffffffffueeeeeeuffffffffffffffueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufwwwwffffllllfueeeeeeuffffffffffffffueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufwfpffffffpflfuuuuuuuuffffffffffffffueeeeeee" +
+    "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuffffffbbffffffqfffffffffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufbbffbuubffbbfqfffffffffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeufbbffbuubffbbfqfffffffffffffffffffffueeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeuffffffbbffffffqfffffffffffffffffffffueeeeeee" +
@@ -61,6 +102,7 @@ public class MyWorld extends World
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" +
     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+
 
     private int currentWave = 0;
     private Player player;
@@ -79,7 +121,10 @@ public class MyWorld extends World
     Counter counter2 = new Counter();
     public final int GAME_LENGTH = 90; // the length of the game, in seconds.
     
-    private GreenfootSound music;
+    private int level;
+    private Board board;
+    
+    public static final GreenfootSound GAME_MUSIC = new GreenfootSound("game_music.mp3");
 
     private UserInfo user; 
     public MyWorld()
@@ -88,7 +133,7 @@ public class MyWorld extends World
         super(1024, 768, 1, false); 
         player = new Player();
         addObject(player, getWidth()/2, getHeight()/2);
-        Board board = new Board(testLayout);//random.nextInt(testLayouts.length)
+        board = new Board(testLayout);//random.nextInt(testLayouts.length)
         addObject(board,0,0);
         board.display();
 
@@ -117,11 +162,12 @@ public class MyWorld extends World
 
         actNum = 0;
 
-        music = new GreenfootSound("game_music.mp3");
-        music.setVolume(50);
-        music.playLoop();
+        GAME_MUSIC.setVolume(50);
+        GAME_MUSIC.playLoop();
         
-        setPaintOrder(Fader.class, SuperStatBar.class,Counter.class, CollisionBox.class, Projectile.class, HurtableEntity.class, Coin.class, Tile.class);
+        level = 0;
+        
+        setPaintOrder(Fader.class, SuperStatBar.class,Counter.class, CollisionBox.class, Projectile.class, HurtableEntity.class, Coin.class, Actor.class, Tile.class, Board.class);
         prepare();
     }
     
@@ -160,11 +206,11 @@ public class MyWorld extends World
     }
 
     public void started(){
-        music.playLoop();
+        GAME_MUSIC.playLoop();
     }
 
     public void stopped(){
-        music.pause();
+        GAME_MUSIC.pause();
     }
     
     /*public void spawnEnemies(int numberOfEnemies) {
@@ -214,5 +260,18 @@ public class MyWorld extends World
      */
     public void prepare()
     {
+    }
+    
+    public void increaseLevel(){
+        level++;
+        System.out.println("NEXT LEVEL");
+        board.delete();
+        board = new Board(testLayout2);
+        addObject(board, 0, 0);
+        board.display();
+        
+        //PlayerSpawnTile startTile = getObjects(PlayerSpawnTile.class).get(0);
+        //player.setRealXY(startTile.getX(), startTile.getY());
+        player.setRealXY(getWidth() / 2, getHeight() / 2);
     }
 }

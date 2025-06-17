@@ -21,15 +21,18 @@ public abstract class Enemy extends HurtableEntity {
     private boolean horizontalSideSteppingCommenced, verticalSideSteppingCommenced;
     private boolean attemptingSideStepHorizontally, attemptingSideStepVertically;
     private boolean counted = false;
-
     private int direction; //for animation
 
     
+    //protected SuperStatBar healthStat;
+
+    private int direction; //for animation
+
     public Enemy (String sheetName, int largeSize) {
         super(sheetName, largeSize);
-        speed = 0.9;
+        maxSpeed = 0.9;
+        speed = maxSpeed;
         distanceFromPlayer = 20;
-
         if(SettingsWorld.getDifficultiyLevelImage() == 0)
         {
             health = 10;
@@ -57,6 +60,15 @@ public abstract class Enemy extends HurtableEntity {
 
     // private int direction; //for animation
     public void act() {
+
+        health = 100;
+        healthStat = new SuperStatBar(50, health, this, 200, 15, Color.RED, Color.BLACK, true, Color.BLACK, 3);
+
+        collider = new CollisionBox(32, 50, 16, this, false);
+    }
+    
+    public void act()
+    {
         super.act();
         if (!dead) {
             attacking();
@@ -75,10 +87,13 @@ public abstract class Enemy extends HurtableEntity {
 
     }
 
-    public void addedToWorld(World w) {
+ {
+    public void addedToWorld(World w){
         super.addedToWorld(w);
-        w.addObject(collider, getX(), getY() + 16);
-        if (!isOld) {
+        //w.addObject(collider, getX(), getY() + 16);
+        //moved to hurtableentity
+        //w.addObject(healthStat, getX(), getY());
+        if(!isOld) {
             List<Player> players = w.getObjects(Player.class);
             if (!players.isEmpty()) {
                 play = players.get(0);
@@ -87,10 +102,11 @@ public abstract class Enemy extends HurtableEntity {
         }
     }
 
-    private void getDirection() {
+
+    private void getDirection(){
     }
 
-    private void pushEntities() {
+    private void pushEntities(){
         List<HurtableEntity> enemies = getWorld().getObjects(HurtableEntity.class);
         for (HurtableEntity e : enemies) {
             if (e != this) {
@@ -111,7 +127,8 @@ public abstract class Enemy extends HurtableEntity {
         }
     }
 
-    protected void attacking() {
+
+    protected void attacking(){
         cd++;
         if (cd % cooldown == 0 && inRange && health > 0) {
             // attack(); --> move this to be called in HurtableEntity
@@ -220,14 +237,12 @@ public abstract class Enemy extends HurtableEntity {
             }
         }
 
-        // if the enemy and player are on the same axis, then it will side step
+
+        // if the enemy and player are on the same axis, then it will side step 
         // until moved past the obstruction
 
-        if (xDiff > -32 && xDiff < 32)
-            attemptingSideStepHorizontally = true; // if the player is within the magnitude of speed to the enemy on the
-        // x axis
-        if (yDiff > -32 && yDiff < 32)
-            attemptingSideStepVertically = true;
+        if(xDiff > -32 && xDiff < 32) attemptingSideStepHorizontally = true; // if the player is within the magnitude of speed to the enemy on the x axis
+        if(yDiff > -32 && yDiff < 32) attemptingSideStepVertically = true;
 
         // checks if the player can move horizontally/ vertically
         if (xDiff < 0)
@@ -235,14 +250,15 @@ public abstract class Enemy extends HurtableEntity {
         else
             horizontallyBlocked = !s[3]; // E
 
-        if (yDiff > 0)
+        if(yDiff > 0) 
             verticallyBlocked = !s[5]; // S
         else
             verticallyBlocked = !s[1]; // N
 
-        if (attemptingSideStepVertically && horizontallyBlocked) {
-            if (!verticalSideSteppingCommenced) {
-                if (Greenfoot.getRandomNumber(2) == 0) // randomly decides which direction to go
+
+        if(attemptingSideStepVertically && horizontallyBlocked) {
+            if(!verticalSideSteppingCommenced) {
+                if(Greenfoot.getRandomNumber(2) == 0) // randomly decides which direction to go
                     dy = -speed;
                 else
                     dy = speed;
@@ -260,9 +276,9 @@ public abstract class Enemy extends HurtableEntity {
             verticalSideSteppingCommenced = false;
         }
 
-        if (attemptingSideStepHorizontally && verticallyBlocked) {
-            if (!horizontalSideSteppingCommenced) {
-                if (Greenfoot.getRandomNumber(2) == 0) // randomly decides which direction to go
+        if(attemptingSideStepHorizontally && verticallyBlocked) {
+            if(!horizontalSideSteppingCommenced) {
+                if(Greenfoot.getRandomNumber(2) == 0) // randomly decides which direction to go
                     dx = -speed;
                 else
                     dx = speed;
@@ -290,14 +306,15 @@ public abstract class Enemy extends HurtableEntity {
             inRange = true;
             return;
         }
-        inRange = false;
+        inRange=false;
 
-        dx = (xDiff / distance) * speed; // unit vector times magnitude
-
+        dx = (xDiff / distance) * speed; //unit vector times magnitude
         dy = (yDiff / distance) * speed;
 
         realX += dx;
         realY += dy;
+        
+        //healthStat.moveMe();
     }
 
     private boolean simpleSideStep(boolean sameCol, boolean sameRow, boolean[] s, double speed) {
@@ -323,19 +340,19 @@ public abstract class Enemy extends HurtableEntity {
         return false; // couldn’t move
     }
 
-    /**
-     * returns a boolean array of the surrounding tiles.
-     * true means that the tile is passible,
-     * false means that the tile is not.
-     * index 0: tile enemy is on
-     * index 1: tile north of enemy
-     * index 2: tile north east of enemy
-     * index 3: tile east of enemy
-     * index 4: tile south east of enemy
-     * index 5: tile south of enemy
-     * index 6: tile south west of enemy
-     * index 7: tile west of enemy
-     * index 8: tile north west of enemy
+
+    /** returns a boolean array of the surrounding tiles. 
+     *  true means that the tile is passible,
+     *  false means that the tile is not.
+     *  index 0: tile enemy is on
+     *  index 1: tile north of enemy
+     *  index 2: tile north east of enemy
+     *  index 3: tile east of enemy
+     *  index 4: tile south east of enemy
+     *  index 5: tile south of enemy
+     *  index 6: tile south west of enemy
+     *  index 7: tile west of enemy
+     *  index 8: tile north west of enemy
      */
     public boolean[] checkSurroundingTiles() {
         boolean[] surroundingTiles = new boolean[9];
@@ -375,15 +392,16 @@ public abstract class Enemy extends HurtableEntity {
         }
     }
 
-    protected int getHealth() {
+   
+    protected int getHealth(){
         return this.health;
     }
 
-    public boolean isDead() {
+    public boolean isDead(){
         return dead;
     }
 
-    public double getSpeed() {
+    public double getSpeed(){
         return speed;
     }
 

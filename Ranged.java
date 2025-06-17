@@ -20,13 +20,13 @@ public class Ranged extends Enemy
         //test
         if (health > 0) {
             //start: set animation to attack at frame 0
+            //think this was because something with the animation was bugging out
             if (lastAction == ActionState.WALKING){
                 curAction = ActionState.ATTACKING;
                 curAnimation = attackAnimation;
                 frame = 0;
                 highestIndex = 6;
             }
-            //if (this instanceof Ranged) highestIndex = 6; else highestIndex = 5;
         }
 
         double angle = Math.toDegrees(Math.atan2(play.getY()-getY(), play.getX()-getX()));
