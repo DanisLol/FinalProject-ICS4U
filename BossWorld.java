@@ -96,12 +96,14 @@ public class BossWorld extends World
 
         playerHealthBar = new SuperStatBar(player.getHealth(), player.getHealth(), player, 200, 15, Color.RED, Color.BLACK, false, Color.BLACK, 3);
         addObject(playerHealthBar, 160, 23);
+        showText("YOU", 160, 23);
 
         boss = new Cohen();
         addObject(boss, getWidth() / 2 + 100, getHeight() / 2);
         bossHealthBar = new SuperStatBar(MAX_BOSS_HEALTH, bossHealth, boss, 200, 15, Color.GREEN, Color.BLACK, false, Color.BLACK, 3);
         addObject(bossHealthBar, 160, 45);
-
+        showText("MR. COHEN", 160, 50);
+        
         timer = new Counter();
         timer.setValue(0);
         st.mark();
