@@ -21,6 +21,7 @@ public class Player extends HurtableEntity
     private int weaponDmg;
     private int tempSpeed;
     private SuperStatBar healthStat;
+    private int playerMaxHealth;
 
     public Player() {
         super(SettingsWorld.getPlayerSkinImage(), 192);
@@ -41,30 +42,31 @@ public class Player extends HurtableEntity
         isNew = true;
         countdown = 6;
         coins = SettingsWorld.getUserInfoInt(3);        
-        maxSpeed = 8;
+        maxSpeed = 5;
         speed = maxSpeed;
 
         attackSound = new GreenfootSound("player_attack.wav");
         attackSound.setVolume(70);
-        
+
         tempSpeed = 3; 
 
         if(SettingsWorld.getDifficultiyLevelImage() == 0)
         {
             damage = 20; 
-            health = 400;
+            playerMaxHealth = 400;
         }
         else if (SettingsWorld.getDifficultiyLevelImage() == 1)
         {
             damage = 15; 
-            health = 300;
+            playerMaxHealth = 300;
         }
         else 
         {
             damage = 21; 
-            health = 200; 
+            playerMaxHealth = 200;
         }
-        //health = 100; 
+        health = playerMaxHealth;
+
         collider = new CollisionBox(32, 32, 16, this, false);
     }
 
@@ -117,16 +119,16 @@ public class Player extends HurtableEntity
             }
         }
         //} 
-        
+
         if (this.isTouching(PortalTile.class)){
             MyWorld w = (MyWorld) getWorld();
             w.increaseLevel();
         }
-        
+
         centreOn(this);
         updateLocation();
     }
-    
+
     public void setSpeed(int newSpeed)
     {
         tempSpeed = newSpeed; 
@@ -231,9 +233,9 @@ public class Player extends HurtableEntity
 
     public void takeDamage(int dmg) {
         health -= dmg;
-        
+
         System.out.println(health);
-        
+
         if (getWorld() instanceof MyWorld){
             MyWorld w = (MyWorld) getWorld();
             w.getHealthStat().update(health);
@@ -241,7 +243,7 @@ public class Player extends HurtableEntity
             BossWorld w = (BossWorld) getWorld();
             w.updatePlayerHealthBar(health);
         }
-        
+
         if (health <= 0){
             if (lastAction != ActionState.DYING){
                 curAction = ActionState.DYING;
@@ -256,7 +258,7 @@ public class Player extends HurtableEntity
     public int getCoin() {
         return coins;
     }
-    
+
     public void setCoin(int newCoinValue){
         coins = newCoinValue;
     }
@@ -274,11 +276,11 @@ public class Player extends HurtableEntity
     // coins++;
     // //}
     // }
-    
+
     public void addKill(){
         killed ++;
     }
-    
+
     public void clearKills(){
         killed = 0;
     }
@@ -346,12 +348,17 @@ public class Player extends HurtableEntity
     }
 
     // public void setSpeedPercents(double newXPercent, double newYPercent){
-        // percentXSpeed = newXPercent;
-        // percentYSpeed = newYPercent;
+    // percentXSpeed = newXPercent;
+    // percentYSpeed = newYPercent;
     // }
 
     public void setRealXY(double newX, double newY){
         realX = newX;
         realY = newY;
+    }
+
+    public int getPlayerMaxHealth()
+    {
+        return playerMaxHealth;
     }
 }

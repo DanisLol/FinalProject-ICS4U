@@ -232,7 +232,8 @@ public class MyWorld extends World
         //addObject(board, 0, 0);
         //board.display();
         //GAME_MUSIC.stop();
-        Greenfoot.setWorld(new BossWorld());
+        SettingsWorld.setUserInfoInt(3, coinStat.getValue()); 
+        Greenfoot.setWorld(new ShopWorld());
         
         //PlayerSpawnTile startTile = getObjects(PlayerSpawnTile.class).get(0);
         //player.setRealXY(startTile.getX(), startTile.getY());
