@@ -97,6 +97,9 @@ public class Tile extends Scroller
             case 'q':
                 imageName = "tile_gate0.png";
                 break;
+            case 't':
+                imageName = "tile_portal.png";
+                break;
             default:
                 imageName = "tile_floor.png";
         }

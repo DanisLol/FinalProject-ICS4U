@@ -49,7 +49,7 @@ public class Player extends HurtableEntity
         tempSpeed = 3; 
 
         damage = 10; //test
-        health = 100;   
+        health = 100000;   
         //healthStat = new SuperStatBar(50, health, this, 200, 15, Color.GREEN, Color.BLACK, true, Color.BLACK, 3);
 
         collider = new CollisionBox(32, 32, 16, this, false);
@@ -104,6 +104,11 @@ public class Player extends HurtableEntity
             }
         }
         //} 
+        
+        if (this.isTouching(PortalTile.class)){
+            MyWorld w = (MyWorld) getWorld();
+            w.increaseLevel();
+        }
         
         centreOn(this);
         updateLocation();
