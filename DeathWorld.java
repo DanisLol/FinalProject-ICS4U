@@ -1,10 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class DeathWorld here.
+ * World for when player dies. Press enter (after text finishes fading in) to return to start screen.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Angela Wang 
+ * @version 
  */
 public class DeathWorld extends World
 {
@@ -38,17 +38,26 @@ public class DeathWorld extends World
         addObject(restartText, getWidth() / 2,((int) (getHeight() * 0.75)));
         
         music = new GreenfootSound("death_music.mp3");
-        //music.playLoop();
+        music.playLoop();
     }
     
+    /**
+     * Play music when started
+     */
     public void started(){
-        //music.playLoop();
+        music.playLoop();
     }
     
+    /**
+     * Pause music when world stopped
+     */
     public void stopped(){
         music.pause();
     }
 
+    /**
+     * Fade restart text in and check for if enter has been pressed to set world to start
+     */
     public void act(){
         if (fadingIn){
             fadeIn(restartText);
@@ -61,6 +70,10 @@ public class DeathWorld extends World
         }
     }
 
+    /**
+     * Fade in provided actor. Need new transparency int and fadingIn boolean. Not the best code but taken from gr11 culminating.
+     * @param a     Actor to be faded in
+     */
     private void fadeIn(Actor a){
         newTransparency = a.getImage().getTransparency() + 2;
         if (newTransparency > 255){

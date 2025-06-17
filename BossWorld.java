@@ -1,4 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.List;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  * Write a description of class BossWorld here.
@@ -16,8 +19,13 @@ public class BossWorld extends World
     private SuperStatBar playerHealthBar, bossHealthBar;
     private Enemy boss;
 
-    public static final int MAX_BOSS_HEALTH = 300;
+    public static final int MAX_BOSS_HEALTH = 700;
     private int bossHealth = MAX_BOSS_HEALTH;
+
+    //"dialogue"
+    private FadingText[] texts;
+    private int curIndex;
+    private String[] lines;
 
     //timer
     private Counter timer;
@@ -92,16 +100,58 @@ public class BossWorld extends World
         timer.setPrefix("Time Taken: ");
         addObject(timer, 928, 68);
 
+        //dialogue
+        lines = new String[]{
+            "You stand face to face with... Mr. Cohen???",
+            "He has locked you in the dungeon until you finish your ICS4U culminating.",
+            "Defeat him to escape!! to breathe!! to touch grass!!"
+        };
+        curIndex = 0;
+
+        texts = new FadingText[lines.length];
+        for (int i = 0; i < texts.length; i++){
+            StringTokenizer line = new StringTokenizer(lines[i]);
+            System.out.println(line.countTokens());
+            texts[i] = new FadingText(lines[i], true, ((int) (line.countTokens() * 60 / 2.5 )));
+        }        
+        addObject(texts[curIndex], getWidth() / 2, ((int) (getHeight() * 0.75)));
+
         setPaintOrder(SuperStatBar.class, Actor.class, Player.class, HurtableEntity.class, Tile.class, Board.class);
     }
 
-    public void act(){
-        actNum++;
-        if (actNum % 60 == 0) timer.add(1); // Increment the counter by 1
+    public void started(){
+        MyWorld.GAME_MUSIC.playLoop();
     }
 
-    public SuperStatBar getHealthStat(){
-        return playerHealthBar;
+    public void stopped(){
+        MyWorld.GAME_MUSIC.pause();
+    }
+
+    public void act(){
+        if (curIndex < lines.length){
+            ArrayList<FadingText> currentTexts = (ArrayList<FadingText>)getObjects(FadingText.class);
+            if (currentTexts.size() == 0){
+                curIndex++;
+                if (curIndex < lines.length) addObject(texts[curIndex], getWidth() / 2, ((int) (getHeight() * 0.75)));
+            }
+        }
+
+        actNum++;
+        if (actNum % 60 == 0) {
+            timer.add(1); // Increment the counter by 1
+
+            //check if boss is dead
+            List<Enemy> enemies = getObjects(Enemy.class);
+            if (enemies.size() == 0){
+                //MyWorld.GAME_MUSIC.stop();
+                //Greenfoot.setWorld(new EndWorld());
+                addObject(new Fader("in", new EndWorld()), getWidth() / 2, getHeight() / 2);
+            }
+        }
+    }
+
+    public void updatePlayerHealthBar(int health){
+        playerHealthBar.update(health);
     }
 
     public void updateBossHealthBar(int health){

@@ -12,7 +12,9 @@ public class Cohen extends Enemy
         super("cohen", 192);
         attackSound = new GreenfootSound("melee.mp3");
         
-        cooldown = 180;
+        cooldown = 90;
+        
+        health = BossWorld.MAX_BOSS_HEALTH;
     }
     
     /**
@@ -28,7 +30,7 @@ public class Cohen extends Enemy
         health -= dmg;
         
         BossWorld w = (BossWorld) getWorld();
-        w.updateBossHealthBar(health);
+        if (w != null ) w.updateBossHealthBar(health);
         if (health <= 0){
             if (lastAction != ActionState.DYING){
                 curAction = ActionState.DYING;

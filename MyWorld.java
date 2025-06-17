@@ -231,7 +231,7 @@ public class MyWorld extends World
         //board = new Board(testLayout2);
         //addObject(board, 0, 0);
         //board.display();
-        GAME_MUSIC.stop();
+        //GAME_MUSIC.stop();
         Greenfoot.setWorld(new BossWorld());
         
         //PlayerSpawnTile startTile = getObjects(PlayerSpawnTile.class).get(0);
