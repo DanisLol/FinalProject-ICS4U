@@ -38,6 +38,7 @@ public class SpikeTile extends Damager
 
         act++;
 
+        //if (isActive){
         if (act % period == 0){
             trapActive = true;
             setImage(images[1]);
@@ -55,6 +56,7 @@ public class SpikeTile extends Damager
                 trapActive = false;
             }
         }
+        //}
     }
 
     public void checkHurtables(){
@@ -66,7 +68,7 @@ public class SpikeTile extends Damager
                 }
             }
         }
-                
+
         countdown = cooldown;
     }
 }

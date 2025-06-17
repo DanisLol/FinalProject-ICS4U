@@ -9,7 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class BarrelTile extends Tile
 {
     private int health;
-    private static final int MAX_HEALTH = 50;
+    private static final int MAX_HEALTH = 30;
 
     public BarrelTile(){
         super("tile_barrel.png", 'b');
