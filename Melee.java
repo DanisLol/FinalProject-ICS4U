@@ -26,10 +26,17 @@ public class Melee extends Enemy {
         attackSound.play();
     }
 
-    // public void takeDamage(int dmg) {
-    // // place holder add stuff pls
-    // }
-    // public void die() {
-    // getWorld().removeObject(this);
-    // }
+    public void takeDamage(int dmg) {
+        health -= dmg;
+
+        if (health <= 0){
+            if (lastAction != ActionState.DYING){
+                curAction = ActionState.DYING;
+                lastAction = ActionState.DYING;
+                curAnimation = deathAnimation;
+                frame = 0;
+                highestIndex = 5;
+            }
+        }
+    }
 }

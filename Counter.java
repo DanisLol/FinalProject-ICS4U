@@ -48,7 +48,7 @@ public class Counter extends Actor
      */
     public Counter(String prefix)
     {
-        background = getImage();  // get image from class
+        background = new GreenfootImage(50, 30);  // get image from class
         value = 0;
         target = 0;
         this.prefix = prefix;
@@ -116,7 +116,7 @@ public class Counter extends Actor
     private void updateImage()
     {
         GreenfootImage image = new GreenfootImage(background);
-        GreenfootImage text = new GreenfootImage(prefix + value, 22, Color.BLACK, transparent);
+        GreenfootImage text = new GreenfootImage(prefix + value, 22, Color.WHITE, transparent);
         
         if (text.getWidth() > image.getWidth() - 20)
         {

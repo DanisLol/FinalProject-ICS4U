@@ -50,18 +50,18 @@ public class Player extends HurtableEntity
 
         if(SettingsWorld.getDifficultiyLevelImage() == 0)
         {
-            damage = 5; 
-            health = 200;
+            damage = 10; 
+            health = 400;
         }
         else if (SettingsWorld.getDifficultiyLevelImage() == 1)
         {
             damage = 10; 
-            health = 150;
+            health = 200;
         }
         else 
         {
             damage = 20; 
-            health = 100; 
+            health = 150; 
         }
         healthStat = new SuperStatBar(50, health, this, 200, 15, Color.GREEN, Color.BLACK, true, Color.BLACK, 3);
 
@@ -129,6 +129,10 @@ public class Player extends HurtableEntity
 
     public void pickUpCoin() {
         coins++;
+        updateCoin();
+        //update world coin display
+        MyWorld w = (MyWorld) getWorld();
+        w.getCoinCounter().setValue(coins);
     }
 
     private void checkActionState(){
@@ -232,14 +236,25 @@ public class Player extends HurtableEntity
         //killed++; 
     }
 
-    // public void takeDamage(int dmg) {
-    // health -= damage;
-    // }
+    public void takeDamage(int dmg) {
+        health -= dmg;
+        MyWorld w = (MyWorld) getWorld();
+        w.getHealthStat().update(health);
+
+        if (health <= 0){
+            if (lastAction != ActionState.DYING){
+                curAction = ActionState.DYING;
+                lastAction = ActionState.DYING;
+                curAnimation = deathAnimation;
+                frame = 0;
+                highestIndex = 5;
+            }
+        }
+    }
 
     public int getCoin() {
         return coins;
     }
-
 
     public void updateCoin()
     {

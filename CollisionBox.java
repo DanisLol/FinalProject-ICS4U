@@ -31,7 +31,9 @@ public class CollisionBox extends Scroller
     {
         if (owner != null && owner.getWorld() != null){
             setLocation(owner.getX(), owner.getY() + yOffset);
-        } 
+        } else {
+            getWorld().removeObject(this);
+        }
     }
     
     public List<Tile> getIntersectingTiles(){

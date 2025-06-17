@@ -38,10 +38,17 @@ public class Ranged extends Enemy
         p.setRotation((int)angle);
     }
 
-    // public void takeDamage(int dmg) {
-    // // place holder add stuff pls
-    // }
-    public void die() {
+    public void takeDamage(int dmg) {
+        health -= dmg;
 
+        if (health <= 0){
+            if (lastAction != ActionState.DYING){
+                curAction = ActionState.DYING;
+                lastAction = ActionState.DYING;
+                curAnimation = deathAnimation;
+                frame = 0;
+                highestIndex = 5;
+            }
+        }
     }
 }

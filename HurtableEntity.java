@@ -104,25 +104,12 @@ public abstract class HurtableEntity extends Scroller
 
     public abstract void attack(); 
 
-    public void takeDamage(int dmg){
-        health -= dmg;
-        //healthStat.update(health);
+    public abstract void takeDamage(int dmg);
 
-        if (health <= 0){
-            if (lastAction != ActionState.DYING){
-                curAction = ActionState.DYING;
-                lastAction = ActionState.DYING;
-                curAnimation = deathAnimation;
-                frame = 0;
-                highestIndex = 5;
-            }
-        }
-    }
-
-    public void die(){
-        player.addKill();
-        getWorld().removeObject(this);
-    }
+    //public void die(){
+        //player.addKill();
+        //getWorld().removeObject(this);
+    //}
 
     public CollisionBox getCollider(){
         return collider;

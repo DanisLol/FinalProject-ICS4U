@@ -28,7 +28,7 @@ public class GateTileExit extends Tile {
             // }
             
             //desperate attempt to reduce lag
-            if (actNum % 30 == 0){
+            /*if (actNum % 30 == 0){
                 allDead = true;
                 
                 List<Enemy> enemies = getWorld().getObjects(Enemy.class);
@@ -39,6 +39,10 @@ public class GateTileExit extends Tile {
                 }
                 
                 if (allDead) deactivate();
+            }*/
+            List<Enemy> enemies = getWorld().getObjects(Enemy.class);
+            if (enemies.size() == 0){
+                deactivate();
             }
         }
     }

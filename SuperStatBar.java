@@ -44,7 +44,7 @@ import java.util.Arrays;
  * @author Jordan Cohen
  * @version 2.2.0 - Jan 2023
  */
-public class SuperStatBar extends Scroller
+public class SuperStatBar extends Actor
 {
 
     /**
@@ -281,7 +281,6 @@ public class SuperStatBar extends Scroller
             if (target.getWorld() != null)
             {
                 setLocation (target.getX(), target.getY() + offset);
-                super.updateLocation();
             }
             else
             {

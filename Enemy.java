@@ -23,9 +23,7 @@ public abstract class Enemy extends HurtableEntity {
     private boolean counted = false;
     private int direction; //for animation
 
-    
     //protected SuperStatBar healthStat;
-
     public Enemy (String sheetName, int largeSize) {
         super(sheetName, largeSize);
         maxSpeed = 0.9;
@@ -43,8 +41,8 @@ public abstract class Enemy extends HurtableEntity {
         {
             health = 7; 
         }
-        
-                health = 100;
+
+        health = 100;
         healthStat = new SuperStatBar(50, health, this, 200, 15, Color.RED, Color.BLACK, true, Color.BLACK, 3);
 
         collider = new CollisionBox(32, 50, 16, this, false);
@@ -62,7 +60,7 @@ public abstract class Enemy extends HurtableEntity {
      */
 
     // private int direction; //for animation
-    
+
     public void act()
     {
         super.act();
@@ -72,16 +70,25 @@ public abstract class Enemy extends HurtableEntity {
             pushEntities();
             getDirection();
             super.animate();
-        }
-
-        if (dead) {
+        } else {
             if (!counted) {
                 play.addKill();
                 counted = true;
             }
+            
+            int random = Greenfoot.getRandomNumber(2);
+            if (random == 0){
+                Coin coin = new Coin();
+                getWorld().addObject(coin, ((int) (this.realX + 0.5)), ((int) (this.realY + 0.5)));
+                coin.updateLocation();
+            }
+            
+            getWorld().removeObject(this);
+            return;
         }
 
     }
+
     public void addedToWorld(World w){
         super.addedToWorld(w);
         //w.addObject(collider, getX(), getY() + 16);
@@ -95,7 +102,6 @@ public abstract class Enemy extends HurtableEntity {
             isOld = true;
         }
     }
-
 
     private void getDirection(){
     }
@@ -120,7 +126,6 @@ public abstract class Enemy extends HurtableEntity {
 
         }
     }
-
 
     protected void attacking(){
         cd++;
@@ -231,7 +236,6 @@ public abstract class Enemy extends HurtableEntity {
             }
         }
 
-
         // if the enemy and player are on the same axis, then it will side step 
         // until moved past the obstruction
 
@@ -248,7 +252,6 @@ public abstract class Enemy extends HurtableEntity {
             verticallyBlocked = !s[5]; // S
         else
             verticallyBlocked = !s[1]; // N
-
 
         if(attemptingSideStepVertically && horizontallyBlocked) {
             if(!verticalSideSteppingCommenced) {
@@ -307,7 +310,7 @@ public abstract class Enemy extends HurtableEntity {
 
         realX += dx;
         realY += dy;
-        
+
         //healthStat.moveMe();
     }
 
@@ -333,7 +336,6 @@ public abstract class Enemy extends HurtableEntity {
         }
         return false; // couldn’t move
     }
-
 
     /** returns a boolean array of the surrounding tiles. 
      *  true means that the tile is passible,
@@ -386,7 +388,6 @@ public abstract class Enemy extends HurtableEntity {
         }
     }
 
-   
     protected int getHealth(){
         return this.health;
     }

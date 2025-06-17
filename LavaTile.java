@@ -11,7 +11,7 @@ public class LavaTile extends Damager
     public LavaTile(){
         super("tile_lava.png", 'l');
         sound = new GreenfootSound("lava.wav");
-        sound.setVolume(30);
+        sound.setVolume(80);
         cooldown = 30;
     }
 

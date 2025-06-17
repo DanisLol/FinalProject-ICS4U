@@ -51,7 +51,7 @@ public class SpikeTile extends Damager
 
             if (activationCountdown == 0){
                 setImage(images[0]);
-                countdown = activationTime;
+                activationCountdown = activationTime;
                 trapActive = false;
             }
         }
