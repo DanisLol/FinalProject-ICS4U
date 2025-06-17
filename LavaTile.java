@@ -1,10 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class LavalTile here.
+ * Tile of lava that damages characters
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Ethan Ren, Angela Wang 
+ * @version June 16, 2025
  */
 public class LavaTile extends Damager
 {
@@ -26,6 +26,9 @@ public class LavaTile extends Damager
         checkHurtablesAfterCooldowns();
     }
 
+    /**
+     * Deals damage to HurtableEntity if it is on the tile
+     */
     public void checkHurtables(){
         java.util.List<HurtableEntity> hurtables = getWorld().getObjects(HurtableEntity.class);
         if (hurtables.size() != 0){

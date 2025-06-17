@@ -37,6 +37,7 @@ public class EndWorld extends World
         fadingIn = true;
         addObject(restartText, getWidth() / 2,((int) (getHeight() * 0.75)));
         
+        MyWorld.GAME_MUSIC.stop(); //may be erroring?
         music = new GreenfootSound("end_music.mp3");
         music.playLoop();
     }

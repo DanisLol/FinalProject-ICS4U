@@ -1,7 +1,14 @@
 import greenfoot.*;
 import java.util.*;
 
+/**
+ * Melee enemies attack player at a close range.
+ * @author Angela Wang & unknown?
+ */
 public class Melee extends Enemy {
+    /**
+     * Melee constructor
+     */
     public Melee() {
         super("guard", 128);
         cooldown = 120;
@@ -15,6 +22,9 @@ public class Melee extends Enemy {
         super.act();
     }
 
+    /**
+     * Deal damage to an intersecting player
+     */
     public void attack() {
         // player.damage() or something
 
@@ -27,6 +37,9 @@ public class Melee extends Enemy {
         attackSound.play();
     }
 
+    /**
+     * Receive damage. If health <= 0, start dying.
+     */
     public void takeDamage(int dmg) {
         health -= dmg;
 

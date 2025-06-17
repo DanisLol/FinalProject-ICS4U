@@ -2,9 +2,9 @@ import greenfoot.*; // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.*;
 
 /**
- * description goes here
+ * Enemy superclass that handles pathfinding
  * 
- * @author Zachary Zhao, Daniel Wang
+ * @author Zachary Zhao, Daniel Wang, Ricky Zhu
  * @version 0.0.2
  */
 
@@ -26,6 +26,12 @@ public abstract class Enemy extends HurtableEntity {
     private int direction; //for animation
 
     //protected SuperStatBar healthStat;
+    
+    /**
+     * Enemy constructor
+     * @param sheetName base of image name
+     * @param largeSize int pixel size of attack frame
+     */
     public Enemy (String sheetName, int largeSize) {
         super(sheetName, largeSize);
         maxSpeed = 0.9;
@@ -69,7 +75,7 @@ public abstract class Enemy extends HurtableEntity {
             attacking();
             pathFindTowardPlayer();
             pushEntities();
-            getDirection();
+            //getDirection(); i gave up
             super.animate();
         } else {
             if (!counted){
@@ -109,6 +115,9 @@ public abstract class Enemy extends HurtableEntity {
     private void getDirection(){
     }
 
+    /**
+     * Receive damage
+     */
     public void takeDamage(int dmg){
         health -= dmg;
 
@@ -158,7 +167,7 @@ public abstract class Enemy extends HurtableEntity {
         }
     }
 
-    public void pathFindTowardPlayer() {
+    private void pathFindTowardPlayer() {
 
         boolean[] s = checkSurroundingTiles(); // 0-8 as documented
 
