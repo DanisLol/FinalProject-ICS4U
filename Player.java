@@ -63,6 +63,7 @@ public class Player extends HurtableEntity
             damage = 20; 
             health = 150; 
         }
+        //health = 100; 
         healthStat = new SuperStatBar(50, health, this, 200, 15, Color.GREEN, Color.BLACK, true, Color.BLACK, 3);
 
         collider = new CollisionBox(32, 32, 16, this, false);
@@ -283,7 +284,7 @@ public class Player extends HurtableEntity
     }
 
     public void setHealth(int h) {
-        this.health += h;
+        this.health = h;
     }
 
     public void setWeaponDmg(int dmg) {
