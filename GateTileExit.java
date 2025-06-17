@@ -17,33 +17,15 @@ public class GateTileExit extends Tile {
 
         actNum++;
         if (activated){
-            // if (isInTopHalfOfBoard()){
-                // if (player.getKilled() == 8){
-                    // deactivate();
-                // }
-            // } else{
-                // if (player.getKilled() == 24){
-                    // deactivate();
-                // }
-            // }
-            
-            //desperate attempt to reduce lag
-            /*if (actNum % 30 == 0){
-                allDead = true;
-                
-                List<Enemy> enemies = getWorld().getObjects(Enemy.class);
-                for (Enemy e : enemies){
-                    if (!e.isDead()){
-                        allDead = false;
-                    }
-                }
-                
-                if (allDead) deactivate();
-            }*/
-            List<Enemy> enemies = getWorld().getObjects(Enemy.class);
-            if (enemies.size() == 0){
-                deactivate();
-            }
+             if (isInTopHalfOfBoard()){
+                 if (player.getKilled() == 8){
+                     deactivate();
+                 }
+             } else{
+                 if (player.getKilled() == 24){
+                     deactivate();
+                 }
+             }
         }
     }
 

@@ -20,7 +20,9 @@ public abstract class Enemy extends HurtableEntity {
     private boolean horizontallyBlocked, verticallyBlocked;
     private boolean horizontalSideSteppingCommenced, verticalSideSteppingCommenced;
     private boolean attemptingSideStepHorizontally, attemptingSideStepVertically;
-    private boolean counted = false;
+    protected boolean counted = false;
+    //protected SuperStatBar healthStat;
+
     private int direction; //for animation
 
     //protected SuperStatBar healthStat;
@@ -29,21 +31,9 @@ public abstract class Enemy extends HurtableEntity {
         maxSpeed = 0.9;
         speed = maxSpeed;
         distanceFromPlayer = 20;
-        if(SettingsWorld.getDifficultiyLevelImage() == 0)
-        {
-            health = 2;
-        }
-        else if (SettingsWorld.getDifficultiyLevelImage() == 1)
-        {
-            health = 4;
-        }
-        else 
-        {
-            health = 7; 
-        }
 
-        health = 100;
-        healthStat = new SuperStatBar(50, health, this, 200, 15, Color.RED, Color.BLACK, true, Color.BLACK, 3);
+        health = 20;
+        //healthStat = new SuperStatBar(50, health, this, 200, 15, Color.RED, Color.BLACK, true, Color.BLACK, 3);
 
         collider = new CollisionBox(32, 50, 16, this, false);
     }
@@ -71,18 +61,10 @@ public abstract class Enemy extends HurtableEntity {
             getDirection();
             super.animate();
         } else {
-            if (!counted) {
+            if (!counted){
                 play.addKill();
                 counted = true;
             }
-            
-            int random = Greenfoot.getRandomNumber(2);
-            if (random == 0){
-                Coin coin = new Coin();
-                getWorld().addObject(coin, ((int) (this.realX + 0.5)), ((int) (this.realY + 0.5)));
-                coin.updateLocation();
-            }
-            
             getWorld().removeObject(this);
             return;
         }
@@ -104,6 +86,20 @@ public abstract class Enemy extends HurtableEntity {
     }
 
     private void getDirection(){
+    }
+    
+    public void takeDamage(int dmg){
+        health -= dmg;
+
+        if (health <= 0){
+            if (lastAction != ActionState.DYING){
+                curAction = ActionState.DYING;
+                lastAction = ActionState.DYING;
+                curAnimation = deathAnimation;
+                frame = 0;
+                highestIndex = 5;
+            }
+        }
     }
 
     private void pushEntities(){

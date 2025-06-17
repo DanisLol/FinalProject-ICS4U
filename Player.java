@@ -48,23 +48,9 @@ public class Player extends HurtableEntity
         
         tempSpeed = 3; 
 
-        if(SettingsWorld.getDifficultiyLevelImage() == 0)
-        {
-            damage = 10; 
-            health = 400;
-        }
-        else if (SettingsWorld.getDifficultiyLevelImage() == 1)
-        {
-            damage = 10; 
-            health = 200;
-        }
-        else 
-        {
-            damage = 20; 
-            health = 150; 
-        }
-        //health = 100; 
-        healthStat = new SuperStatBar(50, health, this, 200, 15, Color.GREEN, Color.BLACK, true, Color.BLACK, 3);
+        damage = 10; //test
+        health = 100;   
+        //healthStat = new SuperStatBar(50, health, this, 200, 15, Color.GREEN, Color.BLACK, true, Color.BLACK, 3);
 
         collider = new CollisionBox(32, 32, 16, this, false);
     }
@@ -130,15 +116,11 @@ public class Player extends HurtableEntity
 
     public void pickUpCoin() {
         coins++;
-        updateCoin();
-        //update world coin display
         MyWorld w = (MyWorld) getWorld();
         w.getCoinCounter().setValue(coins);
     }
 
     private void checkActionState(){
-        System.out.println(dx);
-        System.out.println(dy);
         lastAction = curAction;
 
         dx = 0;
@@ -189,12 +171,6 @@ public class Player extends HurtableEntity
                 curAction = ActionState.WALKING;
             }
         }
-
-        //check portal tile. cheap way but 
-        if (this.isTouching(PortalTile.class)){
-            MyWorld w = (MyWorld) getWorld();
-            w.increaseLevel();
-        }
     }
 
     public void attack(){
@@ -221,7 +197,6 @@ public class Player extends HurtableEntity
             if (c.getOwner() instanceof Enemy){
                 Enemy e = (Enemy) c.getOwner();
                 if (e != null) e.takeDamage(damage);
-                killed++;
                 System.out.println("Reached");
                 //System.out.println(killed);
             }
@@ -270,6 +245,14 @@ public class Player extends HurtableEntity
     // coins++;
     // //}
     // }
+    
+    public void addKill(){
+        killed ++;
+    }
+    
+    public void clearKills(){
+        killed = 0;
+    }
 
     public int getKilled() {
         return this.killed;
@@ -289,6 +272,22 @@ public class Player extends HurtableEntity
 
     public void setWeaponDmg(int dmg) {
         this.weaponDmg += dmg;
+    }
+    
+    public void takeDamage(int dmg){
+        health -= dmg;
+        MyWorld w = (MyWorld) getWorld();
+        w.getHealthStat().update(health);
+
+        if (health <= 0){
+            if (lastAction != ActionState.DYING){
+                curAction = ActionState.DYING;
+                lastAction = ActionState.DYING;
+                curAnimation = deathAnimation;
+                frame = 0;
+                highestIndex = 5;
+            }
+        }
     }
 
     public void addKill() {

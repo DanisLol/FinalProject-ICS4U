@@ -30,7 +30,7 @@ public class Ranged extends Enemy
         }
 
         double angle = Math.toDegrees(Math.atan2(play.getY()-getY(), play.getX()-getX()));
-        int damage = 10, speed = 5;
+        int damage = 5, speed = 5;
         Projectile p = new Projectile(this,damage,speed,angle);
         int offsetX = (int)(25*Math.cos(Math.toRadians(angle)));
         int offsetY = (int)(25*Math.sin(Math.toRadians(angle)));

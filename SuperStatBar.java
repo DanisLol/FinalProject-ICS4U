@@ -281,6 +281,7 @@ public class SuperStatBar extends Actor
             if (target.getWorld() != null)
             {
                 setLocation (target.getX(), target.getY() + offset);
+                //super.updateLocation();
             }
             else
             {

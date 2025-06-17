@@ -15,11 +15,11 @@ public class SpawnerTile extends Tile {
         if (spawned) return;
     
         if (isInTopHalfOfBoard() && allTopHalfGatesActivated()) {
-            spawnEnemies(4);
+            spawnEnemies(2);
             spawned = true;
         } else{
             if (!isInTopHalfOfBoard() && allBottomHalfGatesActivated()){
-                spawnEnemies(4);
+                spawnEnemies(2);
                 spawned = true;
             }
         }

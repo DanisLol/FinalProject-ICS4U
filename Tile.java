@@ -14,23 +14,26 @@ public class Tile extends Scroller
     private char type;
     protected boolean isPassable = true;
     private boolean isMouseHeld;
+    protected boolean isActive = false;
 
     public Tile(String imageName, char type){
         image = new GreenfootImage(imageName);
         setImage(image);
         this.type = type;
-        if (/*type == 'u' || */type == 'b'){
+        if (type == 'u' || type == 'b'){
             isPassable = false;
         }
     }
     
-    //omds i need to change sm
     public Tile(char type){
         setType(type);  // use setType instead of manual code
     }
 
     public void act(){
         super.act();
+        
+        //checkActive();
+        
         // if this tile is in a RoomEditor (NOT in a game world), user can edit type
         if (getWorld() instanceof RoomEditor){
             RoomEditor room = (RoomEditor) getWorld();
@@ -94,12 +97,6 @@ public class Tile extends Scroller
             case 'q':
                 imageName = "tile_gate0.png";
                 break;
-            case 'p':
-                imageName = "tile_floor.png";
-                break;
-            case 't':
-                imageName = "tile_portal.png";
-                break;
             default:
                 imageName = "tile_floor.png";
         }
@@ -118,5 +115,14 @@ public class Tile extends Scroller
     
         int row = board.getTileRow(this);
         return row != -1 && row < board.getTileRowCount() / 2;
+    }
+    
+    public void checkActive(){
+        java.util.List<Player> p = getObjectsInRange(1024, Player.class);
+        if (p.size() != 0){
+            isActive = true;
+        } else {
+            isActive = false;
+        }
     }
 }
