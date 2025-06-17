@@ -1,6 +1,12 @@
 import greenfoot.*;
 import java.util.Random;
 
+/**
+ * Tile that spawns a set number of enemies in a radius around itself
+ * 
+ * @author Ethan Ren 
+ * @version June 16, 2025
+ */
 public class SpawnerTile extends Tile {
     private boolean spawned = false;
     Random random = new Random();
@@ -29,6 +35,10 @@ public class SpawnerTile extends Tile {
         }*/
     }
 
+    /**
+     * Checks if a top half gate is active
+     * @return boolean  True if a top half gate is active
+     */
     private boolean topHalfGateActivated() {
         MyWorld world = (MyWorld) getWorld();
         Board board = world.getObjects(Board.class).get(0);
@@ -50,6 +60,10 @@ public class SpawnerTile extends Tile {
         return true;
     }
     
+    /**
+     * Checks if all top half gates are active
+     * @return boolean  True if all top half gates are active
+     */
     private boolean allTopHalfGatesActivated() {
         MyWorld world = (MyWorld) getWorld();
         Board board = world.getObjects(Board.class).get(0);
@@ -70,6 +84,10 @@ public class SpawnerTile extends Tile {
         return true;
     }
 
+    /**
+     * Checks if all bottom half gates are active
+     * @return boolean  True if all bottom half gates are active
+     */
     private boolean allBottomHalfGatesActivated() {
         MyWorld world = (MyWorld) getWorld();
         Board board = world.getObjects(Board.class).get(0);
@@ -86,6 +104,10 @@ public class SpawnerTile extends Tile {
         return true;
     }
 
+    /**
+     * spawns # of enemies in a 2-tile radius around itself
+     * @param count  number of enemies spawned by this tile
+     */
     private void spawnEnemies(int count) {
         World world = getWorld();
         double centerX = getRealX(); // realX of the spawner

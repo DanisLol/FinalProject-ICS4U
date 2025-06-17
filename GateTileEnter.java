@@ -1,6 +1,12 @@
 import greenfoot.*;
 import java.util.List;
 
+/**
+ * Tile gate that is the entrance to a room, triggers spawning
+ * 
+ * @author Ethan Ren 
+ * @version June 16, 2025
+ */
 public class GateTileEnter extends Tile {
     private boolean activated = false;
     private boolean wasPlayerOnTileLastFrame = false;
@@ -46,6 +52,10 @@ public class GateTileEnter extends Tile {
         
     }
 
+    /**
+     * activates all gate tiles in its half of the board
+     * @param topHalf   Boolean for if the tile is in the top half of the board
+     */
     private void activateGatesInHalf(boolean topHalf) {
         MyWorld world = (MyWorld) getWorld();
         Board board = getBoard();
@@ -72,19 +82,29 @@ public class GateTileEnter extends Tile {
         return boards.isEmpty() ? null : boards.get(0);
     }
 
+    /**
+     * activates this tile. Turns it into unpassable, changes image
+     */
     public void activate() {
         if (activated) return;
         activated = true;
         setIsPassable(false);
         setImage(new GreenfootImage("tile_gate1.png"));
     }
-
+    
+    /**
+     * deactivates this tile. Turns it into passable, changes image
+     */
     public void deactivate() {
         activated = false;
         setIsPassable(true);
         setImage(new GreenfootImage("tile_gate0.png"));
     }
     
+    /**
+     * returns if this gate is activated
+     * @return activated    boolean if gate has been activated
+     */
     public boolean isActivated(){
         return activated;
     }

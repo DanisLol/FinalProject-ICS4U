@@ -1,10 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.List;
 /**
- * Write a description of class WaterTile here.
+ * Tile of water that slows characters
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Ethan Ren, Angela Wang 
+ * @version June 16, 2025
  */
 public class WaterTile extends Damager
 {
@@ -24,7 +24,10 @@ public class WaterTile extends Damager
         super.act();
         //checkHurtablesAfterCooldowns();
     }
-
+    
+    /**
+     * Changes HurtableEntity speed when it is on water tile
+     */
     public void checkHurtables(){
         List<HurtableEntity> entities = getWorld().getObjects(HurtableEntity.class);
         for (HurtableEntity e: entities){

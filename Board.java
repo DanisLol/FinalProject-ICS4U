@@ -102,15 +102,26 @@ public class Board extends Actor
         return layout;
     }
     
+    /**
+     * Function to get # of rows in board
+     * @return int  # of rows
+     */
     public int getTileRowCount(){
         return tiles.length;
     }
     
+    /**
+     * Function to get the board as a 2d arrray of tiles
+     * @return Tile[][] board as a 2d array of tiles
+     */
     public Tile[][] getTiles(){
         return tiles;
     }
     
-
+    /**
+     * Gets row of a specific tile in board
+     * @return i    row of tile
+     */
     public int getTileRow(Tile tile) {
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {

@@ -1,10 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class WallTile here.
+ * Unpassable tile that acts like a wall
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Ethan Ren 
+ * @version June 14, 2025
  */
 public class WallTile extends Tile
 {

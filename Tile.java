@@ -2,9 +2,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
  * Tiles have different images and "passability" (whether or not user can move through).
+ * Creates a 64x64 square with unique properties
  * 
- * @author Angela Wang
- * @version June 4 2025
+ * @author Angela Wang, Ethan Ren
+ * @version June 16 2025
  */
 public class Tile extends Scroller
 {
@@ -108,10 +109,18 @@ public class Tile extends Scroller
         setImage(image);
     }
     
+    /**
+     * Sets new passability
+     * @param bool  New passability of tile
+     */
     public void setIsPassable(boolean bool){
         isPassable = bool;
     }
     
+    /**
+     * Checks if tile is in the top half of the board
+     * @return boolean  Returns true if tile is in top half
+     */
     protected boolean isInTopHalfOfBoard() {
         MyWorld world = (MyWorld) getWorld();
         Board board = world.getObjects(Board.class).get(0);
